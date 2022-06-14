@@ -21,10 +21,19 @@ const countUp = () => {
     timerDisplay.innerText = currentTime;
     console.log(currentTime)
 }
-// define timer that changes every second 
-// WORKS! UNCOMMENT OUT WHEN WANT TO RUN IT
-// const timer = setInterval(countUp,1000);
 
+// define timer
+let timer;
+// const timer = setInterval(countUp,1000);
+const startButton = document.querySelector('#start');
+startButton.addEventListener('click', (e) => {
+    timer = setInterval(countUp,1000);
+})
+
+const stopButton = document.querySelector('#stop')
+stopButton.addEventListener('click', (e) => {
+    clearTimeout(timer);
+})
 
 
 // need to display that timer onscreen
