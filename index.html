@@ -9,11 +9,21 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <h1>Timer:</h1>
-        <h2 id="timer"></h2>
-        <button id="start">START</button>
-        <button id="stop">PAUSE</button>
-        <button id="reset">RESET</button>
+        <div id='container'>
+            <h1>COUNTING SHEEP</h1>
+            <canvas id ='game-canvas'></canvas>
+            <div id="timer-container">
+                <h2>Timer:</h2>
+                <h3 id="timer"></h3>
+                <div id="button-container"></div>
+                    <button id="start">START</button>
+                    <button id="stop">PAUSE</button>
+                    <button id="reset">RESET</button>
+                    <button id="bark">BARK</button>
+                    </div>
+            </div>
+
+        </div>
         <script src="app.js" async defer></script>
     </body>
 </html>

@@ -22,13 +22,14 @@ timerDisplay.innerText = currentTime;
 const countUp = () => {
     ++currentTime;
     timerDisplay.innerText = currentTime;
-    console.log(currentTime)
+    console.log(currentTime);
 }
 
 // define timer
 let timer;
 // const timer = setInterval(countUp,1000);
 const startButton = document.querySelector('#start');
+console.log(startButton);
 startButton.addEventListener('click', (e) => {
     timer = setInterval(countUp,1000);
 })
@@ -36,22 +37,32 @@ startButton.addEventListener('click', (e) => {
 const stopButton = document.querySelector('#stop');
 stopButton.addEventListener('click', (e) => {
     clearTimeout(timer);
+    startButton.innerText = 'RESTART'
 })
+
 
 const resetButton = document.querySelector('#reset');
 resetButton.addEventListener('click', (e) => {
     clearTimeout(timer);
     currentTime = 0;
     timerDisplay.innerText = currentTime;
+    startButton.innerText = 'START'
 })
 
+// notes for how to get clouds! https://silveiraneto.net/2011/06/02/simple-html5-animation-clouds-over-background/
 
 // need to display that timer onscreen
-
 // need to create sheep variable
-
-// when sheep is touched by the aussie avatar, +1 to player score
+let sheep;
+// need to define lostSheepCounter
+// start with 10 lost sheep!
+let lostSheepCounter = 10;
+// when sheep is touched by the aussie avatar, -1 to lostSheepCounter
 
 // press space to bark?
+const barkButton = document.querySelector('#bark');
+barkButton.addEventListener('click', (e) => {
+    console.log('BARK!')
+})
 
 // include background music!
