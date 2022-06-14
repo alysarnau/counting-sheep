@@ -32,6 +32,7 @@ const startButton = document.querySelector('#start');
 console.log(startButton);
 startButton.addEventListener('click', (e) => {
     timer = setInterval(countUp,1000);
+    startButton.innerText = 'RUNNING'
 })
 
 const stopButton = document.querySelector('#stop');
@@ -47,6 +48,7 @@ resetButton.addEventListener('click', (e) => {
     currentTime = 0;
     timerDisplay.innerText = currentTime;
     startButton.innerText = 'START'
+    barkingText.innerText = '';
 })
 
 // notes for how to get clouds! https://silveiraneto.net/2011/06/02/simple-html5-animation-clouds-over-background/
@@ -58,11 +60,12 @@ let sheep;
 // start with 10 lost sheep!
 let lostSheepCounter = 10;
 // when sheep is touched by the aussie avatar, -1 to lostSheepCounter
-
+const barkingText = document.querySelector('#barking');
 // press space to bark?
 const barkButton = document.querySelector('#bark');
 barkButton.addEventListener('click', (e) => {
     console.log('BARK!')
+    barkingText.innerText = 'BARK! BARK!'
 })
 
 // include background music!
