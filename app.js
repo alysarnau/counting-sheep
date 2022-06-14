@@ -7,6 +7,9 @@ const player1 = {
     points: 0,
 }
 
+// define win condition!
+// lowest timer (aka points) wins!
+
 const player2 = {
     playername: '2',
     points: 0,
@@ -30,9 +33,16 @@ startButton.addEventListener('click', (e) => {
     timer = setInterval(countUp,1000);
 })
 
-const stopButton = document.querySelector('#stop')
+const stopButton = document.querySelector('#stop');
 stopButton.addEventListener('click', (e) => {
     clearTimeout(timer);
+})
+
+const resetButton = document.querySelector('#reset');
+resetButton.addEventListener('click', (e) => {
+    clearTimeout(timer);
+    currentTime = 0;
+    timerDisplay.innerText = currentTime;
 })
 
 
