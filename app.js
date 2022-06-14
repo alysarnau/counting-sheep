@@ -11,8 +11,22 @@ const player2 = {
     playername: '2',
     points: 0,
 }
-
+let currentTime = 0;
+const timerDisplay = document.querySelector("#timer");
+timerDisplay.innerText = currentTime;
 // need to create a timer that counts up in seconds
+//define countUp funcion
+const countUp = () => {
+    ++currentTime;
+    timerDisplay.innerText = currentTime;
+    console.log(currentTime)
+}
+// define timer that changes every second 
+// WORKS! UNCOMMENT OUT WHEN WANT TO RUN IT
+// const timer = setInterval(countUp,1000);
+
+
+
 // need to display that timer onscreen
 
 // need to create sheep variable
