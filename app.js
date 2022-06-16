@@ -1,6 +1,10 @@
 // premise of the game is you control a lil aussie dog that has to "collect" sheep
 // it's a time trial! P1 versus P2, fastest one wins!
 
+// define canvas object
+const canvasBackground = document.querySelector('canvas');
+
+
 // need to define p1 object and p2 object
 const player1 = {
     playername: '1',
@@ -48,24 +52,44 @@ resetButton.addEventListener('click', (e) => {
     currentTime = 0;
     timerDisplay.innerText = currentTime;
     startButton.innerText = 'START'
-    barkingText.innerText = '';
+    soundEffect.innerText = '';
 })
 
 // notes for how to get clouds! https://silveiraneto.net/2011/06/02/simple-html5-animation-clouds-over-background/
 
 // need to display that timer onscreen
-// need to create sheep variable
-let sheep;
+const sheep = document.createElement('div');
+sheep.setAttribute('id','sheep');
+canvasBackground.appendChild(sheep);
+
 // need to define lostSheepCounter
 // start with 10 lost sheep!
 let lostSheepCounter = 10;
 // when sheep is touched by the aussie avatar, -1 to lostSheepCounter
-const barkingText = document.querySelector('#barking');
+
+//playAudio function
+function playAudio(url) {
+    new Audio(url).play();
+}
+
+//define soundeffects
+const bark = new Audio('./soundeffects/bark.wav');
+const baa = new Audio('./soundeffects/baa.wav');
+const soundText = document.querySelector('#soundEffect');
 // press space to bark?
 const barkButton = document.querySelector('#bark');
 barkButton.addEventListener('click', (e) => {
     console.log('BARK!')
-    barkingText.innerText = 'BARK! BARK!'
+    soundText.innerText = 'BARK! BARK!'
+    playAudio('./soundeffects/dog-bark.wav')
 })
+const baaButton = document.querySelector('#baaing');
+baaButton.addEventListener('click', (e) => {
+    console.log('BAA!')
+    soundText.innerText = 'BAA!'
+    playAudio('./soundeffects/baa.wav')
+})
+
+
 
 // include background music!
