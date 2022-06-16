@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 body {
     width: 1000px;
     margin: 0 auto;
-    font-family: 'ABeeZee', sans-serif;
+    font-family: 'Press Start 2P', sans-serif;
     background-color: #A9DEF9;
 }
 
@@ -34,7 +34,7 @@ button {
     width: 140px;
     height: 40px;
     font-size: 24px;
-    font-family: 'ABeeZee', sans-serif;
+    font-family: 'Press Start 2P', sans-serif;
     border: 2px solid #FF99C8;
     border-radius: 25px;
     box-shadow: 0 5px #999;

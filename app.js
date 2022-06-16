@@ -1,5 +1,14 @@
 // premise of the game is you control a lil aussie dog that has to "collect" sheep
+// there are wolves (other obstacles) that you need to avoid? 
 // it's a time trial! P1 versus P2, fastest one wins!
+// on starting gameLoop, set page background audio to 
+
+function playAudio(url) {
+    // <embed src="/html/Kalimba.mp3" loop="true" autostart="true" width="2"
+    // height="0">
+}
+//define body 
+const body = document.querySelector('body');
 
 // define canvas object
 const canvasBackground = document.querySelector('canvas');
@@ -68,9 +77,9 @@ let lostSheepCounter = 10;
 // when sheep is touched by the aussie avatar, -1 to lostSheepCounter
 
 //playAudio function
-function playAudio(url) {
-    new Audio(url).play();
-}
+// function playAudio(url) {
+//     const audio = document.querySelector(`audio[data-url="${}"]`);
+// }
 
 //define soundeffects
 const bark = new Audio('./soundeffects/bark.wav');
