@@ -83,6 +83,7 @@ stopButton.addEventListener('click', (e) => {
 // RESET BUTTON
 const resetButton = document.querySelector('#reset');
 resetButton.addEventListener('click', (e) => {
+    //clear timer interval and current Time
     clearTimeout(timer);
     currentTime = 0;
     timerDisplay.innerText = currentTime;
@@ -92,6 +93,11 @@ resetButton.addEventListener('click', (e) => {
     startButton.style.pointerEvents = 'auto';
     // clear canvas!
     ctx.clearRect(0, 0, game.width, game.height)
+    //
+    // resets all status for sheep
+    // lostSheepArray.forEach((sheep) => {
+    //     sheep.lost = true;
+    // })
 })
 
 //define soundeffects
@@ -162,6 +168,7 @@ const gameLoop = () => {
     }
     ctx.clearRect(0, 0, game.width, game.height)
     // render players and sheep
+    // can try this using a forEach loop?
     if (!player.lost) {
         player.render();
     }
@@ -272,11 +279,14 @@ const leaderboard = [];
 function winGame () {
     //pauses timer
     clearInterval(timer);
-    // sets the time at win to player score
+    // pushes winning time to leaderboard
     leaderboard.push(currentTime);
     currentTime = 0;
     console.log(currentTime);
     console.log('you won!');
+    // set font settings for canvas
+    ctx.font = "80px Verdana";
+    ctx.fillText("YOU WON!", 290, 180);
     //reset player location to center
     player.lost = false;
     player.x = 490;
@@ -284,4 +294,6 @@ function winGame () {
     player.render();
     // display win text
     // change START BUTTON text to "Play Again?" and re-allow clicks
+    //resets sheep to LOST
+
 }
