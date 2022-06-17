@@ -60,8 +60,8 @@ body::selection {
     font-size: 36px;
 }
 
-#sheep {
-    background-color: navy;
-    width: 25px;
-    height: 25px;
+#pause-music {
+    font-size: 12px;
+    width: 100px;
+    height: 30px;
 }

@@ -32,13 +32,17 @@ const startButton = document.querySelector('#start');
 startButton.addEventListener('click', (e) => {
     // this defines the setInterval event
     timer = setInterval(countUp,1000);
-    startButton.innerText = 'RUNNING'
+    startButton.innerText = 'RUNNING';
+    if (isPlaying = true) {
+    backgroundMusic.play();
+    }
 })
 // STOP/PAUSE BUTTON
 const stopButton = document.querySelector('#stop');
 stopButton.addEventListener('click', (e) => {
-    clearTimeout(timer);
+    clearInterval(timer);
     startButton.innerText = 'RESTART'
+    backgroundMusic.pause();
 })
 // RESET BUTTON
 const resetButton = document.querySelector('#reset');
@@ -48,6 +52,7 @@ resetButton.addEventListener('click', (e) => {
     timerDisplay.innerText = currentTime;
     startButton.innerText = 'START'
     soundEffect.innerText = '';
+    backgroundMusic.pause();
 })
 
 //define soundeffects
@@ -56,23 +61,35 @@ const bark = new Audio('./soundeffects/bark.wav');
 const baa = new Audio('./soundeffects/baa.wav');
 const soundText = document.querySelector('#soundEffect');
 // press space to bark?
-const barkButton = document.querySelector('#bark');
-barkButton.addEventListener('click', (e) => {
-    console.log('BARK!')
-    soundText.innerText = 'BARK! BARK!'
-    playAudio('./soundeffects/dog-bark.wav')
-})
-const baaButton = document.querySelector('#baaing');
-baaButton.addEventListener('click', (e) => {
-    console.log('BAA!')
-    soundText.innerText = 'BAA!'
-    playAudio('./soundeffects/baa.wav')
-})
+// const barkButton = document.querySelector('#bark');
+// barkButton.addEventListener('click', (e) => {
+//     console.log('BARK!')
+//     soundText.innerText = 'BARK! BARK!'
+//     playAudio('./soundeffects/dog-bark.wav')
+// })
+// const baaButton = document.querySelector('#baaing');
+// baaButton.addEventListener('click', (e) => {
+//     console.log('BAA!')
+//     soundText.innerText = 'BAA!'
+//     playAudio('./soundeffects/baa.wav')
+// })
 
-//plays background music on load
-backgroundMusic.addEventListener("canplaythrough", event => {
-    backgroundMusic.play();
-});
+//logic for toggle background music function
+let isPlaying = false;
+function togglePlay() {
+    isPlaying ? backgroundMusic.pause() : backgroundMusic.play();
+}
+backgroundMusic.onplaying = function() {
+    isPlaying = true;
+}
+backgroundMusic.onpause = function() {
+    isPlaying = false;
+}
+// toggle background music onclick button functionality
+const toggleMusicButton = document.querySelector('#toggle-music');
+toggleMusicButton.addEventListener('click', (e) => {
+    togglePlay();
+})
 
 //define starting lost sheep
 let lostSheepCounter = 10;
