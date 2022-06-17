@@ -35,29 +35,22 @@ class Sheep {
 // CREATE PLAYER AND SHEEP
 let player = new Sheep (200, 200, 'brown', 20, 20, false)
 
-
 let sheep1 = new Sheep(10, 10, 'white', 16, 16, true);
 let sheep2 = new Sheep(50, 50, 'white', 16, 16, true);
 let sheep3 = new Sheep(100, 30, 'white', 16, 16, true);
 let sheep4 = new Sheep(30, 300, 'white', 16, 16, true);
-let sheep5 = new Sheep(500, 125, 'white', 16, 16, true);
-let sheep6 = new Sheep(125, 500, 'white', 16, 16, true);
+let sheep5 = new Sheep(70, 70, 'white', 16, 16, true);
+let sheep6 = new Sheep(125, 300, 'white', 16, 16, true);
 let sheep7 = new Sheep(400, 400, 'white', 16, 16, true);
 let sheep8 = new Sheep(350, 100, 'white', 16, 16, true);
 let sheep9 = new Sheep(100, 350, 'white', 16, 16, true);
-let sheep10 = new Sheep(500, 500, 'white', 16, 16, true);
+let sheep10 = new Sheep(300, 300, 'white', 16, 16, true);
 
 // should I make an array to hold these lost sheep?
 const lostSheepArray = [sheep1, sheep2, sheep3, sheep4, sheep5, sheep6, sheep7, sheep8, sheep9, sheep10]
 
-// and then when sheep1.lost = false, map that value to the foundSheepArray?
-// and when mapped, play Baa sound?
-//when foundSheepArray.length = 10, game win triggers!
-const foundSheepArray = lostSheepArray.map(returnSheep, Sheep)
-
-function returnSheep(sheep) {
-    return !sheep.lost
-}
+// define this now for win condition
+let foundSheepArray;
 
 // timer display and counting function
 let currentTime = 0;
@@ -77,7 +70,8 @@ startButton.addEventListener('click', (e) => {
     timer = setInterval(countUp,1000);
     startButton.innerText = 'RUNNING';
     if (isPlaying = true) {
-    backgroundMusic.play();
+    //DISABLING BACKGROUND MUSIC FOR TESTING
+    //backgroundMusic.play();
     }
     document.addEventListener('keydown', movementHandler)
     setInterval(gameLoop, 60)
@@ -196,9 +190,15 @@ const gameLoop = () => {
     }
     // set up sheep gone home notification and baa
     // temporary!!! this doesn't work on a loop
-    if (!sheep1.lost || !sheep2.lost|| !sheep3.lost || !sheep4.lost || !sheep5.lost){
-        --lostSheepCounter
-        baa.play();
+    //if (!sheep1.lost || !sheep2.lost|| !sheep3.lost || !sheep4.lost || !sheep5.lost || !sheep6.lost ||){
+    //     baa.play();
+    // }
+    foundSheepArray = lostSheepArray.map(sheep => {
+        return (!sheep.lost)
+    })
+    // if foundSheepArray has 10 true elements, then it's a win
+    if (foundSheepArray === [true, true, true, true, true, true, true, true, true, true]) {
+        console.log('you won!')
     }
 }
 
@@ -210,14 +210,12 @@ const detectHit = () => {
         && player.y + player.height > sheep1.y) {
             baa.play();
             sheep1.lost = false;
-            foundSheepArray.push(sheep1);
     } else if (player.x < sheep2.x + sheep2.width 
         && player.x + player.width > sheep2.x
         && player.y < sheep2.y + sheep2.height
         && player.y + player.height > sheep2.y) {
             baa.play();
             sheep2.lost = false;
-            foundSheepArray.push(sheep2);
     } else if (player.x < sheep3.x + sheep3.width 
         && player.x + player.width > sheep3.x
         && player.y < sheep3.y + sheep3.height
