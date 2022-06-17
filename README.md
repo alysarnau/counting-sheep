@@ -18,31 +18,17 @@ USER STORIES
 // background of image is going to be a bucolic pixel art background image
 // player controls their little corgi avatar using WASD keydown
 // stretch goal: animate sprites through movement frames
-// on spacebar keydown, 'bark' soundeffect will trigger. no purpose to it, just fun!
+// on spacebar keydown, 'bark' soundeffect will trigger. (no purpose to it, just fun!)
 // 10 sheep will be populated on the map (randomly????)
 // on collision of sheep and corgi, the sheep will BAAA (trigger baa sound effect), jump up and down(?), and then fade away in 5sec (to return home)
 // 10 wolves will also be populated on the map (randomly???) and will move randomly (not much)
 // stretch goal: be able to set difficulty by increasing movement speed and movement distance for wolves
-// on collision of wolf and corgi, 'snarl' sound effect will trigger and the player will be reset back to starting position on map (player position reset and background reset)
+// on collision of wolf and corgi, 'snarl' sound effect will trigger and the player's time will have 5 seconds added to it!
 // once all 10 sheep have been collected: win condition TRUE; 'YOU WON!' message shows up, (player sprite idle animation plays)
 // player score is added to leaderBoard (if within lowest 10 timer #s)
 // OnScreen will also be displayed two buttons: PLAY AGAIN and VIEW LEADERBOARD
 // PLAY AGAIN takes player to selection screen, same as start
-// VIEW LEADERBOARD takes player to leaderboard, which has lowest scores (>= 10 scores);
-
-
-
-
-
-
-WIREFRAMES
-// AT LEAST 6 WIREFRAMES
-// image that shows some aspect of your game, or some way the game should look
-// start screen
-// during the game
-// end screen
-// win
-// lose
+// VIEW LEADERBOARD takes player to leaderboard, which has lowest scores (total leaderboard scores >= 10 scores);
 
 TECHNOLOGIES USED:
 
