@@ -9,21 +9,7 @@ const ctx = game.getContext('2d');
 game.setAttribute('width', getComputedStyle(game)['width']);
 game.setAttribute('height', getComputedStyle(game)['height']);
 
-class Sheep {
-    constructor(color, width, height, lost) {
-        this.x = Math.floor(Math.random() * (game.width - 25)),
-        this.y = Math.floor(Math.random() * (game.height - 25)),
-        this.color = color,
-        this.width = width,
-        this.height = height,
-        this.lost = lost,
-        this.render = function() {
-            // this creates little rectangle sprites
-            ctx.fillStyle = this.color;
-            ctx.fillRect(this.x, this.y, this.width, this.height)
-        }
-    }
-}
+// define player
 let player = {
     x: 490,
     y: 240,
@@ -38,26 +24,38 @@ let player = {
     }
 }
 
+class Sheep {
+    constructor() {
+        this.x = Math.floor(Math.random() * (game.width - 25)),
+        this.y = Math.floor(Math.random() * (game.height - 25)),
+        this.color = 'white',
+        this.width = 15,
+        this.height = 15,
+        this.lost = true,
+        this.render = function() {
+            // this creates little rectangle sprites
+            ctx.fillStyle = this.color;
+            ctx.fillRect(this.x, this.y, this.width, this.height)
+        }
+    }
+}
 
-// CREATE PLAYER AND SHEEP
+// CREATE SHEEP
+let sheep1 = new Sheep();
+let sheep2 = new Sheep();
+let sheep3 = new Sheep();
+let sheep4 = new Sheep();
+let sheep5 = new Sheep();
+let sheep6 = new Sheep();
+let sheep7 = new Sheep();
+let sheep8 = new Sheep();
+let sheep9 = new Sheep();
+let sheep10 = new Sheep();
 
-let sheep1 = new Sheep('white', 16, 16, true);
-let sheep2 = new Sheep('white', 16, 16, true);
-let sheep3 = new Sheep('white', 16, 16, true);
-let sheep4 = new Sheep('white', 16, 16, true);
-let sheep5 = new Sheep('white', 16, 16, true);
-let sheep6 = new Sheep('white', 16, 16, true);
-let sheep7 = new Sheep('white', 16, 16, true);
-let sheep8 = new Sheep('white', 16, 16, true);
-let sheep9 = new Sheep('white', 16, 16, true);
-let sheep10 = new Sheep('white', 16, 16, true);
-
-// should I make an array to hold these lost sheep?
 const lostSheepArray = [sheep1, sheep2, sheep3, sheep4, sheep5, sheep6, sheep7, sheep8, sheep9, sheep10]
 
-// define this now for win condition
+// define for win condition
 let foundSheepArray;
-//let playerScore;
 
 // timer display and counting function
 let currentTime = 0;
@@ -179,7 +177,6 @@ function checkWin() {
     }
 }
 
-
 // DEFINE GAME LOOP
 const gameLoop = () => {
     if (sheep1.lost || sheep2.lost || sheep3.lost || sheep4.lost || sheep5.lost || sheep6.lost || sheep7.lost || sheep8.lost || sheep9.lost || sheep10.lost) {
@@ -295,12 +292,9 @@ const leaderboard = [];
 
 // ON WIN
 function winGame () {
-    //pauses timer
     clearInterval(timer);
-    // pushes winning time to leaderboard
     leaderboard.push(currentTime);
     currentTime = 0;
-    console.log(currentTime);
     console.log('you won!');
 
     //reset player location to center
@@ -308,9 +302,8 @@ function winGame () {
     player.x = 490;
     player.y = 240;    
     player.render();
-    // display win text
     // change START BUTTON text to "Play Again?" and re-allow clicks
-    //resets sheep to LOST
+    // need to reset sheep lost status to LOST
     // text not displaying
     announceWin();
 }
