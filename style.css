@@ -17,6 +17,7 @@ canvas {
     border: 5px solid #FCF6BD;
     border-radius: 25px;
     position: relative;
+    background-color: green;
 }
 
 h2 {

@@ -1,8 +1,3 @@
-// premise of the game is you control a sprite(dog) that has to "collect" other sprites (sheep)
-// there are wolves (other obstacles) that you need to avoid? 
-// it's a time trial! P1 versus P2, fastest one wins!
-// on starting gameLoop, set page background audio to 
-
 //define body 
 const body = document.querySelector('body');
 
@@ -15,11 +10,7 @@ game.setAttribute('width', getComputedStyle(game)['width']);
 game.setAttribute('height', getComputedStyle(game)['height']);
 
 class Sheep {
-    // classes can ALSO have (and usually do) a constructor function!
-    // this is how we tell our class exactly how we want to build our objects
-    // this also allows us to use the keyword 'this' in reference to whatever object has been made by the class
-    //any attributes that are variable go into the constructor function!
-    constructor(x, y, color, width, height) {
+    constructor(x, y, color, width, height, lost) {
         // this is how I define what my objects will be made of
         // because these will be in an object, need to separate by commas
         this.x = x,
@@ -29,7 +20,7 @@ class Sheep {
         this.height = height,
         // anything that is going to be the same for all instances of the objects we create, we can hard set the value here and leave that out of the constructor.
         // and these are all referring to the parameters we're setting up in the constructor function
-        this.lost = true,
+        this.lost = lost,
         // we can also add methods!
         // in our case, the method is going to be the render method
         this.render = function() {
@@ -42,17 +33,31 @@ class Sheep {
 }
 
 // CREATE PLAYER AND SHEEP
-let player = new Sheep (200, 200, 'brown', 20, 20)
-let sheep1 = new Sheep(10, 10, 'white', 16, 16);
-let sheep2 = new Sheep(50, 50, 'white', 16, 16);
-let sheep3 = new Sheep(100, 30, 'white', 16, 16);
-let sheep4 = new Sheep(30, 300, 'white', 16, 16);
-let sheep5 = new Sheep(500, 125, 'white', 16, 16);
-let sheep6 = new Sheep(125, 500, 'white', 16, 16);
-let sheep7 = new Sheep(400, 400, 'white', 16, 16);
-let sheep8 = new Sheep(350, 100, 'white', 16, 16);
-let sheep9 = new Sheep(100, 350, 'white', 16, 16);
-let sheep10 = new Sheep(500, 500, 'white', 16, 16);
+let player = new Sheep (200, 200, 'brown', 20, 20, false)
+
+
+let sheep1 = new Sheep(10, 10, 'white', 16, 16, true);
+let sheep2 = new Sheep(50, 50, 'white', 16, 16, true);
+let sheep3 = new Sheep(100, 30, 'white', 16, 16, true);
+let sheep4 = new Sheep(30, 300, 'white', 16, 16, true);
+let sheep5 = new Sheep(500, 125, 'white', 16, 16, true);
+let sheep6 = new Sheep(125, 500, 'white', 16, 16, true);
+let sheep7 = new Sheep(400, 400, 'white', 16, 16, true);
+let sheep8 = new Sheep(350, 100, 'white', 16, 16, true);
+let sheep9 = new Sheep(100, 350, 'white', 16, 16, true);
+let sheep10 = new Sheep(500, 500, 'white', 16, 16, true);
+
+// should I make an array to hold these lost sheep?
+const lostSheepArray = [sheep1, sheep2, sheep3, sheep4, sheep5, sheep6, sheep7, sheep8, sheep9, sheep10]
+
+// and then when sheep1.lost = false, map that value to the foundSheepArray?
+// and when mapped, play Baa sound?
+//when foundSheepArray.length = 10, game win triggers!
+const foundSheepArray = lostSheepArray.map(returnSheep, Sheep)
+
+function returnSheep(sheep) {
+    return !sheep.lost
+}
 
 // timer display and counting function
 let currentTime = 0;
@@ -126,14 +131,6 @@ toggleMusicButton.addEventListener('click', (e) => {
     e.target.blur();
 })
 
-//ON COLLISON DOG AND SHEEP, 
-    // -1 to lostSheepCounter
-    // sheep avatar is removed from canvas (slowly disappears?)
-    // baa sound effect plays
-
-    // define win condition!
-// lowest timer (aka points) wins!
-
 // WASD movement
 const movementHandler = (e) => {
     switch (e.keyCode) {
@@ -165,6 +162,7 @@ const gameLoop = () => {
         detectHit();
     }
     ctx.clearRect(0, 0, game.width, game.height)
+    // render players and sheep
     player.render()
     if (sheep1.lost) {
         sheep1.render();
@@ -196,12 +194,13 @@ const gameLoop = () => {
     if (sheep10.lost) {
         sheep10.render();
     }
+    // set up sheep gone home notification and baa
+    // temporary!!! this doesn't work on a loop
+    if (!sheep1.lost || !sheep2.lost|| !sheep3.lost || !sheep4.lost || !sheep5.lost){
+        --lostSheepCounter
+        baa.play();
+    }
 }
-
-//define starting lost sheep
-let lostSheepCounter = 10;
-//connect BAA and lostSheepCounter and notification of 'Sheep X has gone home" to object!
-
 
 // collision detection
 const detectHit = () => {
@@ -211,70 +210,62 @@ const detectHit = () => {
         && player.y + player.height > sheep1.y) {
             baa.play();
             sheep1.lost = false;
-            //document.getElementById('status').textContent = 'You win!'
+            foundSheepArray.push(sheep1);
     } else if (player.x < sheep2.x + sheep2.width 
         && player.x + player.width > sheep2.x
         && player.y < sheep2.y + sheep2.height
         && player.y + player.height > sheep2.y) {
             baa.play();
             sheep2.lost = false;
-            //document.getElementById('status').textContent = 'You win!'
+            foundSheepArray.push(sheep2);
     } else if (player.x < sheep3.x + sheep3.width 
         && player.x + player.width > sheep3.x
         && player.y < sheep3.y + sheep3.height
         && player.y + player.height > sheep3.y) {
             baa.play();
             sheep3.lost = false;
-            //document.getElementById('status').textContent = 'You win!'
     } else if (player.x < sheep4.x + sheep4.width 
         && player.x + player.width > sheep4.x
         && player.y < sheep4.y + sheep4.height
         && player.y + player.height > sheep4.y) {
             baa.play();
             sheep4.lost = false;
-            //document.getElementById('status').textContent = 'You win!'
     } else if (player.x < sheep5.x + sheep5.width 
         && player.x + player.width > sheep5.x
         && player.y < sheep5.y + sheep5.height
         && player.y + player.height > sheep5.y) {
             baa.play();
             sheep5.lost = false;
-            //document.getElementById('status').textContent = 'You win!'
     } else if (player.x < sheep6.x + sheep6.width 
         && player.x + player.width > sheep6.x
         && player.y < sheep6.y + sheep6.height
         && player.y + player.height > sheep6.y) {
             baa.play();
             sheep6.lost = false;
-            //document.getElementById('status').textContent = 'You win!'
     } else if (player.x < sheep7.x + sheep7.width 
         && player.x + player.width > sheep7.x
         && player.y < sheep7.y + sheep7.height
         && player.y + player.height > sheep7.y) {
             baa.play();
             sheep7.lost = false;
-            //document.getElementById('status').textContent = 'You win!'
     } else if (player.x < sheep8.x + sheep8.width 
         && player.x + player.width > sheep8.x
         && player.y < sheep8.y + sheep8.height
         && player.y + player.height > sheep8.y) {
             baa.play();
             sheep8.lost = false;
-            //document.getElementById('status').textContent = 'You win!'
     } else if (player.x < sheep9.x + sheep9.width 
         && player.x + player.width > sheep9.x
         && player.y < sheep9.y + sheep9.height
         && player.y + player.height > sheep9.y) {
             baa.play();
             sheep9.lost = false;
-            //document.getElementById('status').textContent = 'You win!'
     } else if (player.x < sheep10.x + sheep10.width 
         && player.x + player.width > sheep10.x
         && player.y < sheep10.y + sheep10.height
         && player.y + player.height > sheep10.y) {
             baa.play();
             sheep10.lost = false;
-            //document.getElementById('status').textContent = 'You win!'
     }
 }
 
