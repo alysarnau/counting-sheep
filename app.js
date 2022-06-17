@@ -1,4 +1,4 @@
-// premise of the game is you control a lil aussie dog that has to "collect" sheep
+// premise of the game is you control a sprite(dog) that has to "collect" other sprites (sheep)
 // there are wolves (other obstacles) that you need to avoid? 
 // it's a time trial! P1 versus P2, fastest one wins!
 // on starting gameLoop, set page background audio to 
@@ -13,48 +13,34 @@ const body = document.querySelector('body');
 // define canvas object
 const canvasBackground = document.querySelector('canvas');
 
-
-// need to define p1 object and p2 object
-const player1 = {
-    playername: '1',
-    points: 0,
-}
-
-// define win condition!
-// lowest timer (aka points) wins!
-
-const player2 = {
-    playername: '2',
-    points: 0,
-}
+// timer display and counting function
 let currentTime = 0;
 const timerDisplay = document.querySelector("#timer");
 timerDisplay.innerText = currentTime;
-// need to create a timer that counts up in seconds
-//define countUp funcion
+// timer countUp function
 const countUp = () => {
     ++currentTime;
     timerDisplay.innerText = currentTime;
     console.log(currentTime);
 }
+//TO DO: need to display that timer onscreen
 
 // define timer
 let timer;
-// const timer = setInterval(countUp,1000);
+// START BUTTON, START TIMER
 const startButton = document.querySelector('#start');
-console.log(startButton);
 startButton.addEventListener('click', (e) => {
+    // this defines the setInterval event
     timer = setInterval(countUp,1000);
     startButton.innerText = 'RUNNING'
 })
-
+// STOP/PAUSE BUTTON
 const stopButton = document.querySelector('#stop');
 stopButton.addEventListener('click', (e) => {
     clearTimeout(timer);
     startButton.innerText = 'RESTART'
 })
-
-
+// RESET BUTTON
 const resetButton = document.querySelector('#reset');
 resetButton.addEventListener('click', (e) => {
     clearTimeout(timer);
@@ -64,24 +50,8 @@ resetButton.addEventListener('click', (e) => {
     soundEffect.innerText = '';
 })
 
-// notes for how to get clouds! https://silveiraneto.net/2011/06/02/simple-html5-animation-clouds-over-background/
-
-// need to display that timer onscreen
-const sheep = document.createElement('div');
-sheep.setAttribute('id','sheep');
-canvasBackground.appendChild(sheep);
-
-// need to define lostSheepCounter
-// start with 10 lost sheep!
-let lostSheepCounter = 10;
-// when sheep is touched by the aussie avatar, -1 to lostSheepCounter
-
-//playAudio function
-// function playAudio(url) {
-//     const audio = document.querySelector(`audio[data-url="${}"]`);
-// }
-
 //define soundeffects
+const backgroundMusic = new Audio('./soundeffects/backgroundmusic.mp3')
 const bark = new Audio('./soundeffects/bark.wav');
 const baa = new Audio('./soundeffects/baa.wav');
 const soundText = document.querySelector('#soundEffect');
@@ -99,6 +69,36 @@ baaButton.addEventListener('click', (e) => {
     playAudio('./soundeffects/baa.wav')
 })
 
+//plays background music on load
+backgroundMusic.addEventListener("canplaythrough", event => {
+    backgroundMusic.play();
+});
+
+//define starting lost sheep
+let lostSheepCounter = 10;
 
 
-// include background music!
+// need to define player object
+const player = {
+    missingSheep: lostSheepCounter,
+    // on missingSheep = 0, set time to currentTime
+    time: undefined,
+}
+// render player object
+
+
+
+// define and render sheep
+// CREATE SHEEP
+
+//ON COLLISON DOG AND SHEEP, 
+    // -1 to lostSheepCounter
+    // sheep avatar is removed from canvas (slowly disappears?)
+    // baa sound effect plays
+
+    // define win condition!
+// lowest timer (aka points) wins!
+
+
+
+
