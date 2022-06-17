@@ -157,15 +157,22 @@ const movementHandler = (e) => {
         default:
     }
 }
-// DEFINE GAME LOOP
-const gameLoop = () => {
-    if (sheep1.lost || sheep2.lost || sheep3.lost || sheep4.lost || sheep5.lost || sheep6.lost || sheep7.lost || sheep8.lost || sheep9.lost || sheep10.lost) {
-        detectHit();
+
+// check win condition
+function checkWin() {
     if (!sheep1.lost && !sheep2.lost && !sheep3.lost && !sheep4.lost && !sheep5.lost && !sheep6.lost && !sheep7.lost && !sheep8.lost && !sheep9.lost && !sheep10.lost) {
         // GAME WON
         player.lost = true;
         winGame();
     }
+}
+
+
+// DEFINE GAME LOOP
+const gameLoop = () => {
+    if (sheep1.lost || sheep2.lost || sheep3.lost || sheep4.lost || sheep5.lost || sheep6.lost || sheep7.lost || sheep8.lost || sheep9.lost || sheep10.lost) {
+        detectHit();
+    checkWin();
     ctx.clearRect(0, 0, game.width, game.height)
     // render players and sheep
     if (!player.lost) {
@@ -283,9 +290,7 @@ function winGame () {
     currentTime = 0;
     console.log(currentTime);
     console.log('you won!');
-    // set font settings for canvas
-    ctx.font = "80px Verdana";
-    ctx.fillText("YOU WON!", 290, 180);
+
     //reset player location to center
     player.lost = false;
     player.x = 490;
@@ -294,5 +299,12 @@ function winGame () {
     // display win text
     // change START BUTTON text to "Play Again?" and re-allow clicks
     //resets sheep to LOST
+    // text not displaying
+    announceWin();
+}
 
+function announceWin() {
+        // set font settings for canvas
+        ctx.font = "80px Verdana";
+        ctx.fillText("YOU WON!", 290, 180);
 }
