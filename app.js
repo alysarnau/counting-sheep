@@ -59,6 +59,8 @@ const countUp = () => {
 
 // define timer
 let timer;
+//define gamestate
+let gameEnd = false;
 // START BUTTON, START TIMER
 const startButton = document.querySelector('#start');
 startButton.addEventListener('click', (e) => {
@@ -68,8 +70,8 @@ startButton.addEventListener('click', (e) => {
     //DISABLING BACKGROUND MUSIC FOR TESTING
     //backgroundMusic.play();
     }
-    document.addEventListener('keydown', movementHandler)
-    setInterval(gameLoop, 60)
+    document.addEventListener('keydown', movementHandler);
+    setInterval(gameLoop, 60);
     startButton.style.pointerEvents = 'none';
 })
 // STOP/PAUSE BUTTON
@@ -84,7 +86,7 @@ stopButton.addEventListener('click', (e) => {
 const resetButton = document.querySelector('#reset');
 resetButton.addEventListener('click', (e) => {
     //clear timer interval and current Time
-    clearTimeout(timer);
+    clearInterval(timer);
     currentTime = 0;
     timerDisplay.innerText = currentTime;
     startButton.innerText = 'START'
@@ -93,11 +95,7 @@ resetButton.addEventListener('click', (e) => {
     startButton.style.pointerEvents = 'auto';
     // clear canvas!
     ctx.clearRect(0, 0, game.width, game.height)
-    //
-    // resets all status for sheep
-    // lostSheepArray.forEach((sheep) => {
-    //     sheep.lost = true;
-    // })
+    resetGame();
 })
 
 //define soundeffects
@@ -168,45 +166,22 @@ const gameLoop = () => {
     }
     ctx.clearRect(0, 0, game.width, game.height)
     // render players and sheep
-    // can try this using a forEach loop?
     if (!player.lost) {
         player.render();
     }
-    if (sheep1.lost) {
-        sheep1.render();
-    } 
-    if (sheep2.lost) {
-        sheep2.render();
-    }
-    if (sheep3.lost) {
-        sheep3.render();
-    }
-    if (sheep4.lost) {
-        sheep4.render();
-    }
-    if (sheep5.lost) {
-        sheep5.render();
-    }
-    if (sheep6.lost) {
-        sheep6.render();
-    }
-    if (sheep7.lost) {
-        sheep7.render();
-    }
-    if (sheep8.lost) {
-        sheep8.render();
-    }
-    if (sheep9.lost) {
-        sheep9.render();
-    }
-    if (sheep10.lost) {
-        sheep10.render();
-    }
+    // can try this using a forEach loop?
+    // resets all status for sheep
+    lostSheepArray.forEach((sheep) => {
+        if (sheep.lost = true) {
+            sheep.render();
+        }
+    })
     foundSheepArray = lostSheepArray.map(sheep => {
         return (!sheep.lost)
     })
-    }
 }
+}
+
 
 // collision detection
 const detectHit = () => {
@@ -275,15 +250,23 @@ const detectHit = () => {
 
 const leaderboard = [];
 
+//reset function
+function resetGame() {
+    // reset sheep lost status
+    lostSheepArray.forEach((sheep) => {
+        sheep.lost = true;
+    })
+}
+
+
 // ON WIN
 function winGame () {
+    gameEnd = true
     //pauses timer
     clearInterval(timer);
     // pushes winning time to leaderboard
     leaderboard.push(currentTime);
     currentTime = 0;
-    console.log(currentTime);
-    console.log('you won!');
     // set font settings for canvas
     ctx.font = "80px Verdana";
     ctx.fillText("YOU WON!", 290, 180);
@@ -295,5 +278,4 @@ function winGame () {
     // display win text
     // change START BUTTON text to "Play Again?" and re-allow clicks
     //resets sheep to LOST
-
 }
