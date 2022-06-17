@@ -11,21 +11,14 @@ game.setAttribute('height', getComputedStyle(game)['height']);
 
 class Sheep {
     constructor(x, y, color, width, height, lost) {
-        // this is how I define what my objects will be made of
-        // because these will be in an object, need to separate by commas
         this.x = x,
         this.y = y,
         this.color = color,
         this.width = width,
         this.height = height,
-        // anything that is going to be the same for all instances of the objects we create, we can hard set the value here and leave that out of the constructor.
-        // and these are all referring to the parameters we're setting up in the constructor function
         this.lost = lost,
-        // we can also add methods!
-        // in our case, the method is going to be the render method
         this.render = function() {
-            // here is where we start interacting with the canvas!
-            // we set the fillStyle and the fillRect
+            // this creates little rectangle sprites
             ctx.fillStyle = this.color;
             ctx.fillRect(this.x, this.y, this.width, this.height)
         }
@@ -33,7 +26,7 @@ class Sheep {
 }
 
 // CREATE PLAYER AND SHEEP
-let player = new Sheep (200, 200, 'brown', 20, 20, false)
+let player = new Sheep (490, 240, 'brown', 20, 20, false)
 
 let sheep1 = new Sheep(10, 10, 'white', 16, 16, true);
 let sheep2 = new Sheep(50, 50, 'white', 16, 16, true);
@@ -130,19 +123,23 @@ const movementHandler = (e) => {
     switch (e.keyCode) {
         case 87: case 38:
             // moves player up
-            player.y -= 10;
+            if (player.y > 0) {
+            player.y -= 10;}
             break;
         case 83: case 40:
             // moves player down
+            if ((player.y + player.height) < game.height)
             player.y += 10;
             break;
         case 65: case 37:
             // moves player left
-            player.x -= 10;
+            if (player.x > 0)
+            {player.x -= 10;}
             break;
         case 68: case 39:
             // moves player right
-            player.x += 10;
+            if ((player.x + player.width) < game.width)
+            {player.x += 10;}
             break;
         case 32:
             // bark sound!
