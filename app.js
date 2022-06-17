@@ -214,6 +214,7 @@ const detectHit = () => {
         && player.y < sheep1.y + sheep1.height
         && player.y + player.height > sheep1.y) {
             console.log(`Sheep 1 has gone home!`);
+            baa.play();
             sheep1.lost = false;
             //document.getElementById('status').textContent = 'You win!'
     } else if (player.x < sheep2.x + sheep2.width 
@@ -221,6 +222,7 @@ const detectHit = () => {
         && player.y < sheep2.y + sheep2.height
         && player.y + player.height > sheep2.y) {
             console.log(`Sheep 2 has gone home!`);
+            baa.play();
             sheep2.lost = false;
             //document.getElementById('status').textContent = 'You win!'
     } else if (player.x < sheep3.x + sheep3.width 
@@ -228,6 +230,7 @@ const detectHit = () => {
         && player.y < sheep3.y + sheep3.height
         && player.y + player.height > sheep3.y) {
             console.log(`Sheep 3 has gone home!`);
+            baa.play();
             sheep3.lost = false;
             //document.getElementById('status').textContent = 'You win!'
     } else if (player.x < sheep4.x + sheep4.width 
@@ -235,6 +238,7 @@ const detectHit = () => {
         && player.y < sheep4.y + sheep4.height
         && player.y + player.height > sheep4.y) {
             console.log(`Sheep 4 has gone home!`);
+            baa.play();
             sheep4.lost = false;
             //document.getElementById('status').textContent = 'You win!'
     } else if (player.x < sheep5.x + sheep5.width 
@@ -242,6 +246,7 @@ const detectHit = () => {
         && player.y < sheep5.y + sheep5.height
         && player.y + player.height > sheep5.y) {
             console.log(`Sheep 5 has gone home!`);
+            baa.play();
             sheep5.lost = false;
             //document.getElementById('status').textContent = 'You win!'
     } else if (player.x < sheep6.x + sheep6.width 
@@ -249,6 +254,7 @@ const detectHit = () => {
         && player.y < sheep6.y + sheep6.height
         && player.y + player.height > sheep6.y) {
             console.log(`Sheep 6 has gone home!`);
+            baa.play();
             sheep6.lost = false;
             //document.getElementById('status').textContent = 'You win!'
     } else if (player.x < sheep7.x + sheep7.width 
@@ -256,6 +262,7 @@ const detectHit = () => {
         && player.y < sheep7.y + sheep7.height
         && player.y + player.height > sheep7.y) {
             console.log(`Sheep 7 has gone home!`);
+            baa.play();
             sheep7.lost = false;
             //document.getElementById('status').textContent = 'You win!'
     } else if (player.x < sheep8.x + sheep8.width 
@@ -263,6 +270,7 @@ const detectHit = () => {
         && player.y < sheep8.y + sheep8.height
         && player.y + player.height > sheep8.y) {
             console.log(`Sheep 8 has gone home!`);
+            baa.play();
             sheep8.lost = false;
             //document.getElementById('status').textContent = 'You win!'
     } else if (player.x < sheep9.x + sheep9.width 
@@ -270,6 +278,7 @@ const detectHit = () => {
         && player.y < sheep9.y + sheep9.height
         && player.y + player.height > sheep9.y) {
             console.log(`Sheep 9 has gone home!`);
+            baa.play();
             sheep9.lost = false;
             //document.getElementById('status').textContent = 'You win!'
     } else if (player.x < sheep10.x + sheep10.width 
@@ -277,6 +286,7 @@ const detectHit = () => {
         && player.y < sheep10.y + sheep10.height
         && player.y + player.height > sheep10.y) {
             console.log(`Sheep 10 has gone home!`);
+            baa.play();
             sheep10.lost = false;
             //document.getElementById('status').textContent = 'You win!'
     }
