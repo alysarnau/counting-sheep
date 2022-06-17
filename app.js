@@ -3,15 +3,49 @@
 // it's a time trial! P1 versus P2, fastest one wins!
 // on starting gameLoop, set page background audio to 
 
-function playAudio(url) {
-    // <embed src="/html/Kalimba.mp3" loop="true" autostart="true" width="2"
-    // height="0">
-}
 //define body 
 const body = document.querySelector('body');
 
 // define canvas object
-const canvasBackground = document.querySelector('canvas');
+const game = document.querySelector('#game-canvas');
+const ctx = game.getContext('2d');
+
+// set width and height!
+game.setAttribute('width', getComputedStyle(game)['width']);
+game.setAttribute('height', getComputedStyle(game)['height']);
+
+//define starting lost sheep
+let lostSheepCounter = 10;
+
+class Sheep {
+    // classes can ALSO have (and usually do) a constructor function!
+    // this is how we tell our class exactly how we want to build our objects
+    // this also allows us to use the keyword 'this' in reference to whatever object has been made by the class
+    //any attributes that are variable go into the constructor function!
+    constructor(x, y, color, width, height) {
+        // this is how I define what my objects will be made of
+        // because these will be in an object, need to separate by commas
+        this.x = x,
+        this.y = y,
+        this.color = color,
+        this.width = width,
+        this.height = height,
+        // anything that is going to be the same for all instances of the objects we create, we can hard set the value here and leave that out of the constructor.
+        // and these are all referring to the parameters we're setting up in the constructor function
+        this.lost = true,
+        // we can also add methods!
+        // in our case, the method is going to be the render method
+        this.render = function() {
+            // here is where we start interacting with the canvas!
+            // we set the fillStyle and the fillRect
+            ctx.fillStyle = this.color;
+            ctx.fillRect(this.x, this.y, this.width, this.height)
+        }
+    }
+}
+let player = new Sheep (200, 200, 'brown', 20, 20)
+let sheep1 = new Sheep(10, 10, 'white', 16, 16);
+let sheep2 = new Sheep(50, 50, 'white', 16, 16);
 
 // timer display and counting function
 let currentTime = 0;
@@ -91,16 +125,11 @@ toggleMusicButton.addEventListener('click', (e) => {
     togglePlay();
 })
 
-//define starting lost sheep
-let lostSheepCounter = 10;
+
 
 
 // need to define player object
-const player = {
-    missingSheep: lostSheepCounter,
-    // on missingSheep = 0, set time to currentTime
-    time: undefined,
-}
+
 // render player object
 
 
@@ -117,5 +146,14 @@ const player = {
 // lowest timer (aka points) wins!
 
 
-
+const gameLoop = () => {
+    if (sheep1.lost || sheep2.lost) {
+        detectHit();
+    }
+    ctx.clearRect(0, 0, game.width, game.height)
+    player.render()
+    if (sheep1.lost) {
+        sheep1.render();
+    }
+}
 

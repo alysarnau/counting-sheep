@@ -12,7 +12,6 @@ body {
 }
 
 canvas {
-    background-color: #FF99C8;
     height:500px;
     width: 1000px;
     border: 5px solid #FCF6BD;
@@ -31,7 +30,7 @@ h3 {
 
 button {
     background-color: #FCF6BD;
-    width: 140px;
+    width: 240px;
     height: 40px;
     font-size: 24px;
     font-family: 'Press Start 2P', sans-serif;
@@ -60,8 +59,11 @@ body::selection {
     font-size: 36px;
 }
 
-#pause-music {
+#toggle-music {
     font-size: 12px;
     width: 100px;
     height: 30px;
+    position: absolute;
+    top: 20px;
+    right: 100px;
 }
