@@ -10,9 +10,9 @@ game.setAttribute('width', getComputedStyle(game)['width']);
 game.setAttribute('height', getComputedStyle(game)['height']);
 
 class Sheep {
-    constructor(x, y, color, width, height, lost) {
-        this.x = x,
-        this.y = y,
+    constructor(color, width, height, lost) {
+        this.x = Math.floor(Math.random() * (game.width - 25)),
+        this.y = Math.floor(Math.random() * (game.height - 25)),
         this.color = color,
         this.width = width,
         this.height = height,
@@ -24,21 +24,33 @@ class Sheep {
         }
     }
 }
+let player = {
+    x: 490,
+    y: 240,
+    color: 'brown',
+    width: 20,
+    height: 20,
+    lost: false,
+    render: function() {
+        // this creates little rectangle sprites
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.x, this.y, this.width, this.height)
+    }
+}
 
 
 // CREATE PLAYER AND SHEEP
-let player = new Sheep (490, 240, 'brown', 20, 20, false)
 
-let sheep1 = new Sheep(10, 10, 'white', 16, 16, true);
-let sheep2 = new Sheep(50, 50, 'white', 16, 16, true);
-let sheep3 = new Sheep(100, 30, 'white', 16, 16, true);
-let sheep4 = new Sheep(30, 300, 'white', 16, 16, true);
-let sheep5 = new Sheep(70, 70, 'white', 16, 16, true);
-let sheep6 = new Sheep(125, 300, 'white', 16, 16, true);
-let sheep7 = new Sheep(400, 400, 'white', 16, 16, true);
-let sheep8 = new Sheep(350, 100, 'white', 16, 16, true);
-let sheep9 = new Sheep(100, 350, 'white', 16, 16, true);
-let sheep10 = new Sheep(300, 300, 'white', 16, 16, true);
+let sheep1 = new Sheep('white', 16, 16, true);
+let sheep2 = new Sheep('white', 16, 16, true);
+let sheep3 = new Sheep('white', 16, 16, true);
+let sheep4 = new Sheep('white', 16, 16, true);
+let sheep5 = new Sheep('white', 16, 16, true);
+let sheep6 = new Sheep('white', 16, 16, true);
+let sheep7 = new Sheep('white', 16, 16, true);
+let sheep8 = new Sheep('white', 16, 16, true);
+let sheep9 = new Sheep('white', 16, 16, true);
+let sheep10 = new Sheep('white', 16, 16, true);
 
 // should I make an array to hold these lost sheep?
 const lostSheepArray = [sheep1, sheep2, sheep3, sheep4, sheep5, sheep6, sheep7, sheep8, sheep9, sheep10]
