@@ -43,9 +43,19 @@ class Sheep {
         }
     }
 }
+
+// CREATE PLAYER AND SHEEP
 let player = new Sheep (200, 200, 'brown', 20, 20)
 let sheep1 = new Sheep(10, 10, 'white', 16, 16);
 let sheep2 = new Sheep(50, 50, 'white', 16, 16);
+let sheep3 = new Sheep(100, 30, 'white', 16, 16);
+let sheep4 = new Sheep(30, 300, 'white', 16, 16);
+let sheep5 = new Sheep(500, 125, 'white', 16, 16);
+let sheep6 = new Sheep(125, 500, 'white', 16, 16);
+let sheep7 = new Sheep(400, 400, 'white', 16, 16);
+let sheep8 = new Sheep(350, 100, 'white', 16, 16);
+let sheep9 = new Sheep(100, 350, 'white', 16, 16);
+let sheep10 = new Sheep(500, 500, 'white', 16, 16);
 
 // timer display and counting function
 let currentTime = 0;
@@ -57,19 +67,19 @@ const countUp = () => {
     timerDisplay.innerText = currentTime;
     console.log(currentTime);
 }
-//TO DO: need to display that timer onscreen
 
 // define timer
 let timer;
 // START BUTTON, START TIMER
 const startButton = document.querySelector('#start');
 startButton.addEventListener('click', (e) => {
-    // this defines the setInterval event
     timer = setInterval(countUp,1000);
     startButton.innerText = 'RUNNING';
     if (isPlaying = true) {
     backgroundMusic.play();
     }
+    document.addEventListener('keydown', movementHandler)
+    setInterval(gameLoop, 60)
 })
 // STOP/PAUSE BUTTON
 const stopButton = document.querySelector('#stop');
@@ -87,6 +97,7 @@ resetButton.addEventListener('click', (e) => {
     startButton.innerText = 'START'
     soundEffect.innerText = '';
     backgroundMusic.pause();
+    // clear canvas!
 })
 
 //define soundeffects
@@ -124,18 +135,8 @@ const toggleMusicButton = document.querySelector('#toggle-music');
 toggleMusicButton.addEventListener('click', (e) => {
     togglePlay();
 })
-
-
-
-
 // need to define player object
 
-// render player object
-
-
-
-// define and render sheep
-// CREATE SHEEP
 
 //ON COLLISON DOG AND SHEEP, 
     // -1 to lostSheepCounter
@@ -145,15 +146,46 @@ toggleMusicButton.addEventListener('click', (e) => {
     // define win condition!
 // lowest timer (aka points) wins!
 
-
+// DEFINE GAME LOOP
 const gameLoop = () => {
-    if (sheep1.lost || sheep2.lost) {
-        detectHit();
+    if (sheep1.lost || sheep2.lost || sheep3.lost || sheep4.lost || sheep5.lost || sheep6.lost || sheep7.lost || sheep8.lost || sheep9.lost || sheep10.lost) {
+       // detectHit();
     }
     ctx.clearRect(0, 0, game.width, game.height)
     player.render()
     if (sheep1.lost) {
         sheep1.render();
+        sheep2.render();
+        sheep3.render();
+        sheep4.render();
+        sheep5.render();
+        sheep6.render();
+        sheep7.render();
+        sheep8.render();
+        sheep9.render();
+        sheep10.render();
     }
 }
 
+// WASD movement
+const movementHandler = (e) => {
+    switch (e.keyCode) {
+        case 87: case 38:
+            // moves player up
+            player.y -= 10;
+            break;
+        case 83: case 40:
+            // moves player down
+            player.y += 10;
+            break;
+        case 65: case 37:
+            // moves player left
+            player.x -= 10;
+            break;
+        case 68: case 39:
+            // moves player right
+            player.x += 10;
+            break;
+        default:
+    }
+}
