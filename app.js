@@ -68,6 +68,7 @@ startButton.addEventListener('click', (e) => {
     }
     document.addEventListener('keydown', movementHandler)
     setInterval(gameLoop, 60)
+    startButton.style.pointerEvents = 'none';
 })
 // STOP/PAUSE BUTTON
 const stopButton = document.querySelector('#stop');
@@ -75,6 +76,7 @@ stopButton.addEventListener('click', (e) => {
     clearInterval(timer);
     startButton.innerText = 'RESTART'
     backgroundMusic.pause();
+    startButton.style.pointerEvents = 'auto';
 })
 // RESET BUTTON
 const resetButton = document.querySelector('#reset');
@@ -85,19 +87,18 @@ resetButton.addEventListener('click', (e) => {
     startButton.innerText = 'START'
     soundEffect.innerText = '';
     backgroundMusic.pause();
+    startButton.style.pointerEvents = 'auto';
     // clear canvas!
 })
 
 //define soundeffects
 const backgroundMusic = new Audio('./soundeffects/backgroundmusic.mp3')
-const bark = new Audio('./soundeffects/bark.wav');
+const bark = new Audio('./soundeffects/dog-bark.wav');
 const baa = new Audio('./soundeffects/baa.wav');
 // stops sound effects from looping
 bark.loop = false;
 baa.loop = false;
 const soundText = document.querySelector('#soundEffect');
-// press space to bark?
-
 
 //logic for toggle background music function
 let isPlaying = false;
