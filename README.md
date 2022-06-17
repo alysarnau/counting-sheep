@@ -1,3 +1,5 @@
+https://miro.com/app/board/uXjVOsJ2PzQ=/?share_link_id=703401216833 <- whiteboard!
+
 USER STORIES
 // user is presented with two options on page load: START and LEADERBOARD
 // on 'START', selection screen begins
