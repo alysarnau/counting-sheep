@@ -14,9 +14,6 @@ const ctx = game.getContext('2d');
 game.setAttribute('width', getComputedStyle(game)['width']);
 game.setAttribute('height', getComputedStyle(game)['height']);
 
-//define starting lost sheep
-let lostSheepCounter = 10;
-
 class Sheep {
     // classes can ALSO have (and usually do) a constructor function!
     // this is how we tell our class exactly how we want to build our objects
@@ -65,7 +62,6 @@ timerDisplay.innerText = currentTime;
 const countUp = () => {
     ++currentTime;
     timerDisplay.innerText = currentTime;
-    console.log(currentTime);
 }
 
 // define timer
@@ -104,20 +100,12 @@ resetButton.addEventListener('click', (e) => {
 const backgroundMusic = new Audio('./soundeffects/backgroundmusic.mp3')
 const bark = new Audio('./soundeffects/bark.wav');
 const baa = new Audio('./soundeffects/baa.wav');
+// stops sound effects from looping
+bark.loop = false;
+baa.loop = false;
 const soundText = document.querySelector('#soundEffect');
 // press space to bark?
-// const barkButton = document.querySelector('#bark');
-// barkButton.addEventListener('click', (e) => {
-//     console.log('BARK!')
-//     soundText.innerText = 'BARK! BARK!'
-//     playAudio('./soundeffects/dog-bark.wav')
-// })
-// const baaButton = document.querySelector('#baaing');
-// baaButton.addEventListener('click', (e) => {
-//     console.log('BAA!')
-//     soundText.innerText = 'BAA!'
-//     playAudio('./soundeffects/baa.wav')
-// })
+
 
 //logic for toggle background music function
 let isPlaying = false;
@@ -134,9 +122,9 @@ backgroundMusic.onpause = function() {
 const toggleMusicButton = document.querySelector('#toggle-music');
 toggleMusicButton.addEventListener('click', (e) => {
     togglePlay();
+    //unfocus after click
+    e.target.blur();
 })
-// need to define player object
-
 
 //ON COLLISON DOG AND SHEEP, 
     // -1 to lostSheepCounter
@@ -146,6 +134,31 @@ toggleMusicButton.addEventListener('click', (e) => {
     // define win condition!
 // lowest timer (aka points) wins!
 
+// WASD movement
+const movementHandler = (e) => {
+    switch (e.keyCode) {
+        case 87: case 38:
+            // moves player up
+            player.y -= 10;
+            break;
+        case 83: case 40:
+            // moves player down
+            player.y += 10;
+            break;
+        case 65: case 37:
+            // moves player left
+            player.x -= 10;
+            break;
+        case 68: case 39:
+            // moves player right
+            player.x += 10;
+            break;
+        case 32:
+            // bark sound!
+            bark.play();
+        default:
+    }
+}
 // DEFINE GAME LOOP
 const gameLoop = () => {
     if (sheep1.lost || sheep2.lost || sheep3.lost || sheep4.lost || sheep5.lost || sheep6.lost || sheep7.lost || sheep8.lost || sheep9.lost || sheep10.lost) {
@@ -185,35 +198,17 @@ const gameLoop = () => {
     }
 }
 
-// WASD movement
-const movementHandler = (e) => {
-    switch (e.keyCode) {
-        case 87: case 38:
-            // moves player up
-            player.y -= 10;
-            break;
-        case 83: case 40:
-            // moves player down
-            player.y += 10;
-            break;
-        case 65: case 37:
-            // moves player left
-            player.x -= 10;
-            break;
-        case 68: case 39:
-            // moves player right
-            player.x += 10;
-            break;
-        default:
-    }
-}
+//define starting lost sheep
+let lostSheepCounter = 10;
+//connect BAA and lostSheepCounter and notification of 'Sheep X has gone home" to object!
+
+
 // collision detection
 const detectHit = () => {
     if (player.x < sheep1.x + sheep1.width 
         && player.x + player.width > sheep1.x
         && player.y < sheep1.y + sheep1.height
         && player.y + player.height > sheep1.y) {
-            console.log(`Sheep 1 has gone home!`);
             baa.play();
             sheep1.lost = false;
             //document.getElementById('status').textContent = 'You win!'
@@ -221,7 +216,6 @@ const detectHit = () => {
         && player.x + player.width > sheep2.x
         && player.y < sheep2.y + sheep2.height
         && player.y + player.height > sheep2.y) {
-            console.log(`Sheep 2 has gone home!`);
             baa.play();
             sheep2.lost = false;
             //document.getElementById('status').textContent = 'You win!'
@@ -229,7 +223,6 @@ const detectHit = () => {
         && player.x + player.width > sheep3.x
         && player.y < sheep3.y + sheep3.height
         && player.y + player.height > sheep3.y) {
-            console.log(`Sheep 3 has gone home!`);
             baa.play();
             sheep3.lost = false;
             //document.getElementById('status').textContent = 'You win!'
@@ -237,7 +230,6 @@ const detectHit = () => {
         && player.x + player.width > sheep4.x
         && player.y < sheep4.y + sheep4.height
         && player.y + player.height > sheep4.y) {
-            console.log(`Sheep 4 has gone home!`);
             baa.play();
             sheep4.lost = false;
             //document.getElementById('status').textContent = 'You win!'
@@ -245,7 +237,6 @@ const detectHit = () => {
         && player.x + player.width > sheep5.x
         && player.y < sheep5.y + sheep5.height
         && player.y + player.height > sheep5.y) {
-            console.log(`Sheep 5 has gone home!`);
             baa.play();
             sheep5.lost = false;
             //document.getElementById('status').textContent = 'You win!'
@@ -253,7 +244,6 @@ const detectHit = () => {
         && player.x + player.width > sheep6.x
         && player.y < sheep6.y + sheep6.height
         && player.y + player.height > sheep6.y) {
-            console.log(`Sheep 6 has gone home!`);
             baa.play();
             sheep6.lost = false;
             //document.getElementById('status').textContent = 'You win!'
@@ -261,7 +251,6 @@ const detectHit = () => {
         && player.x + player.width > sheep7.x
         && player.y < sheep7.y + sheep7.height
         && player.y + player.height > sheep7.y) {
-            console.log(`Sheep 7 has gone home!`);
             baa.play();
             sheep7.lost = false;
             //document.getElementById('status').textContent = 'You win!'
@@ -269,7 +258,6 @@ const detectHit = () => {
         && player.x + player.width > sheep8.x
         && player.y < sheep8.y + sheep8.height
         && player.y + player.height > sheep8.y) {
-            console.log(`Sheep 8 has gone home!`);
             baa.play();
             sheep8.lost = false;
             //document.getElementById('status').textContent = 'You win!'
@@ -277,7 +265,6 @@ const detectHit = () => {
         && player.x + player.width > sheep9.x
         && player.y < sheep9.y + sheep9.height
         && player.y + player.height > sheep9.y) {
-            console.log(`Sheep 9 has gone home!`);
             baa.play();
             sheep9.lost = false;
             //document.getElementById('status').textContent = 'You win!'
@@ -285,9 +272,9 @@ const detectHit = () => {
         && player.x + player.width > sheep10.x
         && player.y < sheep10.y + sheep10.height
         && player.y + player.height > sheep10.y) {
-            console.log(`Sheep 10 has gone home!`);
             baa.play();
             sheep10.lost = false;
             //document.getElementById('status').textContent = 'You win!'
     }
 }
+
