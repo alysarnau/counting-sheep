@@ -68,7 +68,3 @@ body::selection {
     top: 20px;
     right: 100px;
 }
-
-.null-event {
-    pointer-events: none;
-}

@@ -25,6 +25,7 @@ class Sheep {
     }
 }
 
+
 // CREATE PLAYER AND SHEEP
 let player = new Sheep (490, 240, 'brown', 20, 20, false)
 
@@ -44,6 +45,7 @@ const lostSheepArray = [sheep1, sheep2, sheep3, sheep4, sheep5, sheep6, sheep7, 
 
 // define this now for win condition
 let foundSheepArray;
+//let playerScore;
 
 // timer display and counting function
 let currentTime = 0;
@@ -89,6 +91,7 @@ resetButton.addEventListener('click', (e) => {
     backgroundMusic.pause();
     startButton.style.pointerEvents = 'auto';
     // clear canvas!
+    ctx.clearRect(0, 0, game.width, game.height)
 })
 
 //define soundeffects
@@ -152,10 +155,16 @@ const movementHandler = (e) => {
 const gameLoop = () => {
     if (sheep1.lost || sheep2.lost || sheep3.lost || sheep4.lost || sheep5.lost || sheep6.lost || sheep7.lost || sheep8.lost || sheep9.lost || sheep10.lost) {
         detectHit();
+    if (!sheep1.lost && !sheep2.lost && !sheep3.lost && !sheep4.lost && !sheep5.lost && !sheep6.lost && !sheep7.lost && !sheep8.lost && !sheep9.lost && !sheep10.lost) {
+        // GAME WON
+        player.lost = true;
+        winGame();
     }
     ctx.clearRect(0, 0, game.width, game.height)
     // render players and sheep
-    player.render()
+    if (!player.lost) {
+        player.render();
+    }
     if (sheep1.lost) {
         sheep1.render();
     } 
@@ -186,17 +195,9 @@ const gameLoop = () => {
     if (sheep10.lost) {
         sheep10.render();
     }
-    // set up sheep gone home notification and baa
-    // temporary!!! this doesn't work on a loop
-    //if (!sheep1.lost || !sheep2.lost|| !sheep3.lost || !sheep4.lost || !sheep5.lost || !sheep6.lost ||){
-    //     baa.play();
-    // }
     foundSheepArray = lostSheepArray.map(sheep => {
         return (!sheep.lost)
     })
-    // if foundSheepArray has 10 true elements, then it's a win
-    if (foundSheepArray === [true, true, true, true, true, true, true, true, true, true]) {
-        console.log('you won!')
     }
 }
 
@@ -265,3 +266,22 @@ const detectHit = () => {
     }
 }
 
+const leaderboard = [];
+
+// ON WIN
+function winGame () {
+    //pauses timer
+    clearInterval(timer);
+    // sets the time at win to player score
+    leaderboard.push(currentTime);
+    currentTime = 0;
+    console.log(currentTime);
+    console.log('you won!');
+    //reset player location to center
+    player.lost = false;
+    player.x = 490;
+    player.y = 240;    
+    player.render();
+    // display win text
+    // change START BUTTON text to "Play Again?" and re-allow clicks
+}
