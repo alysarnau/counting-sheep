@@ -77,11 +77,14 @@ class Sheep {
         }
     }
 }
+// saving this as variable so we can clear it later!
+let selectInterval;
+
 ////// see if we can have dedicated select screen
 function selectScreen(){
     // adds movement
-    document.addEventListener('keydown', movementHandler)
-    setInterval(selectLoop, 60)
+    document.addEventListener('keydown', movementHandler);
+    selectInterval = setInterval(selectLoop, 60);
 }
 
 const chooseYourPlayerText = 'Choose Your Player'
@@ -127,20 +130,21 @@ const confirmSelect = () => {
         && player.y < 370
         && player.y + player.height > 290) {
             console.log('begin game')
+            confirmStart()
         }
-        // move confirmStart down here
 }
 // 
 const confirmStart = () => {
+    // clear selectLoop
+    clearInterval(selectInterval);
     // DE-RENDER sprites!
     spriteArray.forEach = (sprite) => {sprite.delete === true}
-        // clear selectLoop
-        clearInterval(selectLoop);
     console.log(spriteArray);
-    // and start game proper!
+    // // and start game proper!
     ctx.clearRect(0, 0, game.width, game.height);
     ctx.drawImage(background,0,0);
-    //setInterval(gameLoop, 60);
+    setInterval(gameLoop, 60);
+    // didn't start the timer!
 }
 
 const selectHit = () => {
