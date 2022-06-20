@@ -5,6 +5,14 @@ const body = document.querySelector('body');
 const game = document.querySelector('#game-canvas');
 const ctx = game.getContext('2d');
 
+// define background
+let background = new Image();
+background.src = "./background/sky.png";
+
+background.onload = function() {
+    ctx.drawImage(background,0,0);
+}
+
 // set width and height!
 game.setAttribute('width', getComputedStyle(game)['width']);
 game.setAttribute('height', getComputedStyle(game)['height']);
@@ -185,6 +193,7 @@ const gameLoop = () => {
         return;
     }
     ctx.clearRect(0, 0, game.width, game.height)
+    ctx.drawImage(background,0,0);
     // render players and sheep
     if (!player.won) {
         player.render();
@@ -223,6 +232,8 @@ const gameLoop = () => {
         return (!sheep.lost)
     })
     }
+    // DOES THIS BRING BG
+
 }
 
 // collision detection
@@ -314,13 +325,6 @@ function winGame () {
     player.y = 240;    
     player.render();
     // change START BUTTON text to "Play Again?" and re-allow clicks
-    // need to reset sheep lost status to LOST
-    // text not displaying
-    // change from ctx to canvas
-    // ctx.fillStyle = "whitesmoke"; 
-    // ctx.textAlign = "center"; 
-    // ctx.font = "80px Verdana";
-    // ctx.fillText("YOU WON!", 290, 180);
     announceWin();
 }
 
@@ -329,5 +333,5 @@ function announceWin() {
     ctx.fillStyle = "white"; 
     ctx.textAlign = "left"; 
     ctx.font = "36px Comic Sans MS";
-    ctx.fillText("YOU WON!", game.width/2, game.height/2);
+    ctx.fillText("YOU WON!", 100, 200);
 }
