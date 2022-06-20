@@ -42,10 +42,12 @@ let player = {
 class Sprite {
     constructor(x,color) {
         this.x = x,
-        this.y = 20,
+        this.y = 115,
         this.color = color,
-        this.width = 15,
-        this.height = 15,
+        this.width = 40,
+        this.height = 40,
+        this.chosen = false;
+        this.delete = false;
         this.render = function() {
             // this creates little rectangle sprites
             ctx.fillStyle = this.color;
@@ -54,11 +56,11 @@ class Sprite {
     }
 }
 
-let spriteOne = new Sprite(20, 'yellow');
-// plyus 40
-let spriteTwo = new Sprite(60, 'red');
-let spriteThree = new Sprite(100,'blue');
-let spriteFour = new Sprite(140,'purple')
+let spriteOne = new Sprite(250, 'yellow');
+let spriteTwo = new Sprite(400, 'red');
+let spriteThree = new Sprite(560,'blue');
+let spriteFour = new Sprite(710,'purple')
+const spriteArray = [spriteOne, spriteTwo, spriteThree, spriteFour]
 
 class Sheep {
     constructor() {
@@ -74,6 +76,107 @@ class Sheep {
             ctx.fillRect(this.x, this.y, this.width, this.height)
         }
     }
+}
+////// see if we can have dedicated select screen
+function selectScreen(){
+    // adds movement
+    document.addEventListener('keydown', movementHandler)
+    setInterval(selectLoop, 60)
+}
+
+const chooseYourPlayerText = 'Choose Your Player'
+const confirmPlayerText = 'Confirm?'
+
+let prePlayText = chooseYourPlayerText;
+// make this as an array so people can change their minds!
+let playerColor = [];
+
+function selectLoop() {
+    ctx.clearRect(0, 0, game.width, game.height);
+    ctx.drawImage(background,0,0);
+    // add text "choose character"
+    ctx.fillStyle = "white"; 
+    ctx.textAlign = "center"; 
+    ctx.font = "50px Comic Sans MS";
+    ctx.fillText(prePlayText, game.width/2, (2*game.height)/3);
+    if (!spriteOne.delete) {
+        spriteOne.render();
+    }
+    if (!spriteTwo.delete) {
+        spriteTwo.render();
+    }
+    if (!spriteThree.delete) {
+        spriteThree.render();
+    }
+    if (!spriteFour.delete) {
+        spriteFour.render();
+    }
+    player.render();
+    selectHit();
+    // hit collision should trigger confirmation screen
+    if (prePlayText === confirmPlayerText) {
+        confirmSelect();
+    }
+}
+
+//collision code working
+const confirmSelect = () => {
+    // collision code goes here
+    if (player.x < 720 
+        && player.x + player.width > 270
+        && player.y < 370
+        && player.y + player.height > 290) {
+            console.log('begin game')
+        }
+        // move confirmStart down here
+}
+// 
+const confirmStart = () => {
+    // DE-RENDER sprites!
+    spriteArray.forEach = (sprite) => {sprite.delete === true}
+        // clear selectLoop
+        clearInterval(selectLoop);
+    console.log(spriteArray);
+    // and start game proper!
+    ctx.clearRect(0, 0, game.width, game.height);
+    ctx.drawImage(background,0,0);
+    //setInterval(gameLoop, 60);
+}
+
+const selectHit = () => {
+    if (player.x < spriteOne.x + spriteOne.width 
+        && player.x + player.width > spriteOne.x
+        && player.y < spriteOne.y + spriteOne.height
+        && player.y + player.height > spriteOne.y) {
+            console.log('yellow')
+            player.color = 'yellow';
+            playerColor.push('yellow');
+            prePlayText = confirmPlayerText;
+    } else if (player.x < spriteTwo.x + spriteTwo.width 
+        && player.x + player.width > spriteTwo.x
+        && player.y < spriteTwo.y + spriteTwo.height
+        && player.y + player.height > spriteTwo.y) {
+            console.log('red')
+            player.color = 'red';
+            playerColor.push('red');
+            prePlayText = confirmPlayerText;
+    } else if (player.x < spriteThree.x + spriteThree.width 
+        && player.x + player.width > spriteThree.x
+        && player.y < spriteThree.y + spriteThree.height
+        && player.y + player.height > spriteThree.y) {
+            console.log('blue')
+            player.color = 'blue';
+            playerColor.push('blue');
+            prePlayText = confirmPlayerText;
+    } else if (player.x < spriteFour.x + spriteFour.width 
+        && player.x + player.width > spriteFour.x
+        && player.y < spriteFour.y + spriteFour.height
+        && player.y + player.height > spriteFour.y) {
+            console.log('purple')
+            player.color = 'purple';
+            playerColor.push('purple');
+            prePlayText = confirmPlayerText;
+    } 
 }
 
 // CREATE SHEEP
@@ -108,14 +211,12 @@ let timer;
 // START BUTTON, START TIMER
 const startButton = document.querySelector('#start');
 startButton.addEventListener('click', (e) => {
-    // resets player win status
+    // and have
+    // eventually have this code below move to CONFIRMATION ACTION
     player.won = false;
-    // set all sheep to lost again!
-    //    resets all status for sheep
     lostSheepArray.forEach((sheep) => {
         sheep.lost = true;
     });
-    // sets timer interval
     timer = setInterval(countUp,1000);
     startButton.innerText = 'RUNNING';
     if (isPlaying = true) {
@@ -123,9 +224,9 @@ startButton.addEventListener('click', (e) => {
     //backgroundMusic.play();
     }
     document.addEventListener('keydown', movementHandler)
+    // delete this (duplicate) once select screen is all set
     setInterval(gameLoop, 60)
     startButton.style.pointerEvents = 'none';
-    //unfocus after click
     e.target.blur();
 })
 // STOP/PAUSE BUTTON
@@ -217,12 +318,6 @@ const movementHandler = (e) => {
             bark.play();
         default:
     }
-}
-
-
-// select screen
-function selectSprite() {
-    
 }
 
 // DEFINE GAME LOOP
