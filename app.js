@@ -80,6 +80,8 @@ let timer;
 // START BUTTON, START TIMER
 const startButton = document.querySelector('#start');
 startButton.addEventListener('click', (e) => {
+    // resets player win status
+    player.won = false;
     // set all sheep to lost again!
     //    resets all status for sheep
     lostSheepArray.forEach((sheep) => {
@@ -188,50 +190,51 @@ const gameLoop = () => {
     if (sheep1.lost || sheep2.lost || sheep3.lost || sheep4.lost || sheep5.lost || sheep6.lost || sheep7.lost || sheep8.lost || sheep9.lost || sheep10.lost) {
         detectHit();
     checkWin();
-    // DO WE NEED TO SET A THING WHERE IF GAMEWON = TRUE, IT STOPS?
+    // Stops loop on win
     if (player.won) {
         return;
+    } else {
+        ctx.clearRect(0, 0, game.width, game.height)
+        ctx.drawImage(background,0,0);
+        // render players and sheep
+        if (!player.won) {
+            player.render();
+        }
+        if (sheep1.lost) {
+            sheep1.render();
+        } 
+        if (sheep2.lost) {
+            sheep2.render();
+        }
+        if (sheep3.lost) {
+            sheep3.render();
+        }
+        if (sheep4.lost) {
+            sheep4.render();
+        }
+        if (sheep5.lost) {
+            sheep5.render();
+        }
+        if (sheep6.lost) {
+            sheep6.render();
+        }
+        if (sheep7.lost) {
+            sheep7.render();
+        }
+        if (sheep8.lost) {
+            sheep8.render();
+        }
+        if (sheep9.lost) {
+            sheep9.render();
+        }
+        if (sheep10.lost) {
+            sheep10.render();
+        }
+        foundSheepArray = lostSheepArray.map(sheep => {
+            return (!sheep.lost)
+        })
     }
-    ctx.clearRect(0, 0, game.width, game.height)
-    ctx.drawImage(background,0,0);
-    // render players and sheep
-    if (!player.won) {
-        player.render();
-    }
-    if (sheep1.lost) {
-        sheep1.render();
-    } 
-    if (sheep2.lost) {
-        sheep2.render();
-    }
-    if (sheep3.lost) {
-        sheep3.render();
-    }
-    if (sheep4.lost) {
-        sheep4.render();
-    }
-    if (sheep5.lost) {
-        sheep5.render();
-    }
-    if (sheep6.lost) {
-        sheep6.render();
-    }
-    if (sheep7.lost) {
-        sheep7.render();
-    }
-    if (sheep8.lost) {
-        sheep8.render();
-    }
-    if (sheep9.lost) {
-        sheep9.render();
-    }
-    if (sheep10.lost) {
-        sheep10.render();
-    }
-    foundSheepArray = lostSheepArray.map(sheep => {
-        return (!sheep.lost)
-    })
-    }
+}
     // DOES THIS BRING BG
 
 }
@@ -309,6 +312,9 @@ function checkWin() {
     if (!sheep1.lost && !sheep2.lost && !sheep3.lost && !sheep4.lost && !sheep5.lost && !sheep6.lost && !sheep7.lost && !sheep8.lost && !sheep9.lost && !sheep10.lost) {
         // GAME WON
         player.won = true;
+        // this removes all players from game board
+        ctx.clearRect(0, 0, game.width, game.height)
+        ctx.drawImage(background,0,0);
         winGame();
     }
 }
@@ -320,7 +326,6 @@ function winGame () {
     currentTime = 0;
     console.log('you won!');
     //reset player location to center
-    player.won = false;
     player.x = 490;
     player.y = 240;    
     player.render();
@@ -331,7 +336,7 @@ function winGame () {
 function announceWin() {
     // set font settings for canvas
     ctx.fillStyle = "white"; 
-    ctx.textAlign = "left"; 
+    ctx.textAlign = "center"; 
     ctx.font = "36px Comic Sans MS";
     ctx.fillText("YOU WON!", 100, 200);
 }
