@@ -1,7 +1,15 @@
 // TO DO STILL
-// fix unpause functionality
+// fix unpause functionality (it pauses properly, but needs to be able to RESTART)
 // fix reset functionality
+// Start button should trigger select player screen first
+// Need to implement leaderboard screen
+// need to set up proper button display
 
+// STRETCH GOALS
+// set up Sprites as avatars
+// Persistent Leaderboard on local storage
+
+//REMEMBER:
 // at load, pause/stop button is display: none
 
 
@@ -80,7 +88,6 @@ class Sheep {
 // saving this as variable so we can clear it later!
 let selectInterval;
 
-////// see if we can have dedicated select screen
 function selectScreen(){
     // adds movement
     document.addEventListener('keydown', movementHandler);
@@ -91,13 +98,12 @@ const chooseYourPlayerText = 'Choose Your Player'
 const confirmPlayerText = 'Confirm?'
 
 let prePlayText = chooseYourPlayerText;
-// make this as an array so people can change their minds!
+// Setting this as an array so players can change their minds
 let playerColor = [];
 
 function selectLoop() {
     ctx.clearRect(0, 0, game.width, game.height);
     ctx.drawImage(background,0,0);
-    // add text "choose character"
     ctx.fillStyle = "white"; 
     ctx.textAlign = "center"; 
     ctx.font = "50px Comic Sans MS";
@@ -122,9 +128,7 @@ function selectLoop() {
     }
 }
 
-//collision code working
 const confirmSelect = () => {
-    // collision code goes here
     if (player.x < 720 
         && player.x + player.width > 270
         && player.y < 370
@@ -133,18 +137,17 @@ const confirmSelect = () => {
             confirmStart()
         }
 }
-// 
+
 const confirmStart = () => {
-    // clear selectLoop
     clearInterval(selectInterval);
-    // DE-RENDER sprites!
     spriteArray.forEach = (sprite) => {sprite.delete === true}
     console.log(spriteArray);
-    // // and start game proper!
     ctx.clearRect(0, 0, game.width, game.height);
     ctx.drawImage(background,0,0);
+    //this starts the timer
+    beginGame();
+    //this starts the game
     setInterval(gameLoop, 60);
-    // didn't start the timer!
 }
 
 const selectHit = () => {
@@ -152,7 +155,6 @@ const selectHit = () => {
         && player.x + player.width > spriteOne.x
         && player.y < spriteOne.y + spriteOne.height
         && player.y + player.height > spriteOne.y) {
-            console.log('yellow')
             player.color = 'yellow';
             playerColor.push('yellow');
             prePlayText = confirmPlayerText;
@@ -160,7 +162,6 @@ const selectHit = () => {
         && player.x + player.width > spriteTwo.x
         && player.y < spriteTwo.y + spriteTwo.height
         && player.y + player.height > spriteTwo.y) {
-            console.log('red')
             player.color = 'red';
             playerColor.push('red');
             prePlayText = confirmPlayerText;
@@ -168,7 +169,6 @@ const selectHit = () => {
         && player.x + player.width > spriteThree.x
         && player.y < spriteThree.y + spriteThree.height
         && player.y + player.height > spriteThree.y) {
-            console.log('blue')
             player.color = 'blue';
             playerColor.push('blue');
             prePlayText = confirmPlayerText;
@@ -176,7 +176,6 @@ const selectHit = () => {
         && player.x + player.width > spriteFour.x
         && player.y < spriteFour.y + spriteFour.height
         && player.y + player.height > spriteFour.y) {
-            console.log('purple')
             player.color = 'purple';
             playerColor.push('purple');
             prePlayText = confirmPlayerText;
@@ -210,13 +209,7 @@ const countUp = () => {
     timerDisplay.innerText = currentTime;
 }
 
-// define timer
-let timer;
-// START BUTTON, START TIMER
-const startButton = document.querySelector('#start');
-startButton.addEventListener('click', (e) => {
-    // and have
-    // eventually have this code below move to CONFIRMATION ACTION
+function beginGame() {
     player.won = false;
     lostSheepArray.forEach((sheep) => {
         sheep.lost = true;
@@ -228,8 +221,21 @@ startButton.addEventListener('click', (e) => {
     //backgroundMusic.play();
     }
     document.addEventListener('keydown', movementHandler)
+}
+
+// define timer
+let timer;
+const startButton = document.querySelector('#start');
+
+//define game interval
+let gameInterval;
+
+// NEED TO UPDATE THIS TO FIRE THE SELECT SCREEN
+startButton.addEventListener('click', (e) => {
+    beginGame();
+    document.addEventListener('keydown', movementHandler)
     // delete this (duplicate) once select screen is all set
-    setInterval(gameLoop, 60)
+    gameInterval = setInterval(gameLoop, 60);
     startButton.style.pointerEvents = 'none';
     e.target.blur();
 })
@@ -245,12 +251,17 @@ stopButton.addEventListener('click', (e) => {
 const resetButton = document.querySelector('#reset');
 resetButton.addEventListener('click', (e) => {
     resetGame();
+    // change startButtonText be visible again
+    // hide pause button again
+    startButton.style.display = 'inline-block';
+    stopButton.style.display = 'none';
 })
 
 function resetGame() {
         //clear timer interval and current Time
         clearInterval(timer);
         currentTime = 0;
+        clearInterval(gameInterval);
         timerDisplay.innerText = currentTime;
         startButton.innerText = 'START'
         backgroundMusic.pause();
@@ -290,41 +301,33 @@ backgroundMusic.onpause = function() {
 const toggleMusicButton = document.querySelector('#toggle-music');
 toggleMusicButton.addEventListener('click', (e) => {
     togglePlay();
-    //unfocus after click
     e.target.blur();
 })
 
-// WASD movement
 const movementHandler = (e) => {
     switch (e.keyCode) {
         case 87: case 38:
-            // moves player up
             if (player.y > 0) {
             player.y -= 10;}
             break;
         case 83: case 40:
-            // moves player down
             if ((player.y + player.height) < game.height)
             player.y += 10;
             break;
         case 65: case 37:
-            // moves player left
             if (player.x > 0)
             {player.x -= 10;}
             break;
         case 68: case 39:
-            // moves player right
             if ((player.x + player.width) < game.width)
             {player.x += 10;}
             break;
         case 32:
-            // bark sound!
             bark.play();
         default:
     }
 }
 
-// DEFINE GAME LOOP
 const gameLoop = () => {
     if (sheep1.lost || sheep2.lost || sheep3.lost || sheep4.lost || sheep5.lost || sheep6.lost || sheep7.lost || sheep8.lost || sheep9.lost || sheep10.lost) {
         detectHit();
@@ -376,6 +379,8 @@ const gameLoop = () => {
 }
     // Hide Start Button when playing
     startButton.style.display = "none";
+    stopButton.style.display = "inline-block";
+    resetButton.style.display = "inline-block";
 }
 
 // collision detection
@@ -444,7 +449,6 @@ const detectHit = () => {
 }
 
 let leaderboard = [];
-
 
 // check win condition
 function checkWin() {
