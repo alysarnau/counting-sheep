@@ -1,17 +1,14 @@
 // TO DO STILL
 // fix unpause functionality (it pauses properly, but needs to be able to RESTART)
-// fix reset functionality
 // Start button should trigger select player screen first
 // Need to implement leaderboard screen
 // need to set up proper button display
+// create pixel background
+// set up scrolling functionality
 
 // STRETCH GOALS
 // set up Sprites as avatars
 // Persistent Leaderboard on local storage
-
-//REMEMBER:
-// at load, pause/stop button is display: none
-
 
 //define body 
 const body = document.querySelector('body');
