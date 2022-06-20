@@ -72,6 +72,12 @@ let timer;
 // START BUTTON, START TIMER
 const startButton = document.querySelector('#start');
 startButton.addEventListener('click', (e) => {
+    // set all sheep to lost again!
+    //    resets all status for sheep
+    lostSheepArray.forEach((sheep) => {
+        sheep.lost = true;
+    });
+    // sets timer interval
     timer = setInterval(countUp,1000);
     startButton.innerText = 'RUNNING';
     if (isPlaying = true) {
@@ -95,22 +101,21 @@ stopButton.addEventListener('click', (e) => {
 // RESET BUTTON
 const resetButton = document.querySelector('#reset');
 resetButton.addEventListener('click', (e) => {
-    //clear timer interval and current Time
-    clearTimeout(timer);
-    currentTime = 0;
-    timerDisplay.innerText = currentTime;
-    startButton.innerText = 'START'
-    soundEffect.innerText = '';
-    backgroundMusic.pause();
-    startButton.style.pointerEvents = 'auto';
-    // clear canvas!
-    ctx.clearRect(0, 0, game.width, game.height)
-    //
-    // resets all status for sheep
-    // lostSheepArray.forEach((sheep) => {
-    //     sheep.lost = true;
-    // })
+    // let's put all this in a reset function
+resetGame();
 })
+
+function resetGame() {
+        //clear timer interval and current Time
+        clearTimeout(timer);
+        currentTime = 0;
+        timerDisplay.innerText = currentTime;
+        startButton.innerText = 'START'
+        backgroundMusic.pause();
+        startButton.style.pointerEvents = 'auto';
+        // clear canvas!
+        ctx.clearRect(0, 0, game.width, game.height)
+}
 
 //define soundeffects
 const backgroundMusic = new Audio('./soundeffects/backgroundmusic.mp3')
@@ -170,20 +175,15 @@ const movementHandler = (e) => {
     }
 }
 
-// check win condition
-function checkWin() {
-    if (!sheep1.lost && !sheep2.lost && !sheep3.lost && !sheep4.lost && !sheep5.lost && !sheep6.lost && !sheep7.lost && !sheep8.lost && !sheep9.lost && !sheep10.lost) {
-        // GAME WON
-        player.won = true;
-        winGame();
-    }
-}
-
 // DEFINE GAME LOOP
 const gameLoop = () => {
     if (sheep1.lost || sheep2.lost || sheep3.lost || sheep4.lost || sheep5.lost || sheep6.lost || sheep7.lost || sheep8.lost || sheep9.lost || sheep10.lost) {
         detectHit();
     checkWin();
+    // DO WE NEED TO SET A THING WHERE IF GAMEWON = TRUE, IT STOPS?
+    if (player.won) {
+        return;
+    }
     ctx.clearRect(0, 0, game.width, game.height)
     // render players and sheep
     if (!player.won) {
@@ -292,6 +292,16 @@ const detectHit = () => {
 
 const leaderboard = [];
 
+
+// check win condition
+function checkWin() {
+    if (!sheep1.lost && !sheep2.lost && !sheep3.lost && !sheep4.lost && !sheep5.lost && !sheep6.lost && !sheep7.lost && !sheep8.lost && !sheep9.lost && !sheep10.lost) {
+        // GAME WON
+        player.won = true;
+        winGame();
+    }
+}
+
 // ON WIN
 function winGame () {
     clearInterval(timer);
@@ -299,7 +309,7 @@ function winGame () {
     currentTime = 0;
     console.log('you won!');
     //reset player location to center
-    player.lost = false;
+    player.won = false;
     player.x = 490;
     player.y = 240;    
     player.render();
@@ -307,17 +317,17 @@ function winGame () {
     // need to reset sheep lost status to LOST
     // text not displaying
     // change from ctx to canvas
-    ctx.fillStyle = "whitesmoke"; 
-    ctx.textAlign = "center"; 
-    ctx.font = "80px Verdana";
-    ctx.fillText("YOU WON!", 290, 180);
-    // announceWin();
+    // ctx.fillStyle = "whitesmoke"; 
+    // ctx.textAlign = "center"; 
+    // ctx.font = "80px Verdana";
+    // ctx.fillText("YOU WON!", 290, 180);
+    announceWin();
 }
 
 function announceWin() {
     // set font settings for canvas
-    ctx.fillStyle = "whitesmoke"; 
-    ctx.textAlign = "center"; 
-    ctx.font = "80px Verdana";
-    ctx.fillText("YOU WON!", 290, 180);
+    ctx.fillStyle = "white"; 
+    ctx.textAlign = "left"; 
+    ctx.font = "36px Comic Sans MS";
+    ctx.fillText("YOU WON!", game.width/2, game.height/2);
 }
