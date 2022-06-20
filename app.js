@@ -290,7 +290,7 @@ const detectHit = () => {
     }
 }
 
-const leaderboard = [];
+let leaderboard = [];
 
 
 // check win condition
