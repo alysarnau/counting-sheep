@@ -16,7 +16,7 @@ let player = {
     color: 'brown',
     width: 20,
     height: 20,
-    lost: false,
+    won: false,
     render: function() {
         // this creates little rectangle sprites
         ctx.fillStyle = this.color;
@@ -81,6 +81,8 @@ startButton.addEventListener('click', (e) => {
     document.addEventListener('keydown', movementHandler)
     setInterval(gameLoop, 60)
     startButton.style.pointerEvents = 'none';
+    //unfocus after click
+    e.target.blur();
 })
 // STOP/PAUSE BUTTON
 const stopButton = document.querySelector('#stop');
@@ -172,7 +174,7 @@ const movementHandler = (e) => {
 function checkWin() {
     if (!sheep1.lost && !sheep2.lost && !sheep3.lost && !sheep4.lost && !sheep5.lost && !sheep6.lost && !sheep7.lost && !sheep8.lost && !sheep9.lost && !sheep10.lost) {
         // GAME WON
-        player.lost = true;
+        player.won = true;
         winGame();
     }
 }
@@ -184,7 +186,7 @@ const gameLoop = () => {
     checkWin();
     ctx.clearRect(0, 0, game.width, game.height)
     // render players and sheep
-    if (!player.lost) {
+    if (!player.won) {
         player.render();
     }
     if (sheep1.lost) {
@@ -296,7 +298,6 @@ function winGame () {
     leaderboard.push(currentTime);
     currentTime = 0;
     console.log('you won!');
-
     //reset player location to center
     player.lost = false;
     player.x = 490;
@@ -305,11 +306,18 @@ function winGame () {
     // change START BUTTON text to "Play Again?" and re-allow clicks
     // need to reset sheep lost status to LOST
     // text not displaying
-    announceWin();
+    // change from ctx to canvas
+    ctx.fillStyle = "whitesmoke"; 
+    ctx.textAlign = "center"; 
+    ctx.font = "80px Verdana";
+    ctx.fillText("YOU WON!", 290, 180);
+    // announceWin();
 }
 
 function announceWin() {
-        // set font settings for canvas
-        ctx.font = "80px Verdana";
-        ctx.fillText("YOU WON!", 290, 180);
+    // set font settings for canvas
+    ctx.fillStyle = "whitesmoke"; 
+    ctx.textAlign = "center"; 
+    ctx.font = "80px Verdana";
+    ctx.fillText("YOU WON!", 290, 180);
 }
