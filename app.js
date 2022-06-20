@@ -124,7 +124,8 @@ function resetGame() {
         backgroundMusic.pause();
         startButton.style.pointerEvents = 'auto';
         // clear canvas!
-        ctx.clearRect(0, 0, game.width, game.height)
+        ctx.clearRect(0, 0, game.width, game.height);
+        ctx.drawImage(background,0,0);
 }
 
 //define soundeffects
@@ -331,6 +332,10 @@ function winGame () {
     player.render();
     // change START BUTTON text to "Play Again?" and re-allow clicks
     announceWin();
+    // allow start button again
+    startButton.innerText = "PLAY AGAIN?"
+    startButton.style.pointerEvents = 'auto';
+
 }
 
 function announceWin() {
