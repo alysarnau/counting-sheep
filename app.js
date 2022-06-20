@@ -1,3 +1,10 @@
+// TO DO STILL
+// fix unpause functionality
+// fix reset functionality
+
+// at load, pause/stop button is display: none
+
+
 //define body 
 const body = document.querySelector('body');
 
@@ -31,6 +38,27 @@ let player = {
         ctx.fillRect(this.x, this.y, this.width, this.height)
     }
 }
+
+class Sprite {
+    constructor(x,color) {
+        this.x = x,
+        this.y = 20,
+        this.color = color,
+        this.width = 15,
+        this.height = 15,
+        this.render = function() {
+            // this creates little rectangle sprites
+            ctx.fillStyle = this.color;
+            ctx.fillRect(this.x, this.y, this.width, this.height)
+        }
+    }
+}
+
+let spriteOne = new Sprite(20, 'yellow');
+// plyus 40
+let spriteTwo = new Sprite(60, 'red');
+let spriteThree = new Sprite(100,'blue');
+let spriteFour = new Sprite(140,'purple')
 
 class Sheep {
     constructor() {
@@ -111,13 +139,12 @@ stopButton.addEventListener('click', (e) => {
 // RESET BUTTON
 const resetButton = document.querySelector('#reset');
 resetButton.addEventListener('click', (e) => {
-    // let's put all this in a reset function
-resetGame();
+    resetGame();
 })
 
 function resetGame() {
         //clear timer interval and current Time
-        clearTimeout(timer);
+        clearInterval(timer);
         currentTime = 0;
         timerDisplay.innerText = currentTime;
         startButton.innerText = 'START'
@@ -126,6 +153,12 @@ function resetGame() {
         // clear canvas!
         ctx.clearRect(0, 0, game.width, game.height);
         ctx.drawImage(background,0,0);
+        startButton.style.display = "inline-block";
+        // see if this solves for sheep rendering
+        lostSheepArray.forEach((sheep) => {
+            sheep.lost = false;
+        });
+        player.won = true;
 }
 
 //define soundeffects
@@ -186,6 +219,12 @@ const movementHandler = (e) => {
     }
 }
 
+
+// select screen
+function selectSprite() {
+    
+}
+
 // DEFINE GAME LOOP
 const gameLoop = () => {
     if (sheep1.lost || sheep2.lost || sheep3.lost || sheep4.lost || sheep5.lost || sheep6.lost || sheep7.lost || sheep8.lost || sheep9.lost || sheep10.lost) {
@@ -236,8 +275,8 @@ const gameLoop = () => {
         })
     }
 }
-    // DOES THIS BRING BG
-
+    // Hide Start Button when playing
+    startButton.style.display = "none";
 }
 
 // collision detection
@@ -332,6 +371,8 @@ function winGame () {
     player.render();
     // change START BUTTON text to "Play Again?" and re-allow clicks
     announceWin();
+    // display startButton again
+    startButton.style.display = "block";
     // allow start button again
     startButton.innerText = "PLAY AGAIN?"
     startButton.style.pointerEvents = 'auto';
@@ -342,6 +383,6 @@ function announceWin() {
     // set font settings for canvas
     ctx.fillStyle = "white"; 
     ctx.textAlign = "center"; 
-    ctx.font = "36px Comic Sans MS";
-    ctx.fillText("YOU WON!", 100, 200);
+    ctx.font = "50px Comic Sans MS";
+    ctx.fillText("YOU WON!", game.width/2, game.height/3);
 }

@@ -68,3 +68,8 @@ body::selection {
     right: 100px;
 }
 
+/* stop/pause and reset are hidden at load*/
+#stop,
+#reset {
+    display: none;
+}
