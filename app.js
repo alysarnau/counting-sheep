@@ -20,6 +20,9 @@ const leaderboardList = document.querySelector('#leaderboard-list');
 const game = document.querySelector('#game-canvas');
 const ctx = game.getContext('2d');
 
+
+
+
 let background = new Image();
 background.src = "./background/background_tiles.png";
 
@@ -30,6 +33,10 @@ background.onload = function() {
 game.setAttribute('width', getComputedStyle(game)['width']);
 game.setAttribute('height', getComputedStyle(game)['height']);
 
+// let playerSprite = document.createElement('img');
+// playerSprite.src = "./sprites/White-sheep.png";
+//ctx.drawImage(playerSprite, 10, 30, 40, 40)
+
 let player = {
     x: 490,
     y: 240,
@@ -39,9 +46,12 @@ let player = {
     won: false,
     score: null,
     render: function() {
-        // this creates little rectangle sprites
         ctx.fillStyle = this.color;
         ctx.fillRect(this.x, this.y, this.width, this.height)
+        // WORKS! NOW JUST HAVE TO FIGURE OUT DOGGIES
+        // let playerSprite = document.createElement('img');
+        // playerSprite.src = "./sprites/White-sheep.png";
+        // ctx.drawImage(playerSprite, this.x, this.y, this.width, this.height)
     }
 }
 
@@ -83,14 +93,14 @@ class Sheep {
     constructor() {
         this.x = Math.floor(Math.random() * (game.width - 25)),
         this.y = Math.floor(Math.random() * (game.height - 25)),
-        this.color = 'white',
-        this.width = 15,
-        this.height = 15,
+        //this.color = 'white',
+        this.width = 30,
+        this.height = 30,
         this.lost = true,
         this.render = function() {
-            // this creates little rectangle sprites
-            ctx.fillStyle = this.color;
-            ctx.fillRect(this.x, this.y, this.width, this.height)
+            let sheepSprite = document.createElement('img');
+            sheepSprite.src = "./sprites/White-sheep.png";
+            ctx.drawImage(sheepSprite, this.x, this.y, this.width, this.height)
         }
     }
 }
