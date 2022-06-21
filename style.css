@@ -59,11 +59,20 @@ body::selection {
     font-size: 36px;
 }
 
-#toggle-music {
+#toggle-music,
+#toggle-leaderboard {
     font-size: 12px;
-    width: 100px;
+    width: 140px;
     height: 30px;
     position: absolute;
+}
+
+#toggle-music {
+    top: 20px;
+    left: 100px;
+}
+
+#toggle-leaderboard {
     top: 20px;
     right: 100px;
 }

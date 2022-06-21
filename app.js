@@ -1,8 +1,7 @@
 // TO DO STILL
 // Need to implement leaderboard screen
-    // hide canvas?
+    // toggle button, on click it shows underneath game canvas
     // create div container to hold scores in its place
-    // on starting new game, hide leaderboard div and unhide canvas?
 // fix unpause functionality multiple times per game (it pauses properly, but needs to be able to RESTART) 
 
 // STRETCH GOALS
@@ -22,7 +21,7 @@
     // push player color/sprite to leaderboard with matching winning times
 
 const body = document.querySelector('body');
-const leaderboardContainer = document.querySelector('leaderboard-container')
+const leaderboardContainer = document.querySelector('#leaderboard-container')
 const game = document.querySelector('#game-canvas');
 const ctx = game.getContext('2d');
 
@@ -69,11 +68,13 @@ class Sprite {
 
 let timer;
 let gameInterval;
+let selectInterval;
+
 const startButton = document.querySelector('#start');
 const pauseButton = document.querySelector('#pause');
 const resumeButton = document.querySelector('#resume');
 const resetButton = document.querySelector('#reset');
-const leaderboardButton = document.querySelector('#leaderboard');
+const toggleScoresButton = document.querySelector('#toggle-leaderboard');
 const timerDisplay = document.querySelector("#timer");
 
 let spriteOne = new Sprite(250, 'yellow');
@@ -97,9 +98,6 @@ class Sheep {
         }
     }
 }
-
-let selectInterval;
-
 
 function selectScreen(){
     // adds movement
@@ -135,7 +133,6 @@ function selectLoop() {
     }
     player.render();
     selectHit();
-    // hit collision should trigger confirmation screen
     if (prePlayText === confirmPlayerText) {
         confirmSelect();
     }
@@ -157,9 +154,7 @@ const confirmStart = () => {
     console.log(spriteArray);
     ctx.clearRect(0, 0, game.width, game.height);
     ctx.drawImage(background,0,0);
-    //this starts the timer
     beginGame();
-    //this starts the game
     setInterval(gameLoop, 60);
 }
 
@@ -242,12 +237,13 @@ function resumeGame() {
 }
 
 startButton.addEventListener('click', (e) => {
+    game.style.display = 'block';
+    leaderboardContainer.style.display = 'none';
     selectScreen()
     startButton.style.pointerEvents = 'none';
     e.target.blur();
 })
 pauseButton.addEventListener('click', (e) => {
-    // this stops movement as well as timer
     clearInterval(timer);
     clearInterval(gameInterval);
     startButton.innerText = 'RESTART'
@@ -271,13 +267,15 @@ resetButton.addEventListener('click', (e) => {
     resetButton.style.display = 'none';
 })
 
-leaderboardButton.addEventListener('click', (e) => {
-    console.log(leaderboard);
-    
+toggleScoresButton.addEventListener('click', (e) => {
+    if (leaderboardContainer.style.display === 'none') {
+        leaderboardContainer.style.display = 'block';
+    } else {
+        leaderboardContainer.style.display = 'none'
+    }
 })
 
 function resetGame() {
-        //clear timer interval and current Time
         clearInterval(timer);
         currentTime = 0;
         clearInterval(gameInterval);
@@ -285,11 +283,9 @@ function resetGame() {
         startButton.innerText = 'START'
         backgroundMusic.pause();
         startButton.style.pointerEvents = 'auto';
-        // clear canvas!
         ctx.clearRect(0, 0, game.width, game.height);
         ctx.drawImage(background,0,0);
         startButton.style.display = "inline-block";
-        // see if this solves for sheep rendering
         lostSheepArray.forEach((sheep) => {
             sheep.lost = false;
         });
