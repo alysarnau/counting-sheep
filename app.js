@@ -1,9 +1,9 @@
 // TO DO STILL
-// fix unpause functionality (it pauses properly, but needs to be able to RESTART)
 // Start button should trigger select player screen first
 // Need to implement leaderboard screen
 // need to set up proper button display (correct buttons displayed/hidden per whiteboard)
 // set up scrolling functionality
+// fix unpause functionality multiple times per game (it pauses properly, but needs to be able to RESTART) 
 
 // STRETCH GOALS
 // set up Sprites as avatars
@@ -255,15 +255,15 @@ startButton.addEventListener('click', (e) => {
     e.target.blur();
 })
 // STOP/PAUSE BUTTON
-const stopButton = document.querySelector('#stop');
-stopButton.addEventListener('click', (e) => {
+const pauseButton = document.querySelector('#pause');
+pauseButton.addEventListener('click', (e) => {
     // this stops movement as well as timer
     clearInterval(timer);
     clearInterval(gameInterval);
     startButton.innerText = 'RESTART'
     backgroundMusic.pause();
     startButton.style.pointerEvents = 'auto';
-    stopButton.style.display = 'none';
+    pauseButton.style.display = 'none';
     resumeButton.style.display = 'inline-block';
 })
 
@@ -275,6 +275,7 @@ const resumeButton = document.querySelector('#resume');
 resumeButton.addEventListener('click', (e) => {
     resumeGame();
     setInterval(gameLoop,60);
+    resumeButton.style.display = 'none';
 })
 
 
@@ -283,9 +284,8 @@ const resetButton = document.querySelector('#reset');
 resetButton.addEventListener('click', (e) => {
     resetGame();
     // change startButtonText be visible again
-    // hide pause button again
     startButton.style.display = 'inline-block';
-    stopButton.style.display = 'none';
+    pauseButton.style.display = 'none';
     resumeButton.style.display = 'none';
     resetButton.style.display = 'none';
 })
@@ -412,7 +412,7 @@ const gameLoop = () => {
 }
     // Hide Start Button when playing
     startButton.style.display = "none";
-    stopButton.style.display = "inline-block";
+    pauseButton.style.display = "inline-block";
     resetButton.style.display = "inline-block";
 }
 
@@ -508,17 +508,18 @@ function winGame () {
     // change START BUTTON text to "Play Again?" and re-allow clicks
     announceWin();
     // display startButton again
-    startButton.style.display = "block";
+    startButton.style.display = 'block';
     // allow start button again
-    startButton.innerText = "PLAY AGAIN?"
+    startButton.innerText = 'PLAY AGAIN?'
     startButton.style.pointerEvents = 'auto';
+    pauseButton.style.display = 'none';
 
 }
 
 function announceWin() {
     // set font settings for canvas
-    ctx.fillStyle = "white"; 
-    ctx.textAlign = "center"; 
-    ctx.font = "50px Comic Sans MS";
-    ctx.fillText("YOU WON!", game.width/2, game.height/3);
+    ctx.fillStyle = 'white'; 
+    ctx.textAlign = 'center'; 
+    ctx.font = '50px Comic Sans MS';
+    ctx.fillText('YOU WON!', game.width/2, game.height/3);
 }
