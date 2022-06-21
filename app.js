@@ -1,6 +1,3 @@
-// TO DO STILL
-// fix unpause functionality multiple times per game (it pauses properly, but needs to be able to RESTART) 
-
 // STRETCH GOALS
 // set up Sprites as avatars
 // use sheep sprites instead of rectangles (and have those show in leaderboard)
@@ -152,7 +149,7 @@ const confirmStart = () => {
     ctx.clearRect(0, 0, game.width, game.height);
     ctx.drawImage(background,0,0);
     beginGame();
-    setInterval(gameLoop, 60);
+    gameinterval = setInterval(gameLoop, 60);
 }
 
 const selectHit = () => {
@@ -217,6 +214,8 @@ function beginGame() {
     //backgroundMusic.play();
     }
     document.addEventListener('keydown', movementHandler)
+    pauseButton.style.display = "inline-block";
+    resetButton.style.display = "inline-block";
 }
 
 function resumeGame() {
@@ -239,17 +238,19 @@ startButton.addEventListener('click', (e) => {
 pauseButton.addEventListener('click', (e) => {
     clearInterval(timer);
     clearInterval(gameInterval);
+    document.removeEventListener('keydown', movementHandler)
     startButton.innerText = 'RESTART'
     backgroundMusic.pause();
     startButton.style.pointerEvents = 'auto';
-    pauseButton.style.display = 'none';
     resumeButton.style.display = 'inline-block';
+    pauseButton.style.display = 'none';
 })
 
 resumeButton.addEventListener('click', (e) => {
     resumeGame();
-    setInterval(gameLoop,60);
+    gameInterval = setInterval(gameLoop,60);
     resumeButton.style.display = 'none';
+    pauseButton.style.display = 'inline-block';
 })
 resetButton.addEventListener('click', (e) => {
     resetGame();
@@ -387,8 +388,8 @@ const gameLoop = () => {
 }
     // Hide Start Button when playing
     startButton.style.display = "none";
-    pauseButton.style.display = "inline-block";
-    resetButton.style.display = "inline-block";
+    // pauseButton.style.display = "inline-block";
+    // resetButton.style.display = "inline-block";
 }
 
 // collision detection
