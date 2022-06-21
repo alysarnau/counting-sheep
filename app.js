@@ -1,10 +1,9 @@
 // TO DO STILL
-// Need to implement leaderboard screen
 // fix unpause functionality multiple times per game (it pauses properly, but needs to be able to RESTART) 
 
 // STRETCH GOALS
 // set up Sprites as avatars
-// use sheep sprites instead of rectangles
+// use sheep sprites instead of rectangles (and have those show in leaderboard)
     // for those, use random # algos to assign up down left or right facing sprites
     // EG: () 
     // function getRandomNum(max) {
@@ -510,6 +509,3 @@ function populateLeaderboard(item){
     score.innerText = `${item.color} ${item.score}`;
     leaderboardList.appendChild(score);
 }
-
-
-leaderboard = [{score: 14}, {score: 73}, {score: 12}]
