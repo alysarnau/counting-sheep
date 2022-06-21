@@ -22,6 +22,7 @@
 
 const body = document.querySelector('body');
 const leaderboardContainer = document.querySelector('#leaderboard-container')
+const leaderboardList = document.querySelector('#leaderboard-list');
 const game = document.querySelector('#game-canvas');
 const ctx = game.getContext('2d');
 
@@ -495,7 +496,8 @@ function winGame () {
     startButton.innerText = 'PLAY AGAIN?'
     startButton.style.pointerEvents = 'auto';
     pauseButton.style.display = 'none';
-
+    // future promising populateLeaderboard here
+    leaderboard.forEach(populateLeaderboard);
 }
 
 function announceWin() {
@@ -504,4 +506,11 @@ function announceWin() {
     ctx.textAlign = 'center'; 
     ctx.font = '50px Comic Sans MS';
     ctx.fillText('YOU WON!', game.width/2, game.height/3);
+}
+
+function populateLeaderboard(item){
+    console.log(item);
+    const score = document.createElement('li');
+    score.innerText = item;
+    leaderboardList.appendChild(score);
 }
