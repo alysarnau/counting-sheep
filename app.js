@@ -2,12 +2,21 @@
 // fix unpause functionality (it pauses properly, but needs to be able to RESTART)
 // Start button should trigger select player screen first
 // Need to implement leaderboard screen
-// need to set up proper button display
+// need to set up proper button display (correct buttons displayed/hidden per whiteboard)
 // create pixel background
 // set up scrolling functionality
 
 // STRETCH GOALS
 // set up Sprites as avatars
+// use sheep pixels instead of rectangles
+    // for those, use random # algos to assign up down left or right facing sprites
+    // EG: () 
+    // function getRandomNum(max) {
+    //     return Math.floor(Math.random() * max);
+    // }
+    // getRandomNum(4)
+        //will return 0, 1, 2, or 3
+        // if 0, left facing sprite; if 1, right facing sprite; if 2, up facing sprite; if 3 down facing sprite
 // Persistent Leaderboard on local storage
 
 //define body 
