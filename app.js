@@ -1,7 +1,5 @@
 // TO DO STILL
 // Need to implement leaderboard screen
-    // toggle button, on click it shows underneath game canvas
-    // create div container to hold scores in its place
 // fix unpause functionality multiple times per game (it pauses properly, but needs to be able to RESTART) 
 
 // STRETCH GOALS
@@ -43,6 +41,7 @@ let player = {
     width: 20,
     height: 20,
     won: false,
+    score: null,
     render: function() {
         // this creates little rectangle sprites
         ctx.fillStyle = this.color;
@@ -110,8 +109,6 @@ const chooseYourPlayerText = 'Choose Your Player'
 const confirmPlayerText = 'Confirm?'
 
 let prePlayText = chooseYourPlayerText;
-// Setting this as an array so players can change their minds
-let playerColor = [];
 
 function selectLoop() {
     ctx.clearRect(0, 0, game.width, game.height);
@@ -165,28 +162,24 @@ const selectHit = () => {
         && player.y < spriteOne.y + spriteOne.height
         && player.y + player.height > spriteOne.y) {
             player.color = 'yellow';
-            playerColor.push('yellow');
             prePlayText = confirmPlayerText;
     } else if (player.x < spriteTwo.x + spriteTwo.width 
         && player.x + player.width > spriteTwo.x
         && player.y < spriteTwo.y + spriteTwo.height
         && player.y + player.height > spriteTwo.y) {
             player.color = 'red';
-            playerColor.push('red');
             prePlayText = confirmPlayerText;
     } else if (player.x < spriteThree.x + spriteThree.width 
         && player.x + player.width > spriteThree.x
         && player.y < spriteThree.y + spriteThree.height
         && player.y + player.height > spriteThree.y) {
             player.color = 'blue';
-            playerColor.push('blue');
             prePlayText = confirmPlayerText;
     } else if (player.x < spriteFour.x + spriteFour.width 
         && player.x + player.width > spriteFour.x
         && player.y < spriteFour.y + spriteFour.height
         && player.y + player.height > spriteFour.y) {
             player.color = 'purple';
-            playerColor.push('purple');
             prePlayText = confirmPlayerText;
     } 
 }
@@ -480,23 +473,19 @@ function checkWin() {
 
 // ON WIN
 function winGame () {
+    // need to push player.color and player.score to leaderboard array
     clearInterval(timer);
-    leaderboard.push(currentTime);
+    player.score = currentTime;
+    leaderboard.push(player);
     currentTime = 0;
-    console.log('you won!');
-    //reset player location to center
     player.x = 490;
     player.y = 240;    
     player.render();
-    // change START BUTTON text to "Play Again?" and re-allow clicks
     announceWin();
-    // display startButton again
     startButton.style.display = 'block';
-    // allow start button again
     startButton.innerText = 'PLAY AGAIN?'
     startButton.style.pointerEvents = 'auto';
     pauseButton.style.display = 'none';
-    // future promising populateLeaderboard here
     leaderboard.forEach(populateLeaderboard);
 }
 
@@ -509,8 +498,11 @@ function announceWin() {
 }
 
 function populateLeaderboard(item){
+    // need to put these in ascending order top down!
+    // put in player avatar as well!
     console.log(item);
     const score = document.createElement('li');
-    score.innerText = item;
+    score.setAttribute('class','score')
+    score.innerText = `${item.color} ${item.score}`;
     leaderboardList.appendChild(score);
 }
