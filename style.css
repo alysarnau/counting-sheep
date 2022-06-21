@@ -88,9 +88,10 @@ body::selection {
     margin: 30px auto;
     height: 300px;
     width: 500px;
-    border: 5px solid #FCF6BD;
+    border: 5px solid #FF99C8;
     border-radius: 25px;
     position: relative;
+    background-color: #FCF6BD;
 }
 
 #leaderboard-title {

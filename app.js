@@ -1,18 +1,12 @@
+// KNOWN BUGS
+// If two sheep populate on top of each other, it can mess with the collision detection, creating an immortal sheep
+
 // STRETCH GOALS
-// set up Sprites as avatars
-// use sheep sprites instead of rectangles (and have those show in leaderboard)
-    // for those, use random # algos to assign up down left or right facing sprites
-    // EG: () 
-    // function getRandomNum(max) {
-    //     return Math.floor(Math.random() * max);
-    // }
-    // getRandomNum(4)
-        //will return 0, 1, 2, or 3
-        // if 0, left facing sprite; if 1, right facing sprite; if 2, up facing sprite; if 3 down facing sprite
+// have player sprite flip left and right with left/right movement
 // create cute pre-start screen?
-// get cloud animation!
+// clouds https://opengameart.org/content/fluffy-clouds
 // Persistent Leaderboard on local storage
-    // push player color/sprite to leaderboard with matching winning times
+// dog and sheep sprite animation
 
 const body = document.querySelector('body');
 const leaderboardContainer = document.querySelector('#leaderboard-container')
@@ -26,22 +20,20 @@ background.onload = function() {
     ctx.drawImage(background,0,0);
 }
 
+
+
+
+
 game.setAttribute('width', getComputedStyle(game)['width']);
 game.setAttribute('height', getComputedStyle(game)['height']);
 
 let player = {
-    x: 490,
-    y: 240,
-    color: null,
     width: 40,
     height: 40,
     won: false,
     score: null,
     src: './sprites/sprite0.png',
     render: function() {
-        // ctx.fillStyle = this.color;
-        // ctx.fillRect(this.x, this.y, this.width, this.height)
-        // WORKS! NOW JUST HAVE TO FIGURE OUT DOGGIES
         let playerSprite = document.createElement('img');
         playerSprite.src = player.src;
         ctx.drawImage(playerSprite, this.x, this.y, this.width, this.height)
@@ -52,20 +44,15 @@ class Sprite {
     constructor(x, src) {
         this.x = x,
         this.y = 115,
-        //this.color = color,
         this.width = 40,
         this.height = 40,
         this.chosen = false;
         this.delete = false;
         this.src = src;
         this.render = function() {
-            // create player Images
             let spriteImage = document.createElement('img');
             spriteImage.src = `${this.src}`
             ctx.drawImage(spriteImage, this.x, this.y, this.width, this.height)
-            // this creates little rectangle sprites
-            // ctx.fillStyle = this.color;
-            // ctx.fillRect(this.x, this.y, this.width, this.height)
         }
     }
 }
@@ -103,14 +90,45 @@ class Sheep {
     }
 }
 
-function selectScreen(){
-    document.addEventListener('keydown', movementHandler);
-    selectInterval = setInterval(selectLoop, 60);
-}
-
 const chooseYourPlayerText = 'Choose Your Player'
 const confirmPlayerText = 'Confirm?'
-let prePlayText = chooseYourPlayerText;
+let prePlayText;
+
+// for clouds!
+
+function updateCloud(){
+	cloud_x += 0.3;
+	if (cloud_x > width ) {
+		cloud_x = -cloud.width;
+	}
+}
+function drawCloud() {
+	ctx.drawImage(background,0,0);
+	ctx.drawImage(cloud, cloud_x, 0);
+}
+
+function startScreenLoop() {
+	drawCloud();
+	updateCloud();
+}
+
+//
+
+function selectScreen(){
+    // update background from fancy screen
+    // background.src = "./background/background_tiles.png"
+    timerDisplay.innerText = currentTime;
+    player.x = 490;
+    player.y = 240;
+    currentTime = 0;
+    prePlayText = chooseYourPlayerText;
+    document.addEventListener('keydown', movementHandler);
+    selectInterval = setInterval(selectLoop, 60);
+    startButton.style.display = 'none';
+    resetButton.style.display = 'inline-block'
+
+}
+
 
 function selectLoop() {
     ctx.clearRect(0, 0, game.width, game.height);
@@ -217,6 +235,7 @@ function beginGame() {
     document.addEventListener('keydown', movementHandler)
     pauseButton.style.display = "inline-block";
     resetButton.style.display = "inline-block";
+    startButton.style.display = "none";
 }
 function resumeGame() {
     timer = setInterval(countUp,1000);
@@ -225,6 +244,7 @@ function resumeGame() {
     //DISABLING BACKGROUND MUSIC FOR TESTING
     //backgroundMusic.play();
     }
+    startButton.style.display = "none";
     document.addEventListener('keydown', movementHandler)
 }
 function resetGame() {
@@ -234,7 +254,7 @@ function resetGame() {
     timerDisplay.innerText = currentTime;
     startButton.innerText = 'START'
     backgroundMusic.pause();
-    startButton.style.pointerEvents = 'auto';
+    startButton.style.pointerEvents = 'inline-block';
     ctx.clearRect(0, 0, game.width, game.height);
     ctx.drawImage(background,0,0);
     startButton.style.display = "inline-block";
@@ -271,6 +291,7 @@ resetButton.addEventListener('click', (e) => {
     resetGame();
     // change startButtonText be visible again
     startButton.style.display = 'inline-block';
+    startButton.style.pointerEvents = 'auto';
     pauseButton.style.display = 'none';
     resumeButton.style.display = 'none';
     resetButton.style.display = 'none';
@@ -375,7 +396,7 @@ const gameLoop = () => {
         })
     }
 }
-    startButton.style.display = "none";
+    //startButton.style.display = "none";
 }
 
 const detectHit = () => {
@@ -460,7 +481,7 @@ function winGame () {
     player.y = 240;    
     player.render();
     announceWin();
-    startButton.style.display = 'block';
+    startButton.style.display = 'inline-block';
     startButton.innerText = 'PLAY AGAIN?'
     startButton.style.pointerEvents = 'auto';
     pauseButton.style.display = 'none';
@@ -480,6 +501,6 @@ function populateLeaderboard(item){
     // put in player avatar as well!
     const score = document.createElement('li');
     score.setAttribute('class','score')
-    score.innerText = `${item.color} ${item.score}`;
+    score.innerHTML = `<img src="${item.src}" /> ${item.score}`;
     leaderboardList.appendChild(score);
 }
