@@ -1,9 +1,9 @@
 // TO DO STILL
+// create pixel background
 // fix unpause functionality (it pauses properly, but needs to be able to RESTART)
 // Start button should trigger select player screen first
 // Need to implement leaderboard screen
 // need to set up proper button display (correct buttons displayed/hidden per whiteboard)
-// create pixel background
 // set up scrolling functionality
 
 // STRETCH GOALS
@@ -28,7 +28,7 @@ const ctx = game.getContext('2d');
 
 // define background
 let background = new Image();
-background.src = "./background/sky.png";
+background.src = "./background/background_tiles.png";
 
 background.onload = function() {
     ctx.drawImage(background,0,0);
