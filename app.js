@@ -20,22 +20,14 @@ const leaderboardList = document.querySelector('#leaderboard-list');
 const game = document.querySelector('#game-canvas');
 const ctx = game.getContext('2d');
 
-
-
-
 let background = new Image();
 background.src = "./background/background_tiles.png";
-
 background.onload = function() {
     ctx.drawImage(background,0,0);
 }
 
 game.setAttribute('width', getComputedStyle(game)['width']);
 game.setAttribute('height', getComputedStyle(game)['height']);
-
-// let playerSprite = document.createElement('img');
-// playerSprite.src = "./sprites/White-sheep.png";
-//ctx.drawImage(playerSprite, 10, 30, 40, 40)
 
 let player = {
     x: 490,
@@ -55,8 +47,12 @@ let player = {
     }
 }
 
+// sprite animation
+
+//
+
 class Sprite {
-    constructor(x,color) {
+    constructor(x,color, src) {
         this.x = x,
         this.y = 115,
         this.color = color,
@@ -64,7 +60,12 @@ class Sprite {
         this.height = 40,
         this.chosen = false;
         this.delete = false;
+        this.src = src;
         this.render = function() {
+            // create player Images
+            // let spriteImage = document.createElement('img');
+            // spriteImage.src = `${this.src}`
+            // ctx.drawImage(spriteImage, this.x, this.y, this.width, this.height)
             // this creates little rectangle sprites
             ctx.fillStyle = this.color;
             ctx.fillRect(this.x, this.y, this.width, this.height)
@@ -80,6 +81,7 @@ const startButton = document.querySelector('#start');
 const pauseButton = document.querySelector('#pause');
 const resumeButton = document.querySelector('#resume');
 const resetButton = document.querySelector('#reset');
+const toggleMusicButton = document.querySelector('#toggle-music');
 const toggleScoresButton = document.querySelector('#toggle-leaderboard');
 const timerDisplay = document.querySelector("#timer");
 
@@ -93,7 +95,6 @@ class Sheep {
     constructor() {
         this.x = Math.floor(Math.random() * (game.width - 25)),
         this.y = Math.floor(Math.random() * (game.height - 25)),
-        //this.color = 'white',
         this.width = 30,
         this.height = 30,
         this.lost = true,
@@ -106,14 +107,12 @@ class Sheep {
 }
 
 function selectScreen(){
-    // adds movement
     document.addEventListener('keydown', movementHandler);
     selectInterval = setInterval(selectLoop, 60);
 }
 
 const chooseYourPlayerText = 'Choose Your Player'
 const confirmPlayerText = 'Confirm?'
-
 let prePlayText = chooseYourPlayerText;
 
 function selectLoop() {
@@ -147,7 +146,6 @@ const confirmSelect = () => {
         && player.x + player.width > 270
         && player.y < 370
         && player.y + player.height > 290) {
-            console.log('begin game')
             confirmStart()
         }
 }
@@ -155,13 +153,11 @@ const confirmSelect = () => {
 const confirmStart = () => {
     clearInterval(selectInterval);
     spriteArray.forEach = (sprite) => {sprite.delete === true}
-    console.log(spriteArray);
     ctx.clearRect(0, 0, game.width, game.height);
     ctx.drawImage(background,0,0);
     beginGame();
     gameinterval = setInterval(gameLoop, 60);
 }
-
 const selectHit = () => {
     if (player.x < spriteOne.x + spriteOne.width 
         && player.x + player.width > spriteOne.x
@@ -203,9 +199,7 @@ let sheep10 = new Sheep();
 const lostSheepArray = [sheep1, sheep2, sheep3, sheep4, sheep5, sheep6, sheep7, sheep8, sheep9, sheep10]
 let foundSheepArray;
 
-// timer display and counting function
 let currentTime = 0;
-
 timerDisplay.innerText = currentTime;
 const countUp = () => {
     ++currentTime;
@@ -227,7 +221,6 @@ function beginGame() {
     pauseButton.style.display = "inline-block";
     resetButton.style.display = "inline-block";
 }
-
 function resumeGame() {
     timer = setInterval(countUp,1000);
     startButton.innerText = 'RUNNING';
@@ -236,6 +229,22 @@ function resumeGame() {
     //backgroundMusic.play();
     }
     document.addEventListener('keydown', movementHandler)
+}
+function resetGame() {
+    clearInterval(timer);
+    currentTime = 0;
+    clearInterval(gameInterval);
+    timerDisplay.innerText = currentTime;
+    startButton.innerText = 'START'
+    backgroundMusic.pause();
+    startButton.style.pointerEvents = 'auto';
+    ctx.clearRect(0, 0, game.width, game.height);
+    ctx.drawImage(background,0,0);
+    startButton.style.display = "inline-block";
+    lostSheepArray.forEach((sheep) => {
+        sheep.lost = false;
+    });
+    player.won = true;
 }
 
 startButton.addEventListener('click', (e) => {
@@ -255,7 +264,6 @@ pauseButton.addEventListener('click', (e) => {
     resumeButton.style.display = 'inline-block';
     pauseButton.style.display = 'none';
 })
-
 resumeButton.addEventListener('click', (e) => {
     resumeGame();
     gameInterval = setInterval(gameLoop,60);
@@ -270,7 +278,6 @@ resetButton.addEventListener('click', (e) => {
     resumeButton.style.display = 'none';
     resetButton.style.display = 'none';
 })
-
 toggleScoresButton.addEventListener('click', (e) => {
     if (leaderboardContainer.style.display === 'none') {
         leaderboardContainer.style.display = 'block';
@@ -278,34 +285,16 @@ toggleScoresButton.addEventListener('click', (e) => {
         leaderboardContainer.style.display = 'none'
     }
 })
+toggleMusicButton.addEventListener('click', (e) => {
+    togglePlay();
+    e.target.blur();
+})
 
-function resetGame() {
-        clearInterval(timer);
-        currentTime = 0;
-        clearInterval(gameInterval);
-        timerDisplay.innerText = currentTime;
-        startButton.innerText = 'START'
-        backgroundMusic.pause();
-        startButton.style.pointerEvents = 'auto';
-        ctx.clearRect(0, 0, game.width, game.height);
-        ctx.drawImage(background,0,0);
-        startButton.style.display = "inline-block";
-        lostSheepArray.forEach((sheep) => {
-            sheep.lost = false;
-        });
-        player.won = true;
-}
-
-//define soundeffects
 const backgroundMusic = new Audio('./soundeffects/backgroundmusic.mp3')
 const bark = new Audio('./soundeffects/dog-bark.wav');
 const baa = new Audio('./soundeffects/baa.wav');
-// stops sound effects from looping
 bark.loop = false;
 baa.loop = false;
-const soundText = document.querySelector('#soundEffect');
-
-//logic for toggle background music function
 let isPlaying = false;
 function togglePlay() {
     isPlaying ? backgroundMusic.pause() : backgroundMusic.play();
@@ -316,12 +305,6 @@ backgroundMusic.onplaying = function() {
 backgroundMusic.onpause = function() {
     isPlaying = false;
 }
-// toggle background music onclick button functionality
-const toggleMusicButton = document.querySelector('#toggle-music');
-toggleMusicButton.addEventListener('click', (e) => {
-    togglePlay();
-    e.target.blur();
-})
 
 const movementHandler = (e) => {
     switch (e.keyCode) {
@@ -351,7 +334,6 @@ const gameLoop = () => {
     if (sheep1.lost || sheep2.lost || sheep3.lost || sheep4.lost || sheep5.lost || sheep6.lost || sheep7.lost || sheep8.lost || sheep9.lost || sheep10.lost) {
         detectHit();
     checkWin();
-    // Stops loop on win
     if (player.won) {
         return;
     } else {
@@ -396,13 +378,9 @@ const gameLoop = () => {
         })
     }
 }
-    // Hide Start Button when playing
     startButton.style.display = "none";
-    // pauseButton.style.display = "inline-block";
-    // resetButton.style.display = "inline-block";
 }
 
-// collision detection
 const detectHit = () => {
     if (player.x < sheep1.x + sheep1.width 
         && player.x + player.width > sheep1.x
@@ -468,22 +446,15 @@ const detectHit = () => {
 }
 
 let leaderboard = [];
-
-// check win condition
 function checkWin() {
     if (!sheep1.lost && !sheep2.lost && !sheep3.lost && !sheep4.lost && !sheep5.lost && !sheep6.lost && !sheep7.lost && !sheep8.lost && !sheep9.lost && !sheep10.lost) {
-        // GAME WON
         player.won = true;
-        // this removes all players from game board
         ctx.clearRect(0, 0, game.width, game.height)
         ctx.drawImage(background,0,0);
         winGame();
     }
 }
-
-// ON WIN
 function winGame () {
-    // need to push player.color and player.score to leaderboard array
     clearInterval(timer);
     player.score = currentTime;
     leaderboard.push(player);
@@ -499,22 +470,17 @@ function winGame () {
     leaderboard.sort(compare);
     leaderboard.forEach(populateLeaderboard);
 }
-
 function announceWin() {
-    // set font settings for canvas
     ctx.fillStyle = 'white'; 
     ctx.textAlign = 'center'; 
     ctx.font = '50px Comic Sans MS';
     ctx.fillText('YOU WON!', game.width/2, game.height/3);
 }
-
 function compare(a,b) {
     return a.score - b.score
 }
-
 function populateLeaderboard(item){
     // put in player avatar as well!
-    console.log(item);
     const score = document.createElement('li');
     score.setAttribute('class','score')
     score.innerText = `${item.color} ${item.score}`;
