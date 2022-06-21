@@ -70,6 +70,7 @@ body::selection {
 
 /* stop/pause and reset are hidden at load*/
 #stop,
-#reset {
+#reset,
+#resume {
     display: none;
 }

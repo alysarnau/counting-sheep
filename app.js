@@ -1,5 +1,4 @@
 // TO DO STILL
-// create pixel background
 // fix unpause functionality (it pauses properly, but needs to be able to RESTART)
 // Start button should trigger select player screen first
 // Need to implement leaderboard screen
@@ -229,6 +228,16 @@ function beginGame() {
     document.addEventListener('keydown', movementHandler)
 }
 
+function resumeGame() {
+    timer = setInterval(countUp,1000);
+    startButton.innerText = 'RUNNING';
+    if (isPlaying = true) {
+    //DISABLING BACKGROUND MUSIC FOR TESTING
+    //backgroundMusic.play();
+    }
+    document.addEventListener('keydown', movementHandler)
+}
+
 // define timer
 let timer;
 const startButton = document.querySelector('#start');
@@ -248,11 +257,27 @@ startButton.addEventListener('click', (e) => {
 // STOP/PAUSE BUTTON
 const stopButton = document.querySelector('#stop');
 stopButton.addEventListener('click', (e) => {
+    // this stops movement as well as timer
     clearInterval(timer);
+    clearInterval(gameInterval);
     startButton.innerText = 'RESTART'
     backgroundMusic.pause();
     startButton.style.pointerEvents = 'auto';
+    stopButton.style.display = 'none';
+    resumeButton.style.display = 'inline-block';
 })
+
+// functionality
+// when click start, start disappears - and pause shows up!
+// create hidden resume button that restarts gameLoop()?
+
+const resumeButton = document.querySelector('#resume');
+resumeButton.addEventListener('click', (e) => {
+    resumeGame();
+    setInterval(gameLoop,60);
+})
+
+
 // RESET BUTTON
 const resetButton = document.querySelector('#reset');
 resetButton.addEventListener('click', (e) => {
@@ -261,6 +286,8 @@ resetButton.addEventListener('click', (e) => {
     // hide pause button again
     startButton.style.display = 'inline-block';
     stopButton.style.display = 'none';
+    resumeButton.style.display = 'none';
+    resetButton.style.display = 'none';
 })
 
 function resetGame() {
