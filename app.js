@@ -1,5 +1,4 @@
 // TO DO STILL
-// Start button should trigger select player screen first
 // Need to implement leaderboard screen
 // need to set up proper button display (correct buttons displayed/hidden per whiteboard)
 // set up scrolling functionality
@@ -16,6 +15,8 @@
     // getRandomNum(4)
         //will return 0, 1, 2, or 3
         // if 0, left facing sprite; if 1, right facing sprite; if 2, up facing sprite; if 3 down facing sprite
+// create cute pre-start screen?
+// get cloud animation!
 // Persistent Leaderboard on local storage
 
 //define body 
@@ -247,10 +248,7 @@ let gameInterval;
 
 // NEED TO UPDATE THIS TO FIRE THE SELECT SCREEN
 startButton.addEventListener('click', (e) => {
-    beginGame();
-    document.addEventListener('keydown', movementHandler)
-    // delete this (duplicate) once select screen is all set
-    gameInterval = setInterval(gameLoop, 60);
+    selectScreen()
     startButton.style.pointerEvents = 'none';
     e.target.blur();
 })
