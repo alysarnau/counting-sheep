@@ -1,12 +1,13 @@
 // TO DO STILL
 // Need to implement leaderboard screen
-// need to set up proper button display (correct buttons displayed/hidden per whiteboard)
-// set up scrolling functionality
+    // hide canvas?
+    // create div container to hold scores in its place
+    // on starting new game, hide leaderboard div and unhide canvas?
 // fix unpause functionality multiple times per game (it pauses properly, but needs to be able to RESTART) 
 
 // STRETCH GOALS
 // set up Sprites as avatars
-// use sheep pixels instead of rectangles
+// use sheep sprites instead of rectangles
     // for those, use random # algos to assign up down left or right facing sprites
     // EG: () 
     // function getRandomNum(max) {
@@ -18,15 +19,13 @@
 // create cute pre-start screen?
 // get cloud animation!
 // Persistent Leaderboard on local storage
+    // push player color/sprite to leaderboard with matching winning times
 
-//define body 
 const body = document.querySelector('body');
-
-// define canvas object
+const leaderboardContainer = document.querySelector('leaderboard-container')
 const game = document.querySelector('#game-canvas');
 const ctx = game.getContext('2d');
 
-// define background
 let background = new Image();
 background.src = "./background/background_tiles.png";
 
@@ -34,11 +33,9 @@ background.onload = function() {
     ctx.drawImage(background,0,0);
 }
 
-// set width and height!
 game.setAttribute('width', getComputedStyle(game)['width']);
 game.setAttribute('height', getComputedStyle(game)['height']);
 
-// define player
 let player = {
     x: 490,
     y: 240,
@@ -70,6 +67,15 @@ class Sprite {
     }
 }
 
+let timer;
+let gameInterval;
+const startButton = document.querySelector('#start');
+const pauseButton = document.querySelector('#pause');
+const resumeButton = document.querySelector('#resume');
+const resetButton = document.querySelector('#reset');
+const leaderboardButton = document.querySelector('#leaderboard');
+const timerDisplay = document.querySelector("#timer");
+
 let spriteOne = new Sprite(250, 'yellow');
 let spriteTwo = new Sprite(400, 'red');
 let spriteThree = new Sprite(560,'blue');
@@ -91,8 +97,9 @@ class Sheep {
         }
     }
 }
-// saving this as variable so we can clear it later!
+
 let selectInterval;
+
 
 function selectScreen(){
     // adds movement
@@ -188,7 +195,6 @@ const selectHit = () => {
     } 
 }
 
-// CREATE SHEEP
 let sheep1 = new Sheep();
 let sheep2 = new Sheep();
 let sheep3 = new Sheep();
@@ -199,17 +205,13 @@ let sheep7 = new Sheep();
 let sheep8 = new Sheep();
 let sheep9 = new Sheep();
 let sheep10 = new Sheep();
-
 const lostSheepArray = [sheep1, sheep2, sheep3, sheep4, sheep5, sheep6, sheep7, sheep8, sheep9, sheep10]
-
-// define for win condition
 let foundSheepArray;
 
 // timer display and counting function
 let currentTime = 0;
-const timerDisplay = document.querySelector("#timer");
+
 timerDisplay.innerText = currentTime;
-// timer countUp function
 const countUp = () => {
     ++currentTime;
     timerDisplay.innerText = currentTime;
@@ -239,21 +241,11 @@ function resumeGame() {
     document.addEventListener('keydown', movementHandler)
 }
 
-// define timer
-let timer;
-const startButton = document.querySelector('#start');
-
-//define game interval
-let gameInterval;
-
-// NEED TO UPDATE THIS TO FIRE THE SELECT SCREEN
 startButton.addEventListener('click', (e) => {
     selectScreen()
     startButton.style.pointerEvents = 'none';
     e.target.blur();
 })
-// STOP/PAUSE BUTTON
-const pauseButton = document.querySelector('#pause');
 pauseButton.addEventListener('click', (e) => {
     // this stops movement as well as timer
     clearInterval(timer);
@@ -265,20 +257,11 @@ pauseButton.addEventListener('click', (e) => {
     resumeButton.style.display = 'inline-block';
 })
 
-// functionality
-// when click start, start disappears - and pause shows up!
-// create hidden resume button that restarts gameLoop()?
-
-const resumeButton = document.querySelector('#resume');
 resumeButton.addEventListener('click', (e) => {
     resumeGame();
     setInterval(gameLoop,60);
     resumeButton.style.display = 'none';
 })
-
-
-// RESET BUTTON
-const resetButton = document.querySelector('#reset');
 resetButton.addEventListener('click', (e) => {
     resetGame();
     // change startButtonText be visible again
@@ -286,6 +269,11 @@ resetButton.addEventListener('click', (e) => {
     pauseButton.style.display = 'none';
     resumeButton.style.display = 'none';
     resetButton.style.display = 'none';
+})
+
+leaderboardButton.addEventListener('click', (e) => {
+    console.log(leaderboard);
+    
 })
 
 function resetGame() {
