@@ -33,16 +33,17 @@ let player = {
     x: 490,
     y: 240,
     color: null,
-    width: 30,
-    height: 30,
+    width: 40,
+    height: 40,
     won: false,
     score: null,
+    src: './sprites/sprite0.png',
     render: function() {
-        ctx.fillStyle = this.color;
-        ctx.fillRect(this.x, this.y, this.width, this.height)
+        // ctx.fillStyle = this.color;
+        // ctx.fillRect(this.x, this.y, this.width, this.height)
         // WORKS! NOW JUST HAVE TO FIGURE OUT DOGGIES
         let playerSprite = document.createElement('img');
-        playerSprite.src = "./sprites/sprite0.png";
+        playerSprite.src = player.src;
         ctx.drawImage(playerSprite, this.x, this.y, this.width, this.height)
     }
 }
@@ -159,25 +160,25 @@ const selectHit = () => {
         && player.x + player.width > spriteOne.x
         && player.y < spriteOne.y + spriteOne.height
         && player.y + player.height > spriteOne.y) {
-            player.color = 'yellow';
+            player.src = './sprites/sprite0.png';
             prePlayText = confirmPlayerText;
     } else if (player.x < spriteTwo.x + spriteTwo.width 
         && player.x + player.width > spriteTwo.x
         && player.y < spriteTwo.y + spriteTwo.height
         && player.y + player.height > spriteTwo.y) {
-            player.color = 'red';
+            player.src = './sprites/sprite1.png';
             prePlayText = confirmPlayerText;
     } else if (player.x < spriteThree.x + spriteThree.width 
         && player.x + player.width > spriteThree.x
         && player.y < spriteThree.y + spriteThree.height
         && player.y + player.height > spriteThree.y) {
-            player.color = 'blue';
+            player.src = './sprites/sprite2.png';
             prePlayText = confirmPlayerText;
     } else if (player.x < spriteFour.x + spriteFour.width 
         && player.x + player.width > spriteFour.x
         && player.y < spriteFour.y + spriteFour.height
         && player.y + player.height > spriteFour.y) {
-            player.color = 'purple';
+            player.src = './sprites/sprite3.png';
             prePlayText = confirmPlayerText;
     } 
 }
