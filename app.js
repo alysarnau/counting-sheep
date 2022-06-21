@@ -486,6 +486,7 @@ function winGame () {
     startButton.innerText = 'PLAY AGAIN?'
     startButton.style.pointerEvents = 'auto';
     pauseButton.style.display = 'none';
+    leaderboard.sort(compare);
     leaderboard.forEach(populateLeaderboard);
 }
 
@@ -497,8 +498,11 @@ function announceWin() {
     ctx.fillText('YOU WON!', game.width/2, game.height/3);
 }
 
+function compare(a,b) {
+    return a.score - b.score
+}
+
 function populateLeaderboard(item){
-    // need to put these in ascending order top down!
     // put in player avatar as well!
     console.log(item);
     const score = document.createElement('li');
@@ -506,3 +510,6 @@ function populateLeaderboard(item){
     score.innerText = `${item.color} ${item.score}`;
     leaderboardList.appendChild(score);
 }
+
+
+leaderboard = [{score: 14}, {score: 73}, {score: 12}]
