@@ -32,30 +32,26 @@ game.setAttribute('height', getComputedStyle(game)['height']);
 let player = {
     x: 490,
     y: 240,
-    color: 'brown',
-    width: 20,
-    height: 20,
+    color: null,
+    width: 30,
+    height: 30,
     won: false,
     score: null,
     render: function() {
         ctx.fillStyle = this.color;
         ctx.fillRect(this.x, this.y, this.width, this.height)
         // WORKS! NOW JUST HAVE TO FIGURE OUT DOGGIES
-        // let playerSprite = document.createElement('img');
-        // playerSprite.src = "./sprites/White-sheep.png";
-        // ctx.drawImage(playerSprite, this.x, this.y, this.width, this.height)
+        let playerSprite = document.createElement('img');
+        playerSprite.src = "./sprites/sprite0.png";
+        ctx.drawImage(playerSprite, this.x, this.y, this.width, this.height)
     }
 }
 
-// sprite animation
-
-//
-
 class Sprite {
-    constructor(x,color, src) {
+    constructor(x, src) {
         this.x = x,
         this.y = 115,
-        this.color = color,
+        //this.color = color,
         this.width = 40,
         this.height = 40,
         this.chosen = false;
@@ -63,12 +59,12 @@ class Sprite {
         this.src = src;
         this.render = function() {
             // create player Images
-            // let spriteImage = document.createElement('img');
-            // spriteImage.src = `${this.src}`
-            // ctx.drawImage(spriteImage, this.x, this.y, this.width, this.height)
+            let spriteImage = document.createElement('img');
+            spriteImage.src = `${this.src}`
+            ctx.drawImage(spriteImage, this.x, this.y, this.width, this.height)
             // this creates little rectangle sprites
-            ctx.fillStyle = this.color;
-            ctx.fillRect(this.x, this.y, this.width, this.height)
+            // ctx.fillStyle = this.color;
+            // ctx.fillRect(this.x, this.y, this.width, this.height)
         }
     }
 }
@@ -85,10 +81,10 @@ const toggleMusicButton = document.querySelector('#toggle-music');
 const toggleScoresButton = document.querySelector('#toggle-leaderboard');
 const timerDisplay = document.querySelector("#timer");
 
-let spriteOne = new Sprite(250, 'yellow');
-let spriteTwo = new Sprite(400, 'red');
-let spriteThree = new Sprite(560,'blue');
-let spriteFour = new Sprite(710,'purple')
+let spriteOne = new Sprite(250, './sprites/sprite0.png');
+let spriteTwo = new Sprite(400, './sprites/sprite1.png');
+let spriteThree = new Sprite(560,'./sprites/sprite2.png');
+let spriteFour = new Sprite(710,'./sprites/sprite3.png')
 const spriteArray = [spriteOne, spriteTwo, spriteThree, spriteFour]
 
 class Sheep {
