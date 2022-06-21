@@ -1,10 +1,12 @@
 // KNOWN BUGS
 // If two sheep populate on top of each other, it can mess with the collision detection, creating an immortal sheep
 
+// BEFORE LAUNCH
+// make sure to re-enable background music on Start!
+
 // STRETCH GOALS
-// have player sprite flip left and right with left/right movement
-// create cute pre-start screen?
-// clouds https://opengameart.org/content/fluffy-clouds
+// have player sprite flip left and right with left/right movement (but make sure it defaults to right at end of game)
+// create cute pre-start screen? with canva!
 // Persistent Leaderboard on local storage
 // dog and sheep sprite animation
 
@@ -19,10 +21,6 @@ background.src = "./background/background_tiles.png";
 background.onload = function() {
     ctx.drawImage(background,0,0);
 }
-
-
-
-
 
 game.setAttribute('width', getComputedStyle(game)['width']);
 game.setAttribute('height', getComputedStyle(game)['height']);
@@ -93,26 +91,6 @@ class Sheep {
 const chooseYourPlayerText = 'Choose Your Player'
 const confirmPlayerText = 'Confirm?'
 let prePlayText;
-
-// for clouds!
-
-function updateCloud(){
-	cloud_x += 0.3;
-	if (cloud_x > width ) {
-		cloud_x = -cloud.width;
-	}
-}
-function drawCloud() {
-	ctx.drawImage(background,0,0);
-	ctx.drawImage(cloud, cloud_x, 0);
-}
-
-function startScreenLoop() {
-	drawCloud();
-	updateCloud();
-}
-
-//
 
 function selectScreen(){
     // update background from fancy screen
