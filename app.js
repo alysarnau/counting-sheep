@@ -459,6 +459,9 @@ function populateLeaderboard(){
         }
     }
     leaderboard.sort(compare);
+    while (leaderboard.length > 10) {
+        leaderboard.pop();
+    }
     leaderboard.forEach((score) => {
         const playerScore = document.createElement('li');
         playerScore.setAttribute('class','score')
