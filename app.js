@@ -8,7 +8,6 @@
 
 // STRETCH GOALS
 // have player sprite flip left and right with left/right movement (but make sure it defaults to right at end of game)
-// create cute pre-start screen? with canva!
 // Persistent Leaderboard on local storage
 // dog and sheep sprite animation
 
@@ -19,7 +18,7 @@ const game = document.querySelector('#game-canvas');
 const ctx = game.getContext('2d');
 
 let background = new Image();
-background.src = "./background/background_tiles.png";
+background.src = "./background/startScreen.png";
 background.onload = function() {
     ctx.drawImage(background,0,0);
 }
@@ -96,7 +95,7 @@ let prePlayText;
 
 function selectScreen(){
     // update background from fancy screen
-    // background.src = "./background/background_tiles.png"
+    background.src = "./background/background_tiles.png"
     timerDisplay.innerText = currentTime;
     player.x = 490;
     player.y = 240;
@@ -452,14 +451,9 @@ function checkWin() {
     }
 }
 
-// define currentWinner
-let currentWinner = {};
-
 function winGame () {
     clearInterval(timer);
     player.score = currentTime;
-    currentWinner.push(player.src);
-    currentWinner.push(player.score);
     leaderboard.push(player);
     currentTime = 0;
     player.x = 490;
