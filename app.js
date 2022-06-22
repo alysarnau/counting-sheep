@@ -258,7 +258,6 @@ resumeButton.addEventListener('click', (e) => {
 })
 resetButton.addEventListener('click', (e) => {
     resetGame();
-    // change startButtonText be visible again
     startButton.style.display = 'inline-block';
     startButton.style.pointerEvents = 'auto';
     pauseButton.style.display = 'none';
@@ -293,6 +292,7 @@ backgroundMusic.onpause = function() {
     isPlaying = false;
 }
 
+// need to refactor movement handling
 const movementHandler = (e) => {
     switch (e.keyCode) {
         case 87: case 38:
@@ -335,7 +335,6 @@ function detectHit(thing) {
 }
 
 function leftSpriteChange() {
-    // this changes image on left turn
     if (player.src === './sprites/right/sprite0.png') {
         player.src = './sprites/left/sprite0.png';
     } else if (player.src === './sprites/right/sprite1.png') {
@@ -347,7 +346,6 @@ function leftSpriteChange() {
 }
 
 function rightSpriteChange() {
-    // this changes image on right turn
     if (player.src === './sprites/left/sprite0.png') {
         player.src = './sprites/right/sprite0.png';
     } else if (player.src === './sprites/left/sprite1.png') {
@@ -369,6 +367,7 @@ const gameLoop = () => {
         if (!player.won) {
             player.render();
         }
+        // refactor this?
         if (sheep1.lost) {
             sheep1.render();
             detectHit(sheep1);
@@ -427,9 +426,11 @@ function checkWin() {
 
 function winGame () {
     clearInterval(timer);
+    clearInterval(gameInterval);
     rightSpriteChange()
+    leaderboard.push(currentTime)
     player.score = currentTime;
-    leaderboard.push(player);
+    // leaderboard.push(player);
     currentTime = 0;
     player.x = 490;
     player.y = 240;    
@@ -439,8 +440,7 @@ function winGame () {
     startButton.innerText = 'PLAY AGAIN?'
     startButton.style.pointerEvents = 'auto';
     pauseButton.style.display = 'none';
-    leaderboard.sort(compare);
-    leaderboard.forEach(populateLeaderboard);
+    populateLeaderboard(leaderboard);
 }
 function announceWin() {
     ctx.fillStyle = 'white'; 
@@ -448,18 +448,23 @@ function announceWin() {
     ctx.font = '50px Comic Sans MS';
     ctx.fillText('YOU WON!', game.width/2, game.height/3);
 }
+//changed this for numbers, not players
 function compare(a,b) {
-    return a.score - b.score
+    return a - b;
 }
-function populateLeaderboard(item){
-    // remove existing lis
-    // if (leaderboardList.hasChildNodes()) {
-    //     while (leaderboardList.firstChild) {
-    //         leaderboardList.removeChild(leaderboardList.firstChild)
-    //     }
-    // }
-    const score = document.createElement('li');
-    score.setAttribute('class','score')
-    score.innerHTML = `<img src="${item.src}" /> ${item.score}`;
-    leaderboardList.appendChild(score);
+function populateLeaderboard(){
+    if (leaderboardList.hasChildNodes()) {
+        while (leaderboardList.firstChild) {
+            leaderboardList.removeChild(leaderboardList.firstChild)
+        }
+    }
+    leaderboard.sort(compare);
+    leaderboard.forEach((score) => {
+        const playerScore = document.createElement('li');
+        playerScore.setAttribute('class','score')
+        if (typeof score === 'number') {
+            playerScore.innerText = `${score}`;
+        }
+        leaderboardList.appendChild(playerScore);
+    })
 }
