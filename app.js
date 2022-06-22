@@ -31,7 +31,7 @@ let player = {
     height: 40,
     won: false,
     score: null,
-    src: './sprites/sprite0.png',
+    src: './sprites/right/sprite0.png',
     render: function() {
         let playerSprite = document.createElement('img');
         playerSprite.src = player.src;
@@ -68,10 +68,10 @@ const toggleMusicButton = document.querySelector('#toggle-music');
 const toggleScoresButton = document.querySelector('#toggle-leaderboard');
 const timerDisplay = document.querySelector("#timer");
 
-let spriteOne = new Sprite(250, './sprites/sprite0.png');
-let spriteTwo = new Sprite(400, './sprites/sprite1.png');
-let spriteThree = new Sprite(560,'./sprites/sprite2.png');
-let spriteFour = new Sprite(710,'./sprites/sprite3.png')
+let spriteOne = new Sprite(250, './sprites/right/sprite0.png');
+let spriteTwo = new Sprite(400, './sprites/right/sprite1.png');
+let spriteThree = new Sprite(560,'./sprites/right/sprite2.png');
+let spriteFour = new Sprite(710,'./sprites/right/sprite3.png')
 const spriteArray = [spriteOne, spriteTwo, spriteThree, spriteFour]
 
 class Sheep {
@@ -157,25 +157,25 @@ const selectHit = () => {
         && player.x + player.width > spriteOne.x
         && player.y < spriteOne.y + spriteOne.height
         && player.y + player.height > spriteOne.y) {
-            player.src = './sprites/sprite0.png';
+            player.src = './sprites/right/sprite0.png';
             prePlayText = confirmPlayerText;
     } else if (player.x < spriteTwo.x + spriteTwo.width 
         && player.x + player.width > spriteTwo.x
         && player.y < spriteTwo.y + spriteTwo.height
         && player.y + player.height > spriteTwo.y) {
-            player.src = './sprites/sprite1.png';
+            player.src = './sprites/right/sprite1.png';
             prePlayText = confirmPlayerText;
     } else if (player.x < spriteThree.x + spriteThree.width 
         && player.x + player.width > spriteThree.x
         && player.y < spriteThree.y + spriteThree.height
         && player.y + player.height > spriteThree.y) {
-            player.src = './sprites/sprite2.png';
+            player.src = './sprites/right/sprite2.png';
             prePlayText = confirmPlayerText;
     } else if (player.x < spriteFour.x + spriteFour.width 
         && player.x + player.width > spriteFour.x
         && player.y < spriteFour.y + spriteFour.height
         && player.y + player.height > spriteFour.y) {
-            player.src = './sprites/sprite3.png';
+            player.src = './sprites/right/sprite3.png';
             prePlayText = confirmPlayerText;
     } 
 }
@@ -306,18 +306,23 @@ backgroundMusic.onpause = function() {
 const movementHandler = (e) => {
     switch (e.keyCode) {
         case 87: case 38:
+            //up
             if (player.y > 0) {
             player.y -= 10;}
+            // add
             break;
         case 83: case 40:
+            //down
             if ((player.y + player.height) < game.height)
             player.y += 10;
             break;
         case 65: case 37:
+            //left
             if (player.x > 0)
             {player.x -= 10;}
             break;
         case 68: case 39:
+            //right
             if ((player.x + player.width) < game.width)
             {player.x += 10;}
             break;
