@@ -1,8 +1,10 @@
 // KNOWN BUGS
 // If two sheep populate on top of each other, it can mess with the collision detection, creating an immortal sheep
+// on replay wins, the score is added to leaderboard twice
 
 // BEFORE LAUNCH
 // make sure to re-enable background music on Start!
+// doublecheck attribution and update readme
 
 // STRETCH GOALS
 // have player sprite flip left and right with left/right movement (but make sure it defaults to right at end of game)
@@ -374,7 +376,6 @@ const gameLoop = () => {
         })
     }
 }
-    //startButton.style.display = "none";
 }
 
 const detectHit = () => {
@@ -441,7 +442,7 @@ const detectHit = () => {
     }
 }
 
-let leaderboard = [];
+const leaderboard = [];
 function checkWin() {
     if (!sheep1.lost && !sheep2.lost && !sheep3.lost && !sheep4.lost && !sheep5.lost && !sheep6.lost && !sheep7.lost && !sheep8.lost && !sheep9.lost && !sheep10.lost) {
         player.won = true;
@@ -450,9 +451,15 @@ function checkWin() {
         winGame();
     }
 }
+
+// define currentWinner
+let currentWinner = {};
+
 function winGame () {
     clearInterval(timer);
     player.score = currentTime;
+    currentWinner.push(player.src);
+    currentWinner.push(player.score);
     leaderboard.push(player);
     currentTime = 0;
     player.x = 490;
@@ -476,7 +483,12 @@ function compare(a,b) {
     return a.score - b.score
 }
 function populateLeaderboard(item){
-    // put in player avatar as well!
+    // remove existing lis
+    // if (leaderboardList.hasChildNodes()) {
+    //     while (leaderboardList.firstChild) {
+    //         leaderboardList.removeChild(leaderboardList.firstChild)
+    //     }
+    // }
     const score = document.createElement('li');
     score.setAttribute('class','score')
     score.innerHTML = `<img src="${item.src}" /> ${item.score}`;

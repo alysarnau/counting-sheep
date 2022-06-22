@@ -29,20 +29,21 @@ USER STORIES
 <img src="leaderboard.png" />
 
 STRETCH GOALS:
-// sprites!  (diff corgis as option)
 // animate sprites through movement frames
 // Wolves (other obstacles) that you need to avoid
     // 10 wolves will also be populated on the map (randomly???) and will move randomly (not much)
     // stretch goal: be able to set difficulty by increasing movement speed and movement distance for wolves
     // on collision of wolf and corgi, 'snarl' sound effect will trigger and the player's time will have 5 seconds added to it!
 // PERSISTENT LEARDERBOARD
-// CLOUDS [notes for how to get clouds! https://silveiraneto.net/2011/06/02/simple-html5-animation-clouds-over-background/]
 
 TECHNOLOGIES USED:
+- HTML, CSS, JavaScript
 
-APPRACH TAKEN:
+APPROACH TAKEN:
 
 KNOWN BUGS/TO FIX:
+// If two sheep populate on top of each other, it can mess with the collision detection, creating an immortal sheep
+
 
 ATTRIBUTION:
 Sheep asset courtesy: https://bobkatt.itch.io/
