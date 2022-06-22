@@ -1,10 +1,6 @@
-// TO DO'S
-// Refactor Gameloop
-
 // KNOWN BUGS
 
 // BEFORE LAUNCH
-// make sure to re-enable background music on Start!
 // doublecheck attribution and update readme
 
 // STRETCH GOALS
@@ -22,16 +18,14 @@ background.src = "./background/startScreen.png";
 background.onload = function() {
     ctx.drawImage(background,0,0);
 }
-
+game.setAttribute('width', getComputedStyle(game)['width']);
+game.setAttribute('height', getComputedStyle(game)['height']);
 document.addEventListener('keydown', (e) => {
     if (e.code == 'Space') {
         console.log= e.code;
         bark.play()
     }
 })
-
-game.setAttribute('width', getComputedStyle(game)['width']);
-game.setAttribute('height', getComputedStyle(game)['height']);
 
 class Dog {
     constructor() {
@@ -265,8 +259,7 @@ function beginGame() {
     timer = setInterval(countUp,1000);
     startButton.innerText = 'RUNNING';
     if (isPlaying = true) {
-    //DISABLING BACKGROUND MUSIC FOR TESTING
-    //backgroundMusic.play();
+    backgroundMusic.play();
     }
     trackMovement();
     player.movePlayer();
@@ -278,8 +271,7 @@ function resumeGame() {
     timer = setInterval(countUp,1000);
     startButton.innerText = 'RUNNING';
     if (isPlaying = true) {
-    //DISABLING BACKGROUND MUSIC FOR TESTING
-    //backgroundMusic.play();
+    backgroundMusic.play();
     }
     startButton.style.display = "none";
     trackMovement();
@@ -394,47 +386,12 @@ const gameLoop = () => {
         if (!player.won) {
             player.render();
         }
-        // refactor this?
-        if (sheep1.lost) {
-            sheep1.render();
-            detectHit(sheep1);
-        } 
-        if (sheep2.lost) {
-            sheep2.render();
-            detectHit(sheep2);
-        }
-        if (sheep3.lost) {
-            sheep3.render();
-            detectHit(sheep3);
-        }
-        if (sheep4.lost) {
-            sheep4.render();
-            detectHit(sheep4);
-        }
-        if (sheep5.lost) {
-            sheep5.render();
-            detectHit(sheep5);
-        }
-        if (sheep6.lost) {
-            sheep6.render();
-            detectHit(sheep6);
-        }
-        if (sheep7.lost) {
-            sheep7.render();
-            detectHit(sheep7);
-        }
-        if (sheep8.lost) {
-            sheep8.render();
-            detectHit(sheep8);
-        }
-        if (sheep9.lost) {
-            sheep9.render();
-            detectHit(sheep9);
-        }
-        if (sheep10.lost) {
-            sheep10.render();
-            detectHit(sheep10);
-        }
+        lostSheepArray.forEach((lostSheep) => {
+            if (lostSheep.lost) {
+                lostSheep.render();
+                detectHit(lostSheep);
+            }
+        })
         foundSheepArray = lostSheepArray.map(sheep => {
             return (!sheep.lost)
         })
