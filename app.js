@@ -1,11 +1,7 @@
 // TO DO'S
-// RE-COMPLICATE LEADERBOARD
-// set up keydown listener for bark sound 
-    // 32:
-    //             bark.play();
+// Refactor Gameloop
 
 // KNOWN BUGS
-// get background music to loop!
 
 // BEFORE LAUNCH
 // make sure to re-enable background music on Start!
@@ -26,6 +22,13 @@ background.src = "./background/startScreen.png";
 background.onload = function() {
     ctx.drawImage(background,0,0);
 }
+
+document.addEventListener('keydown', (e) => {
+    if (e.code == 'Space') {
+        console.log= e.code;
+        bark.play()
+    }
+})
 
 game.setAttribute('width', getComputedStyle(game)['width']);
 game.setAttribute('height', getComputedStyle(game)['height']);
@@ -344,6 +347,7 @@ toggleMusicButton.addEventListener('click', (e) => {
 const backgroundMusic = new Audio('./soundeffects/backgroundmusic.mp3')
 const bark = new Audio('./soundeffects/dog-bark.wav');
 const baa = new Audio('./soundeffects/baa.wav');
+backgroundMusic.loop = true;
 bark.loop = false;
 baa.loop = false;
 let isPlaying = false;
@@ -453,7 +457,6 @@ function winGame () {
     rightSpriteChange()
     leaderboard.push(currentTime)
     player.score = currentTime;
-    // leaderboard.push(player);
     currentTime = 0;
     player.x = 490;
     player.y = 240;    
@@ -471,7 +474,7 @@ function announceWin() {
     ctx.font = '50px Comic Sans MS';
     ctx.fillText('YOU WON!', game.width/2, game.height/3);
 }
-//changed this for numbers, not players
+
 function compare(a,b) {
     return a - b;
 }
