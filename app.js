@@ -28,15 +28,84 @@ background.onload = function() {
 game.setAttribute('width', getComputedStyle(game)['width']);
 game.setAttribute('height', getComputedStyle(game)['height']);
 
-let player = {
-    x: 490,
-    y: 240,
-    width: 40,
-    height: 40,
-    won: false,
-    score: null,
-    src: './sprites/right/sprite0.png',
-    render: function() {
+// let player = {
+//     x: 490,
+//     y: 240,
+//     width: 40,
+//     height: 40,
+//     won: false,
+//     score: null,
+//     src: './sprites/right/sprite0.png',
+//     render: function() {
+//         let playerSprite = document.createElement('img');
+//         playerSprite.src = player.src;
+//         ctx.drawImage(playerSprite, this.x, this.y, this.width, this.height)
+//     }
+// }
+class Dog {
+    constructor() {
+        this.x = 490,
+        this.y = 240,
+        this.width = 40,
+        this.height = 40,
+        this.won = false,
+        this.score = null,
+        this.speed = 10,
+        this.src = './sprites/right/sprite0.png',
+        this.direction = {
+            up: false,
+            down: false,
+            left: false,
+            right: false
+        }
+    }
+    setDirection = function (key) {
+        if (key.toLowerCase() == 'w') { this.direction.up = true }
+        if (key.toLowerCase() == 'a') { this.direction.left = true }
+        if (key.toLowerCase() == 's') { this.direction.down = true }
+        if (key.toLowerCase() == 'd') { this.direction.right = true }
+    }
+    unSetDirection = function (key) {
+        if (key.toLowerCase() == 'w') { this.direction.up = false }
+        if (key.toLowerCase() == 'a') { this.direction.left = false }
+        if (key.toLowerCase() == 's') { this.direction.down = false }
+        if (key.toLowerCase() == 'd') { this.direction.right = false }
+    }
+    movePlayer = function () {
+        // move player looks at the direction, and sends the guy flying in whatever direction is true
+        if (this.direction.up) {
+            this.y -= this.speed
+            // bc we're tracking up movement, let's stop our player
+            // from exiting the top of the canvas
+            if (this.y <= 0) {
+                this.y = 0
+            }
+        }
+        if (this.direction.left) {
+            this.x -= this.speed
+            // bc we're tracking the left moves, stop him at left edge
+            if (this.x <= 0) {
+                this.x = 0
+            }
+        }
+        if (this.direction.down) {
+            this.y += this.speed
+
+            // this tracks down movement, so we need to consider the height
+            if (this.y + this.height >= game.height) {
+                this.y = game.height - this.height
+            }
+        }
+        if (this.direction.right) {
+            this.x += this.speed
+
+            // this tracks right movement, so we need to consider the width
+            if (this.x + this.width >= game.width) {
+                this.x = game.width - this.width
+            }
+        }
+    }
+    render = function () {
         let playerSprite = document.createElement('img');
         playerSprite.src = player.src;
         ctx.drawImage(playerSprite, this.x, this.y, this.width, this.height)
@@ -59,6 +128,8 @@ class Sprite {
         }
     }
 }
+
+let player = new Dog();
 
 let timer;
 let gameInterval;
@@ -92,6 +163,18 @@ class Sheep {
         }
     }
 }
+//handles movement
+function trackMovement() {
+    // two new event handlers are needed, one for keyup and one for keydown
+    document.addEventListener('keydown', (e) => {
+        player.setDirection(e.key)
+    })
+    document.addEventListener('keyup', (e) => {
+        if (['w', 'a', 's', 'd'].includes(e.key)) {
+            player.unSetDirection(e.key)
+        }
+    })
+}
 
 const chooseYourPlayerText = 'Choose Your Player'
 const confirmPlayerText = 'Confirm?'
@@ -104,7 +187,6 @@ function selectScreen(){
     player.y = 240;
     currentTime = 0;
     prePlayText = chooseYourPlayerText;
-    document.addEventListener('keydown', movementHandler);
     selectInterval = setInterval(selectLoop, 60);
     startButton.style.display = 'none';
     resetButton.style.display = 'inline-block'
@@ -118,6 +200,8 @@ function selectLoop() {
     ctx.textAlign = "center"; 
     ctx.font = "50px Comic Sans MS";
     ctx.fillText(prePlayText, game.width/2, (2*game.height)/3);
+    trackMovement();
+    player.movePlayer();
     if (!spriteOne.delete) {
         spriteOne.render();
         selectHit(spriteOne);
