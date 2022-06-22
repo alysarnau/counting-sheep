@@ -1,4 +1,7 @@
-//CHECK MOVEMENT
+// TO DOS
+//REFACTOR MOVEMENT
+//REFACTOR HIT DETECTION
+//SIMPLIFY BUT FIX LEADERBOARD
 
 // KNOWN BUGS
 // If two sheep populate on top of each other, it can mess with the collision detection, creating an immortal sheep
@@ -29,6 +32,8 @@ game.setAttribute('width', getComputedStyle(game)['width']);
 game.setAttribute('height', getComputedStyle(game)['height']);
 
 let player = {
+    x: 490,
+    y: 240,
     width: 40,
     height: 40,
     won: false,
@@ -326,6 +331,7 @@ const movementHandler = (e) => {
             break;
         case 68: case 39:
             //right
+            rightSpriteChange()
             if ((player.x + player.width) < game.width)
             {player.x += 10;}
             break;
@@ -333,6 +339,19 @@ const movementHandler = (e) => {
             bark.play();
         default:
     }
+}
+
+//DETECT HIT STILL NOT WORKING
+function detectHit(thing) {
+    // we'll use one big if statement that clearly defines any moment of collision.
+    // that means utilizing, x, y, width and height of our objects
+    if (player.x < thing.x + thing.width
+        && player.x + player.width > thing.x
+        && player.y < thing.y + thing.height
+        && player.y + player.height > thing.y) {
+            thing.lost = false;
+            baa.play();
+        }
 }
 
 function leftSpriteChange() {
@@ -375,33 +394,43 @@ const gameLoop = () => {
         }
         if (sheep1.lost) {
             sheep1.render();
+            detectHit(sheep1);
         } 
         if (sheep2.lost) {
             sheep2.render();
+            //detectHit(sheep2);
         }
         if (sheep3.lost) {
             sheep3.render();
+            //detectHit(sheep3);
         }
         if (sheep4.lost) {
             sheep4.render();
+            //detectHit(sheep4);
         }
         if (sheep5.lost) {
             sheep5.render();
+            //detectHit(sheep5);
         }
         if (sheep6.lost) {
             sheep6.render();
+            //detectHit(sheep6);
         }
         if (sheep7.lost) {
             sheep7.render();
+            //detectHit(sheep7);
         }
         if (sheep8.lost) {
             sheep8.render();
+            //detectHit(sheep8);
         }
         if (sheep9.lost) {
             sheep9.render();
+            //detectHit(sheep9);
         }
         if (sheep10.lost) {
             sheep10.render();
+            //detectHit(sheep10);
         }
         foundSheepArray = lostSheepArray.map(sheep => {
             return (!sheep.lost)
@@ -410,69 +439,69 @@ const gameLoop = () => {
 }
 }
 
-const detectHit = () => {
-    if (player.x < sheep1.x + sheep1.width 
-        && player.x + player.width > sheep1.x
-        && player.y < sheep1.y + sheep1.height
-        && player.y + player.height > sheep1.y) {
-            baa.play();
-            sheep1.lost = false;
-    } else if (player.x < sheep2.x + sheep2.width 
-        && player.x + player.width > sheep2.x
-        && player.y < sheep2.y + sheep2.height
-        && player.y + player.height > sheep2.y) {
-            baa.play();
-            sheep2.lost = false;
-    } else if (player.x < sheep3.x + sheep3.width 
-        && player.x + player.width > sheep3.x
-        && player.y < sheep3.y + sheep3.height
-        && player.y + player.height > sheep3.y) {
-            baa.play();
-            sheep3.lost = false;
-    } else if (player.x < sheep4.x + sheep4.width 
-        && player.x + player.width > sheep4.x
-        && player.y < sheep4.y + sheep4.height
-        && player.y + player.height > sheep4.y) {
-            baa.play();
-            sheep4.lost = false;
-    } else if (player.x < sheep5.x + sheep5.width 
-        && player.x + player.width > sheep5.x
-        && player.y < sheep5.y + sheep5.height
-        && player.y + player.height > sheep5.y) {
-            baa.play();
-            sheep5.lost = false;
-    } else if (player.x < sheep6.x + sheep6.width 
-        && player.x + player.width > sheep6.x
-        && player.y < sheep6.y + sheep6.height
-        && player.y + player.height > sheep6.y) {
-            baa.play();
-            sheep6.lost = false;
-    } else if (player.x < sheep7.x + sheep7.width 
-        && player.x + player.width > sheep7.x
-        && player.y < sheep7.y + sheep7.height
-        && player.y + player.height > sheep7.y) {
-            baa.play();
-            sheep7.lost = false;
-    } else if (player.x < sheep8.x + sheep8.width 
-        && player.x + player.width > sheep8.x
-        && player.y < sheep8.y + sheep8.height
-        && player.y + player.height > sheep8.y) {
-            baa.play();
-            sheep8.lost = false;
-    } else if (player.x < sheep9.x + sheep9.width 
-        && player.x + player.width > sheep9.x
-        && player.y < sheep9.y + sheep9.height
-        && player.y + player.height > sheep9.y) {
-            baa.play();
-            sheep9.lost = false;
-    } else if (player.x < sheep10.x + sheep10.width 
-        && player.x + player.width > sheep10.x
-        && player.y < sheep10.y + sheep10.height
-        && player.y + player.height > sheep10.y) {
-            baa.play();
-            sheep10.lost = false;
-    }
-}
+// const detectHit = () => {
+//     if (player.x < sheep1.x + sheep1.width 
+//         && player.x + player.width > sheep1.x
+//         && player.y < sheep1.y + sheep1.height
+//         && player.y + player.height > sheep1.y) {
+//             baa.play();
+//             sheep1.lost = false;
+//     } else if (player.x < sheep2.x + sheep2.width 
+//         && player.x + player.width > sheep2.x
+//         && player.y < sheep2.y + sheep2.height
+//         && player.y + player.height > sheep2.y) {
+//             baa.play();
+//             sheep2.lost = false;
+//     } else if (player.x < sheep3.x + sheep3.width 
+//         && player.x + player.width > sheep3.x
+//         && player.y < sheep3.y + sheep3.height
+//         && player.y + player.height > sheep3.y) {
+//             baa.play();
+//             sheep3.lost = false;
+//     } else if (player.x < sheep4.x + sheep4.width 
+//         && player.x + player.width > sheep4.x
+//         && player.y < sheep4.y + sheep4.height
+//         && player.y + player.height > sheep4.y) {
+//             baa.play();
+//             sheep4.lost = false;
+//     } else if (player.x < sheep5.x + sheep5.width 
+//         && player.x + player.width > sheep5.x
+//         && player.y < sheep5.y + sheep5.height
+//         && player.y + player.height > sheep5.y) {
+//             baa.play();
+//             sheep5.lost = false;
+//     } else if (player.x < sheep6.x + sheep6.width 
+//         && player.x + player.width > sheep6.x
+//         && player.y < sheep6.y + sheep6.height
+//         && player.y + player.height > sheep6.y) {
+//             baa.play();
+//             sheep6.lost = false;
+//     } else if (player.x < sheep7.x + sheep7.width 
+//         && player.x + player.width > sheep7.x
+//         && player.y < sheep7.y + sheep7.height
+//         && player.y + player.height > sheep7.y) {
+//             baa.play();
+//             sheep7.lost = false;
+//     } else if (player.x < sheep8.x + sheep8.width 
+//         && player.x + player.width > sheep8.x
+//         && player.y < sheep8.y + sheep8.height
+//         && player.y + player.height > sheep8.y) {
+//             baa.play();
+//             sheep8.lost = false;
+//     } else if (player.x < sheep9.x + sheep9.width 
+//         && player.x + player.width > sheep9.x
+//         && player.y < sheep9.y + sheep9.height
+//         && player.y + player.height > sheep9.y) {
+//             baa.play();
+//             sheep9.lost = false;
+//     } else if (player.x < sheep10.x + sheep10.width 
+//         && player.x + player.width > sheep10.x
+//         && player.y < sheep10.y + sheep10.height
+//         && player.y + player.height > sheep10.y) {
+//             baa.play();
+//             sheep10.lost = false;
+//     }
+// }
 
 const leaderboard = [];
 function checkWin() {
