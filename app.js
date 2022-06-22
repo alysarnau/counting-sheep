@@ -1,12 +1,3 @@
-// KNOWN BUGS
-
-// BEFORE LAUNCH
-// doublecheck attribution and update readme
-
-// STRETCH GOALS
-// Persistent Leaderboard on local storage
-// dog and sheep sprite animation
-
 const body = document.querySelector('body');
 const leaderboardContainer = document.querySelector('#leaderboard-container')
 const leaderboardList = document.querySelector('#leaderboard-list');
@@ -240,7 +231,6 @@ let sheep8 = new Sheep();
 let sheep9 = new Sheep();
 let sheep10 = new Sheep();
 const lostSheepArray = [sheep1, sheep2, sheep3, sheep4, sheep5, sheep6, sheep7, sheep8, sheep9, sheep10]
-let foundSheepArray;
 
 let currentTime = 0;
 timerDisplay.innerText = currentTime;
@@ -399,9 +389,6 @@ const gameLoop = () => {
                 lostSheep.render();
                 detectHit(lostSheep);
             }
-        })
-        foundSheepArray = lostSheepArray.map(sheep => {
-            return (!sheep.lost)
         })
     }
 }
