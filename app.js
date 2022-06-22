@@ -318,6 +318,7 @@ const movementHandler = (e) => {
             break;
         case 65: case 37:
             //left
+            spriteChange()
             if (player.x > 0)
             {player.x -= 10;}
             break;
@@ -329,6 +330,20 @@ const movementHandler = (e) => {
         case 32:
             bark.play();
         default:
+    }
+}
+
+function spriteChange() {
+    // this changes image on left or right turn
+    // left turns
+    if (player.src === './sprites/right/sprite0.png') {
+        player.src = './sprites/left/sprite0.png';
+    } else if (player.src === './sprites/right/sprite1.png') {
+        player.src = './sprites/left/sprite1.png';
+    } else if (player.src === './sprites/right/sprite2.png') {
+        player.src = './sprites/left/sprite2.png';
+    } else if (player.src === './sprites/right/sprite3.png') {
+        player.src = './sprites/left/sprite3.png';
     }
 }
 
