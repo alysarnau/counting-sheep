@@ -161,8 +161,6 @@ let prePlayText;
 function selectScreen(){
     background.src = "./background/background_tiles.png"
     timerDisplay.innerText = currentTime;
-    player.x = 490;
-    player.y = 240;
     currentTime = 0;
     prePlayText = chooseYourPlayerText;
     selectInterval = setInterval(selectLoop, 60);
@@ -282,6 +280,7 @@ function resetGame() {
     currentTime = 0;
     clearInterval(selectInterval);
     clearInterval(gameInterval);
+    resetPlayerPosition();
     timerDisplay.innerText = currentTime;
     startButton.innerText = 'START'
     backgroundMusic.pause();
@@ -294,6 +293,13 @@ function resetGame() {
         sheep.lost = false;
     });
     player.won = true;
+}
+
+function resetPlayerPosition() {
+    player.x = 490;
+    player.y = 240;
+    rightSpriteChange();
+    player.src = './sprites/right/sprite0.png';
 }
 
 startButton.addEventListener('click', (e) => {
@@ -410,15 +416,13 @@ function checkWin() {
     }
 }
 
+
 function winGame () {
     clearInterval(timer);
     clearInterval(gameInterval);
-    rightSpriteChange()
-    leaderboard.push(currentTime)
-    player.score = currentTime;
+    leaderboard.push(currentTime);
     currentTime = 0;
-    player.x = 490;
-    player.y = 240;    
+    resetPlayerPosition();
     player.render();
     announceWin();
     startButton.style.display = 'inline-block';
