@@ -280,12 +280,14 @@ function resumeGame() {
 function resetGame() {
     clearInterval(timer);
     currentTime = 0;
+    clearInterval(selectInterval);
     clearInterval(gameInterval);
     timerDisplay.innerText = currentTime;
     startButton.innerText = 'START'
     backgroundMusic.pause();
     startButton.style.pointerEvents = 'inline-block';
     ctx.clearRect(0, 0, game.width, game.height);
+    background.src = "./background/startScreen.png";
     ctx.drawImage(background,0,0);
     startButton.style.display = "inline-block";
     lostSheepArray.forEach((sheep) => {
