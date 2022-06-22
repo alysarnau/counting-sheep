@@ -1,9 +1,11 @@
 // TO DO'S
-// REFACTOR MOVEMENT
 // RE-COMPLICATE LEADERBOARD
+// set up keydown listener for bark sound 
+    // 32:
+    //             bark.play();
 
 // KNOWN BUGS
-// 
+// get background music to loop!
 
 // BEFORE LAUNCH
 // make sure to re-enable background music on Start!
@@ -28,20 +30,6 @@ background.onload = function() {
 game.setAttribute('width', getComputedStyle(game)['width']);
 game.setAttribute('height', getComputedStyle(game)['height']);
 
-// let player = {
-//     x: 490,
-//     y: 240,
-//     width: 40,
-//     height: 40,
-//     won: false,
-//     score: null,
-//     src: './sprites/right/sprite0.png',
-//     render: function() {
-//         let playerSprite = document.createElement('img');
-//         playerSprite.src = player.src;
-//         ctx.drawImage(playerSprite, this.x, this.y, this.width, this.height)
-//     }
-// }
 class Dog {
     constructor() {
         this.x = 490,
@@ -72,34 +60,28 @@ class Dog {
         if (key.toLowerCase() == 'd') { this.direction.right = false }
     }
     movePlayer = function () {
-        // move player looks at the direction, and sends the guy flying in whatever direction is true
         if (this.direction.up) {
             this.y -= this.speed
-            // bc we're tracking up movement, let's stop our player
-            // from exiting the top of the canvas
             if (this.y <= 0) {
                 this.y = 0
             }
         }
         if (this.direction.left) {
             this.x -= this.speed
-            // bc we're tracking the left moves, stop him at left edge
+            leftSpriteChange()
             if (this.x <= 0) {
                 this.x = 0
             }
         }
         if (this.direction.down) {
             this.y += this.speed
-
-            // this tracks down movement, so we need to consider the height
             if (this.y + this.height >= game.height) {
                 this.y = game.height - this.height
             }
         }
         if (this.direction.right) {
             this.x += this.speed
-
-            // this tracks right movement, so we need to consider the width
+            rightSpriteChange()
             if (this.x + this.width >= game.width) {
                 this.x = game.width - this.width
             }
@@ -163,9 +145,8 @@ class Sheep {
         }
     }
 }
-//handles movement
+
 function trackMovement() {
-    // two new event handlers are needed, one for keyup and one for keydown
     document.addEventListener('keydown', (e) => {
         player.setDirection(e.key)
     })
@@ -243,12 +224,12 @@ const confirmStart = () => {
     gameInterval = setInterval(gameLoop, 60);
 }
 
-function selectHit(thing) {
-    if (player.x < thing.x + thing.width
-        && player.x + player.width > thing.x
-        && player.y < thing.y + thing.height
-        && player.y + player.height > thing.y) {
-            player.src = thing.src
+function selectHit(sprite) {
+    if (player.x < sprite.x + sprite.width
+        && player.x + player.width > sprite.x
+        && player.y < sprite.y + sprite.height
+        && player.y + player.height > sprite.y) {
+            player.src = sprite.src
             prePlayText = confirmPlayerText;
         }
 }
@@ -284,7 +265,8 @@ function beginGame() {
     //DISABLING BACKGROUND MUSIC FOR TESTING
     //backgroundMusic.play();
     }
-    document.addEventListener('keydown', movementHandler)
+    trackMovement();
+    player.movePlayer();
     pauseButton.style.display = "inline-block";
     resetButton.style.display = "inline-block";
     startButton.style.display = "none";
@@ -297,7 +279,8 @@ function resumeGame() {
     //backgroundMusic.play();
     }
     startButton.style.display = "none";
-    document.addEventListener('keydown', movementHandler)
+    trackMovement();
+    player.movePlayer();
 }
 function resetGame() {
     clearInterval(timer);
@@ -326,7 +309,6 @@ startButton.addEventListener('click', (e) => {
 pauseButton.addEventListener('click', (e) => {
     clearInterval(timer);
     clearInterval(gameInterval);
-    document.removeEventListener('keydown', movementHandler)
     startButton.innerText = 'RESTART'
     backgroundMusic.pause();
     startButton.style.pointerEvents = 'auto';
@@ -375,38 +357,6 @@ backgroundMusic.onpause = function() {
     isPlaying = false;
 }
 
-// need to refactor movement handling
-const movementHandler = (e) => {
-    switch (e.keyCode) {
-        case 87: case 38:
-            //up
-            if (player.y > 0) {
-            player.y -= 10;}
-            // add
-            break;
-        case 83: case 40:
-            //down
-            if ((player.y + player.height) < game.height)
-            player.y += 10;
-            break;
-        case 65: case 37:
-            //left
-            leftSpriteChange()
-            if (player.x > 0)
-            {player.x -= 10;}
-            break;
-        case 68: case 39:
-            //right
-            rightSpriteChange()
-            if ((player.x + player.width) < game.width)
-            {player.x += 10;}
-            break;
-        case 32:
-            bark.play();
-        default:
-    }
-}
-
 function detectHit(thing) {
     if (player.x < thing.x + thing.width
         && player.x + player.width > thing.x
@@ -418,29 +368,19 @@ function detectHit(thing) {
 }
 
 function leftSpriteChange() {
-    if (player.src === './sprites/right/sprite0.png') {
-        player.src = './sprites/left/sprite0.png';
-    } else if (player.src === './sprites/right/sprite1.png') {
-        player.src = './sprites/left/sprite1.png';
-    } else if (player.src === './sprites/right/sprite2.png') {
-        player.src = './sprites/left/sprite2.png';
-    } else if (player.src === './sprites/right/sprite3.png') {
-        player.src = './sprites/left/sprite3.png';}
+    if (player.src.includes('right')) {
+        player.src = player.src.replace('right', 'left')
+    }
 }
-
 function rightSpriteChange() {
-    if (player.src === './sprites/left/sprite0.png') {
-        player.src = './sprites/right/sprite0.png';
-    } else if (player.src === './sprites/left/sprite1.png') {
-        player.src = './sprites/right/sprite1.png';
-    } else if (player.src === './sprites/left/sprite2.png') {
-        player.src = './sprites/right/sprite2.png';
-    } else if (player.src === './sprites/left/sprite3.png') {
-        player.src = './sprites/right/sprite3.png';
+    if (player.src.includes('left')) {
+        player.src = player.src.replace('left', 'right')
     }
 }
 
 const gameLoop = () => {
+    trackMovement();
+    player.movePlayer();
     checkWin();
     if (player.won) {
         return;
