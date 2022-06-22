@@ -1,6 +1,5 @@
-// TO DOS
+// TO DO'S
 //REFACTOR MOVEMENT
-//REFACTOR HIT DETECTION
 //SIMPLIFY BUT FIX LEADERBOARD
 
 // KNOWN BUGS
@@ -12,7 +11,6 @@
 // doublecheck attribution and update readme
 
 // STRETCH GOALS
-// have player sprite flip left and right with left/right movement (but make sure it defaults to right at end of game)
 // Persistent Leaderboard on local storage
 // dog and sheep sprite animation
 
@@ -101,7 +99,6 @@ const confirmPlayerText = 'Confirm?'
 let prePlayText;
 
 function selectScreen(){
-    // update background from fancy screen
     background.src = "./background/background_tiles.png"
     timerDisplay.innerText = currentTime;
     player.x = 490;
@@ -112,7 +109,6 @@ function selectScreen(){
     selectInterval = setInterval(selectLoop, 60);
     startButton.style.display = 'none';
     resetButton.style.display = 'inline-block'
-
 }
 
 
@@ -125,18 +121,22 @@ function selectLoop() {
     ctx.fillText(prePlayText, game.width/2, (2*game.height)/3);
     if (!spriteOne.delete) {
         spriteOne.render();
+        selectHit(spriteOne);
     }
     if (!spriteTwo.delete) {
         spriteTwo.render();
+        selectHit(spriteTwo);
     }
     if (!spriteThree.delete) {
         spriteThree.render();
+        selectHit(spriteThree);
     }
     if (!spriteFour.delete) {
         spriteFour.render();
+        selectHit(spriteFour);
     }
     player.render();
-    selectHit();
+    //selectHit();
     if (prePlayText === confirmPlayerText) {
         confirmSelect();
     }
@@ -157,34 +157,17 @@ const confirmStart = () => {
     ctx.clearRect(0, 0, game.width, game.height);
     ctx.drawImage(background,0,0);
     beginGame();
-    gameinterval = setInterval(gameLoop, 60);
+    gameInterval = setInterval(gameLoop, 60);
 }
-const selectHit = () => {
-    if (player.x < spriteOne.x + spriteOne.width 
-        && player.x + player.width > spriteOne.x
-        && player.y < spriteOne.y + spriteOne.height
-        && player.y + player.height > spriteOne.y) {
-            player.src = './sprites/right/sprite0.png';
+
+function selectHit(thing) {
+    if (player.x < thing.x + thing.width
+        && player.x + player.width > thing.x
+        && player.y < thing.y + thing.height
+        && player.y + player.height > thing.y) {
+            player.src = thing.src
             prePlayText = confirmPlayerText;
-    } else if (player.x < spriteTwo.x + spriteTwo.width 
-        && player.x + player.width > spriteTwo.x
-        && player.y < spriteTwo.y + spriteTwo.height
-        && player.y + player.height > spriteTwo.y) {
-            player.src = './sprites/right/sprite1.png';
-            prePlayText = confirmPlayerText;
-    } else if (player.x < spriteThree.x + spriteThree.width 
-        && player.x + player.width > spriteThree.x
-        && player.y < spriteThree.y + spriteThree.height
-        && player.y + player.height > spriteThree.y) {
-            player.src = './sprites/right/sprite2.png';
-            prePlayText = confirmPlayerText;
-    } else if (player.x < spriteFour.x + spriteFour.width 
-        && player.x + player.width > spriteFour.x
-        && player.y < spriteFour.y + spriteFour.height
-        && player.y + player.height > spriteFour.y) {
-            player.src = './sprites/right/sprite3.png';
-            prePlayText = confirmPlayerText;
-    } 
+        }
 }
 
 let sheep1 = new Sheep();
