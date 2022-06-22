@@ -1,10 +1,9 @@
 // TO DO'S
-//REFACTOR MOVEMENT
-//SIMPLIFY BUT FIX LEADERBOARD
+// REFACTOR MOVEMENT
+// RE-COMPLICATE LEADERBOARD
 
 // KNOWN BUGS
-// If two sheep populate on top of each other, it can mess with the collision detection, creating an immortal sheep
-// on replay wins, the score is added to leaderboard twice
+// 
 
 // BEFORE LAUNCH
 // make sure to re-enable background music on Start!
