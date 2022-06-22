@@ -1,3 +1,5 @@
+//CHECK MOVEMENT
+
 // KNOWN BUGS
 // If two sheep populate on top of each other, it can mess with the collision detection, creating an immortal sheep
 // on replay wins, the score is added to leaderboard twice
@@ -318,7 +320,7 @@ const movementHandler = (e) => {
             break;
         case 65: case 37:
             //left
-            spriteChange()
+            leftSpriteChange()
             if (player.x > 0)
             {player.x -= 10;}
             break;
@@ -333,9 +335,8 @@ const movementHandler = (e) => {
     }
 }
 
-function spriteChange() {
-    // this changes image on left or right turn
-    // left turns
+function leftSpriteChange() {
+    // this changes image on left turn
     if (player.src === './sprites/right/sprite0.png') {
         player.src = './sprites/left/sprite0.png';
     } else if (player.src === './sprites/right/sprite1.png') {
@@ -343,7 +344,19 @@ function spriteChange() {
     } else if (player.src === './sprites/right/sprite2.png') {
         player.src = './sprites/left/sprite2.png';
     } else if (player.src === './sprites/right/sprite3.png') {
-        player.src = './sprites/left/sprite3.png';
+        player.src = './sprites/left/sprite3.png';}
+}
+
+function rightSpriteChange() {
+    // this changes image on right turn
+    if (player.src === './sprites/left/sprite0.png') {
+        player.src = './sprites/right/sprite0.png';
+    } else if (player.src === './sprites/left/sprite1.png') {
+        player.src = './sprites/right/sprite1.png';
+    } else if (player.src === './sprites/left/sprite2.png') {
+        player.src = './sprites/right/sprite2.png';
+    } else if (player.src === './sprites/left/sprite3.png') {
+        player.src = './sprites/right/sprite3.png';
     }
 }
 
