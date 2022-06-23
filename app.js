@@ -1,6 +1,5 @@
 // TO DO
-// SET UP CONDITIONAL SO WAGGING DOG IMAGE MATCHES PLAYER IMAGE
-// add happy sheep?
+// add happy sheep to bottom of winScreen
 
 const body = document.querySelector('body');
 const leaderboardContainer = document.querySelector('#leaderboard-container')
