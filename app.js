@@ -27,7 +27,7 @@ class Dog {
         this.won = false,
         this.score = null,
         this.speed = 10,
-        this.src = './sprites/right/sprite0.png',
+        this.src = null,
         this.direction = {
             up: false,
             down: false,
@@ -100,6 +100,7 @@ class Sprite {
 }
 
 let player = new Dog();
+player.src = './sprites/right/sprite0.png'
 
 let timer;
 let gameInterval;
@@ -151,7 +152,7 @@ const confirmPlayerText = 'Confirm?'
 let prePlayText;
 
 function selectScreen(){
-    clearInterval(waggingAnimation);
+    clearInterval(winAnimation);
     background.src = "./background/background_tiles.png"
     timerDisplay.innerText = currentTime;
     currentTime = 0;
@@ -283,14 +284,14 @@ function resetGame() {
         sheep.lost = false;
     });
     player.won = true;
-    clearInterval(waggingAnimation)
+    clearInterval(winAnimation)
 }
 
 function resetPlayerPosition() {
     player.x = 490;
     player.y = 240;
     rightSpriteChange();
-    player.src = './sprites/right/sprite0.png';
+    //player.src = './sprites/right/sprite0.png';
 }
 
 startButton.addEventListener('click', (e) => {
@@ -394,10 +395,16 @@ const gameLoop = () => {
         })
     }
 }
-
+// does this resolve issue with leaderboard
+let winner;
 const leaderboard = [];
 function checkWin() {
     if (!sheep1.lost && !sheep2.lost && !sheep3.lost && !sheep4.lost && !sheep5.lost && !sheep6.lost && !sheep7.lost && !sheep8.lost && !sheep9.lost && !sheep10.lost) {
+        player.score = currentTime;
+        console.log(player.score);
+        console.log(player.src)
+        leaderboard.push([player.score, player.src]);
+        console.log(leaderboard);
         player.won = true;
         ctx.clearRect(0, 0, game.width, game.height)
         ctx.drawImage(background,0,0);
@@ -405,7 +412,7 @@ function checkWin() {
     }
 }
 
-let waggingAnimation;
+let winAnimation;
 let waggingCorgi = new Image();
 function setWinVariant() {
     if (player.src.includes('sprite0.png')) {
@@ -432,10 +439,9 @@ let currentFrame = 0;
 function winGame () {
     clearInterval(timer);
     clearInterval(gameInterval);
-    leaderboard.push(currentTime);
     currentTime = 0;
     setWinVariant();
-    waggingAnimation = setInterval(function() {
+    winAnimation = setInterval(function() {
         currentFrame++;
         let maxFrame = numColumns * numRows - 1;
         if (currentFrame > maxFrame){
@@ -473,7 +479,7 @@ function announceWin() {
 }
 
 function compare(a,b) {
-    return a - b;
+    return a.score - b.score;
 }
 function populateLeaderboard(){
     if (leaderboardList.hasChildNodes()) {
@@ -489,7 +495,7 @@ function populateLeaderboard(){
         const playerScore = document.createElement('li');
         playerScore.setAttribute('class','score')
         if (typeof score === 'number') {
-            playerScore.innerText = `${score}`;
+            playerScore.innerText = `${player.score}`;
         }
         leaderboardList.appendChild(playerScore);
     })
