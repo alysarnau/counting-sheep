@@ -1,3 +1,9 @@
+// TO DO:
+// clear out unused image files
+// implement local storage to keep record of scores 
+    // https://www.w3schools.com/jsref/prop_win_localstorage.asp
+// implement wolf that chases?
+
 const body = document.querySelector('body');
 const leaderboardContainer = document.querySelector('#leaderboard-container')
 const leaderboardList = document.querySelector('#leaderboard-list');
