@@ -1,6 +1,3 @@
-// TO DO
-// correct collision detection for "confirm"
-
 const body = document.querySelector('body');
 const leaderboardContainer = document.querySelector('#leaderboard-container')
 const leaderboardList = document.querySelector('#leaderboard-list');
