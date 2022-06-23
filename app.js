@@ -160,7 +160,6 @@ function selectScreen(){
     resetButton.style.display = 'inline-block'
 }
 
-
 function selectLoop() {
     ctx.clearRect(0, 0, game.width, game.height);
     ctx.drawImage(background,0,0);
@@ -413,7 +412,6 @@ function winGame () {
     leaderboard.push(currentTime);
     currentTime = 0;
     resetPlayerPosition();
-    //player.render();
     waggingAnimation = setInterval(function() {
         currentFrame++;
         let maxFrame = numColumns * numRows - 1;
@@ -425,9 +423,8 @@ function winGame () {
         ctx.clearRect(0, 0, game.width, game.height);
         ctx.drawImage(background,0,0);
         announceWin();
-        ctx.drawImage(waggingCorgi, column * frameWidth, row * frameHeight, frameWidth, frameHeight, 450, 250, frameWidth*1.5, frameHeight*1.5);
+        ctx.drawImage(waggingCorgi, column * frameWidth, row * frameHeight, frameWidth, frameHeight, 450, 200, frameWidth*1.5, frameHeight*1.5);
     }, 100);
-    ////////////
     startButton.style.display = 'inline-block';
     startButton.innerText = 'PLAY AGAIN?'
     startButton.style.pointerEvents = 'auto';
@@ -464,8 +461,6 @@ function populateLeaderboard(){
     })
 }
 
-/////// animation code!
-
 let waggingCorgi = new Image();
 waggingCorgi.src= './sprites/corgi_wagging_idle.png'
 let row = 0;
@@ -475,15 +470,3 @@ let numColumns = 5;
 let frameHeight = 64;
 let frameWidth = 64;
 let currentFrame = 0;
-
-// const waggingAnimation = setInterval(function() {
-//     currentFrame++;
-//     let maxFrame = numColumns * numRows - 1;
-//     if (currentFrame > maxFrame){
-//         currentFrame = 0;
-//     }
-//     let column = currentFrame % numColumns;
-//     let row = Math.floor(currentFrame / numColumns);
-//     //ctx.clearRect(0, 0, ctx.width, ctx.height);
-//     ctx.drawImage(waggingCorgi, column * frameWidth, row * frameHeight, frameWidth, frameHeight, 450, 250, frameWidth*1.5, frameHeight*1.5);
-// }, 60);
