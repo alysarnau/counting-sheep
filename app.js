@@ -1,5 +1,5 @@
 // TO DO
-// add happy sheep to bottom of winScreen
+// correct collision detection for "confirm"
 
 const body = document.querySelector('body');
 const leaderboardContainer = document.querySelector('#leaderboard-container')
@@ -189,16 +189,15 @@ function selectLoop() {
         selectHit(spriteFour);
     }
     player.render();
-    //selectHit();
     if (prePlayText === confirmPlayerText) {
         confirmSelect();
     }
 }
 
 const confirmSelect = () => {
-    if (player.x < 720 
-        && player.x + player.width > 270
-        && player.y < 370
+    if (player.x < 610 
+        && player.x + player.width > 390
+        && player.y < 350
         && player.y + player.height > 290) {
             confirmStart()
         }
@@ -408,7 +407,6 @@ function checkWin() {
 }
 
 let waggingAnimation;
-//for winning animation
 let waggingCorgi = new Image();
 function setWinVariant() {
     if (player.src.includes('sprite0.png')) {
@@ -422,7 +420,6 @@ function setWinVariant() {
     }
 }
 
-//for animated endscreen
 let happySheep = new Image();
 happySheep.src = './sprites/sheep_idle_col5.png'
 let row = 0;
