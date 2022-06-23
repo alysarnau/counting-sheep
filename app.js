@@ -1,3 +1,7 @@
+// TO DO
+// SET UP CONDITIONAL SO WAGGING DOG IMAGE MATCHES PLAYER IMAGE
+// add happy sheep?
+
 const body = document.querySelector('body');
 const leaderboardContainer = document.querySelector('#leaderboard-container')
 const leaderboardList = document.querySelector('#leaderboard-list');
@@ -405,13 +409,36 @@ function checkWin() {
 }
 
 let waggingAnimation;
+//for winning animation
+let waggingCorgi = new Image();
+function setWinVariant() {
+    if (player.src.includes('sprite0.png')) {
+        waggingCorgi.src = './sprites/corgi_pembroke_fawn_wag.png';
+    } else if (player.src.includes('sprite1.png')) {
+        waggingCorgi.src = './sprites/corgi_wagging_idle.png';
+    } else if (player.src.includes('sprite2.png')) {
+        waggingCorgi.src = './sprites/corgi_pembroke_tri_wag.png';
+    } else if (player.src.includes('sprite3.png')) {
+        waggingCorgi.src = './sprites/corgi_cardigan_tri_wag.png';
+    }
+}
+
+//for animated endscreen
+let row = 0;
+let column = 0;
+let numRows = 1
+let numColumns = 5;
+let frameHeight = 64;
+let frameWidth = 64;
+let currentFrame = 0;
 
 function winGame () {
     clearInterval(timer);
     clearInterval(gameInterval);
     leaderboard.push(currentTime);
     currentTime = 0;
-    resetPlayerPosition();
+    console.log(player.src)
+    setWinVariant();
     waggingAnimation = setInterval(function() {
         currentFrame++;
         let maxFrame = numColumns * numRows - 1;
@@ -429,6 +456,7 @@ function winGame () {
     startButton.innerText = 'PLAY AGAIN?'
     startButton.style.pointerEvents = 'auto';
     pauseButton.style.display = 'none';
+    resetPlayerPosition();
     populateLeaderboard(leaderboard);
 }
 function announceWin() {
@@ -461,12 +489,3 @@ function populateLeaderboard(){
     })
 }
 
-let waggingCorgi = new Image();
-waggingCorgi.src= './sprites/corgi_wagging_idle.png'
-let row = 0;
-let column = 0;
-let numRows = 1
-let numColumns = 5;
-let frameHeight = 64;
-let frameWidth = 64;
-let currentFrame = 0;
