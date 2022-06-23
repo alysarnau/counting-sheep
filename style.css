@@ -53,6 +53,7 @@ p {
 
 .score {
     font-size: 26px;
+    padding-bottom: 10px;
 }
 
 .player-div {
@@ -100,7 +101,7 @@ p {
 
 #leaderboard-container {
     margin: 30px auto;
-    height: 300px;
+    min-height: 300px;
     width: 500px;
     border: 5px solid #FF99C8;
     border-radius: 25px;

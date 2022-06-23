@@ -13,7 +13,6 @@ game.setAttribute('width', getComputedStyle(game)['width']);
 game.setAttribute('height', getComputedStyle(game)['height']);
 document.addEventListener('keydown', (e) => {
     if (e.code == 'Space') {
-        console.log= e.code;
         bark.play()
     }
 })
@@ -297,7 +296,6 @@ function resetPlayerPosition() {
 startButton.addEventListener('click', (e) => {
     instructionDiv.style.display = 'none';
     game.style.display = 'block';
-    leaderboardContainer.style.display = 'none';
     selectScreen()
     startButton.style.pointerEvents = 'none';
     e.target.blur();
@@ -395,16 +393,14 @@ const gameLoop = () => {
         })
     }
 }
-// does this resolve issue with leaderboard
+
 let winner;
 const leaderboard = [];
 function checkWin() {
     if (!sheep1.lost && !sheep2.lost && !sheep3.lost && !sheep4.lost && !sheep5.lost && !sheep6.lost && !sheep7.lost && !sheep8.lost && !sheep9.lost && !sheep10.lost) {
+        rightSpriteChange()
         player.score = currentTime;
-        console.log(player.score);
-        console.log(player.src)
         leaderboard.push([player.score, player.src]);
-        console.log(leaderboard);
         player.won = true;
         ctx.clearRect(0, 0, game.width, game.height)
         ctx.drawImage(background,0,0);
@@ -479,7 +475,17 @@ function announceWin() {
 }
 
 function compare(a,b) {
-    return a.score - b.score;
+    let thisScore;
+    let nextScore;
+
+    thisScore = a[0]
+    nextScore = b[0];
+    if (thisScore < nextScore) {
+        return -1;
+    } else if (thisScore > nextScore) {
+        return 1;
+    }
+    return 0;
 }
 function populateLeaderboard(){
     if (leaderboardList.hasChildNodes()) {
@@ -494,9 +500,21 @@ function populateLeaderboard(){
     leaderboard.forEach((score) => {
         const playerScore = document.createElement('li');
         playerScore.setAttribute('class','score')
-        if (typeof score === 'number') {
-            playerScore.innerText = `${player.score}`;
-        }
+        playerScore.innerHTML = `<img src='${score[1]}' /> ${score[0]}`;
         leaderboardList.appendChild(playerScore);
     })
+}
+
+function compare(a,b) {
+    let thisScore;
+    let nextScore;
+
+    thisScore = a[0]
+    nextScore = b[0];
+    if (thisScore < nextScore) {
+        return -1;
+    } else if (thisScore > nextScore) {
+        return 1;
+    }
+    return 0;
 }
