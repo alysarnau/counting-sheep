@@ -437,7 +437,6 @@ function winGame () {
     clearInterval(gameInterval);
     leaderboard.push(currentTime);
     currentTime = 0;
-    console.log(player.src)
     setWinVariant();
     waggingAnimation = setInterval(function() {
         currentFrame++;
