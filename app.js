@@ -3,6 +3,7 @@
 // implement local storage to keep record of scores 
     // https://www.w3schools.com/jsref/prop_win_localstorage.asp
 // implement wolf that chases?
+    //https://stackoverflow.com/questions/27533331/problems-making-enemy-follow-moving-player
 
 const body = document.querySelector('body');
 const leaderboardContainer = document.querySelector('#leaderboard-container')
