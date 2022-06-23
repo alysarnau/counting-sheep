@@ -28,9 +28,8 @@ USER STORIES
 <img src="leaderboard.png" />
 
 STRETCH GOALS:
-// Wolves (other obstacles) that you need to avoid
-    // 10 wolves will also be populated on the map (randomly???) and will move randomly (not much)
-    // stretch goal: be able to set difficulty by increasing movement speed and movement distance for wolves
+// Wolf that chases you that you need to avoid!
+    // stretch goal: be able to set difficulty by increasing movement speed for wolf!
     // on collision of wolf and corgi, 'snarl' sound effect will trigger and the player's time will have 5 seconds added to it!
 // PERSISTENT LEADERBOARD (https://blog.logrocket.com/localstorage-javascript-complete-guide/)
 // animate sprites through movement frames
