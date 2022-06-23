@@ -504,17 +504,3 @@ function populateLeaderboard(){
         leaderboardList.appendChild(playerScore);
     })
 }
-
-function compare(a,b) {
-    let thisScore;
-    let nextScore;
-
-    thisScore = a[0]
-    nextScore = b[0];
-    if (thisScore < nextScore) {
-        return -1;
-    } else if (thisScore > nextScore) {
-        return 1;
-    }
-    return 0;
-}
