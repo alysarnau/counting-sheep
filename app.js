@@ -423,6 +423,8 @@ function setWinVariant() {
 }
 
 //for animated endscreen
+let happySheep = new Image();
+happySheep.src = './sprites/sheep_idle_col5.png'
 let row = 0;
 let column = 0;
 let numRows = 1
@@ -449,6 +451,8 @@ function winGame () {
         ctx.drawImage(background,0,0);
         announceWin();
         ctx.drawImage(waggingCorgi, column * frameWidth, row * frameHeight, frameWidth, frameHeight, 450, 200, frameWidth*1.5, frameHeight*1.5);
+        //////
+        ctx.drawImage(happySheep, column * 192, row * 192, 192, 192, 450, 350, 150, 150);
     }, 100);
     startButton.style.display = 'inline-block';
     startButton.innerText = 'PLAY AGAIN?'
@@ -487,3 +491,12 @@ function populateLeaderboard(){
     })
 }
 
+const drawHappySheep = () => {
+    let row = 0;
+    let column = 0;
+    let frameHeight = 64;
+    let frameWidth = 64;
+    let happySheep = new Image();
+    happySheep.src = './sprites/sheep_idle.png'
+    ctx.drawImage(happySheep, column * frameWidth, row * frameHeight, frameWidth, frameHeight, 450, 200, frameWidth*1.5, frameHeight*1.5);
+}
