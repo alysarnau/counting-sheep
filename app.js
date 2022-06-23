@@ -112,6 +112,7 @@ const resetButton = document.querySelector('#reset');
 const toggleMusicButton = document.querySelector('#toggle-music');
 const toggleScoresButton = document.querySelector('#toggle-leaderboard');
 const timerDisplay = document.querySelector("#timer");
+const instructionDiv = document.getElementById('instructions');
 
 let spriteOne = new Sprite(250, './sprites/right/sprite0.png');
 let spriteTwo = new Sprite(400, './sprites/right/sprite1.png');
@@ -293,6 +294,7 @@ function resetPlayerPosition() {
 }
 
 startButton.addEventListener('click', (e) => {
+    instructionDiv.style.display = 'none';
     game.style.display = 'block';
     leaderboardContainer.style.display = 'none';
     selectScreen()
