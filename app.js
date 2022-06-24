@@ -1,3 +1,6 @@
+// BUG - MAKE SURE WOLF DOESNT GENERATE IN MIDDLE OF SCREEN - THAT'S UNWINNABLE
+// make sure wolf doesn't generate OVER sheep
+
 const body = document.querySelector('body');
 const leaderboardContainer = document.querySelector('#leaderboard-container');
 const leaderboardList = document.querySelector('#leaderboard-list');
@@ -217,6 +220,7 @@ const confirmSelect = () => {
         && player.y + player.height > 290) {
             confirmStart()
         }
+    instructionDiv.style.display = 'none';
 }
 
 const confirmStart = () => {
@@ -326,7 +330,7 @@ function resetPlayerPosition() {
 }
 
 startButton.addEventListener('click', (e) => {
-    instructionDiv.style.display = 'none';
+    instructionDiv.innerHTML = `<p>Use WASD to move over the pup you'd like to play. Once you've chosen, move your pup over the word 'CONFIRM'.</p>`;
     game.style.display = 'block';
     selectScreen()
     startButton.style.pointerEvents = 'none';
