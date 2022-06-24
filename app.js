@@ -139,6 +139,19 @@ class Sheep {
     }
 }
 
+function wolfLocator() {
+    lostSheepArray.forEach((sheep) => {
+        if (badWolf.x < sheep.x + sheep.width
+            && badWolf.x + badWolf.width > sheep.x
+            && badWolf.y < badWolf.y + sheep.height
+            && badWolf.y + badWolf.height > sheep.y) {
+                badWolf.x = Math.floor(Math.random() * (game.width - 40));
+                badWolf.y = Math.floor(Math.random() * (game.height - 40));
+                console.log('recalculating');
+            }
+    })
+}
+
 class Wolf {
     constructor() {
         this.x = Math.floor(Math.random() * (game.width - 80)),
@@ -277,6 +290,7 @@ function beginGame() {
     lostSheepArray = [sheep1, sheep2, sheep3, sheep4, sheep5, sheep6, sheep7, sheep8, sheep9, sheep10]
     player.won = false;
     badWolf = new Wolf();
+    wolfLocator();
     lostSheepArray.forEach((sheep) => {
         sheep.lost = true;
     });
