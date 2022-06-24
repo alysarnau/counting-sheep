@@ -1,5 +1,4 @@
 // TO DO:
-// ADD PADDING
 // implement wolf that chases?
     //https://stackoverflow.com/questions/27533331/problems-making-enemy-follow-moving-player
 
@@ -143,10 +142,10 @@ class Sheep {
 
 class Wolf {
     constructor() {
-        this.x = Math.floor(Math.random() * (game.width - 60)),
-        this.y = Math.floor(Math.random() * (game.height - 60)),
-        this.width = 60,
-        this.height = 60,
+        this.x = Math.floor(Math.random() * (game.width - 80)),
+        this.y = Math.floor(Math.random() * (game.height - 80)),
+        this.width = 80,
+        this.height = 80,
         this.lost = true,
         this.type = 'wolf',
         this.render = function() {
@@ -242,19 +241,19 @@ function selectHit(sprite) {
         }
 }
 
-let sheep1 = new Sheep();
-let sheep2 = new Sheep();
-let sheep3 = new Sheep();
-let sheep4 = new Sheep();
-let sheep5 = new Sheep();
-let sheep6 = new Sheep();
-let sheep7 = new Sheep();
-let sheep8 = new Sheep();
-let sheep9 = new Sheep();
-let sheep10 = new Sheep();
-const lostSheepArray = [sheep1, sheep2, sheep3, sheep4, sheep5, sheep6, sheep7, sheep8, sheep9, sheep10]
+let sheep1
+let sheep2
+let sheep3
+let sheep4
+let sheep5
+let sheep6
+let sheep7
+let sheep8
+let sheep9
+let sheep10
+let lostSheepArray = [];
 
-let badWolf = new Wolf();
+let badWolf;
 
 let currentTime = 0;
 timerDisplay.innerText = currentTime;
@@ -264,7 +263,19 @@ const countUp = () => {
 }
 
 function beginGame() {
+    sheep1 = new Sheep();
+    sheep2 = new Sheep();
+    sheep3 = new Sheep();
+    sheep4 = new Sheep();
+    sheep5 = new Sheep();
+    sheep6 = new Sheep();
+    sheep7 = new Sheep();
+    sheep8 = new Sheep();
+    sheep9 = new Sheep();
+    sheep10 = new Sheep();
+    lostSheepArray = [sheep1, sheep2, sheep3, sheep4, sheep5, sheep6, sheep7, sheep8, sheep9, sheep10]
     player.won = false;
+    badWolf = new Wolf();
     lostSheepArray.forEach((sheep) => {
         sheep.lost = true;
     });
@@ -393,8 +404,6 @@ function detectHit(thing) {
                 baa.play();
             } else if (thing.type === 'wolf') {
                 growl.play();
-                
-                console.log('WOLF');
                 resetPlayerPosition();
             }
         }
