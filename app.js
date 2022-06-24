@@ -401,6 +401,7 @@ const gameLoop = () => {
     }
 }
 
+
 let winner;
 const leaderboard = [];
 function checkWin() {
@@ -408,6 +409,15 @@ function checkWin() {
         rightSpriteChange()
         player.score = currentTime;
         leaderboard.push([player.score, player.src]);
+        /// to make string to send to localstorage
+        let index = Math.floor(Math.random() * 5000);
+        let localPush = {
+            'playerAvatar' : player.src,
+            'playerScore' : player.score
+        }
+        localStorage.setItem(`playerInfo${index}`, JSON.stringify(localPush));
+        console.log(localStorage);
+        /////
         player.won = true;
         ctx.clearRect(0, 0, game.width, game.height)
         ctx.drawImage(background,0,0);
@@ -511,3 +521,5 @@ function populateLeaderboard(){
         leaderboardList.appendChild(playerScore);
     })
 }
+
+
