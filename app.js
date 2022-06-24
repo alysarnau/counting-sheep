@@ -1,7 +1,5 @@
 // TO DO:
 // clear out unused image files
-// implement local storage to keep record of scores 
-    // https://www.w3schools.com/jsref/prop_win_localstorage.asp
 // implement wolf that chases?
     //https://stackoverflow.com/questions/27533331/problems-making-enemy-follow-moving-player
 
@@ -409,7 +407,6 @@ function checkWin() {
     if (!sheep1.lost && !sheep2.lost && !sheep3.lost && !sheep4.lost && !sheep5.lost && !sheep6.lost && !sheep7.lost && !sheep8.lost && !sheep9.lost && !sheep10.lost) {
         rightSpriteChange()
         const paddedScore = currentTime.toString().padStart(2,'0');
-        /// to make string to send to localstorage
         let index = Math.floor(Math.random() * 5000);
         let localPush = {
             'playerAvatar' : player.src,
@@ -417,7 +414,6 @@ function checkWin() {
         }
         localStorage.setItem(`playerInfo${index}`, JSON.stringify(localPush));
         updateLeaderboard()
-        /////
         player.won = true;
         ctx.clearRect(0, 0, game.width, game.height)
         ctx.drawImage(background,0,0);
@@ -425,7 +421,6 @@ function checkWin() {
     }
 }
 
-//updates leaderboard from local storage
 function updateLeaderboard() {
         keys = Object.keys(localStorage),
         i = keys.length;
