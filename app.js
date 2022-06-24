@@ -6,7 +6,7 @@
     //https://stackoverflow.com/questions/27533331/problems-making-enemy-follow-moving-player
 
 const body = document.querySelector('body');
-const leaderboardContainer = document.querySelector('#leaderboard-container')
+const leaderboardContainer = document.querySelector('#leaderboard-container');
 const leaderboardList = document.querySelector('#leaderboard-list');
 const game = document.querySelector('#game-canvas');
 const ctx = game.getContext('2d');
@@ -334,8 +334,10 @@ resetButton.addEventListener('click', (e) => {
 toggleScoresButton.addEventListener('click', (e) => {
     if (leaderboardContainer.style.display === 'none') {
         leaderboardContainer.style.display = 'block';
+        toggleScoresButton.innerText = "HIDE HI SCORES";
     } else {
         leaderboardContainer.style.display = 'none'
+        toggleScoresButton.innerText = "VIEW HI SCORES";
     }
 })
 toggleMusicButton.addEventListener('click', (e) => {
@@ -532,5 +534,15 @@ function populateLeaderboard(){
         leaderboardList.appendChild(playerScore);
     })
 }
+
+const clearScoreButton = document.getElementById('clear-scores')
+clearScoreButton.addEventListener('click', (e) => {
+    localStorage.clear();
+    if (leaderboardList.hasChildNodes()) {
+        while (leaderboardList.firstChild) {
+            leaderboardList.removeChild(leaderboardList.firstChild)
+        }
+    }
+})
 
 
