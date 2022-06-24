@@ -1,5 +1,4 @@
-// to add:
-// wolf movement
+// implement a life feature? three lives?
 
 const body = document.querySelector('body');
 const leaderboardContainer = document.querySelector('#leaderboard-container');
@@ -16,7 +15,7 @@ game.setAttribute('width', getComputedStyle(game)['width']);
 game.setAttribute('height', getComputedStyle(game)['height']);
 document.addEventListener('keydown', (e) => {
     if (e.code == 'Space') {
-        bark.play()
+        bark.play();
     }
 })
 
@@ -58,7 +57,7 @@ class Dog {
         }
         if (this.direction.left) {
             this.x -= this.speed
-            leftSpriteChange()
+            leftSpriteChange(player)
             if (this.x <= 0) {
                 this.x = 0
             }
@@ -71,7 +70,7 @@ class Dog {
         }
         if (this.direction.right) {
             this.x += this.speed
-            rightSpriteChange()
+            rightSpriteChange(player)
             if (this.x + this.width >= game.width) {
                 this.x = game.width - this.width
             }
@@ -148,9 +147,11 @@ class Wolf {
         this.lost = true,
         this.type = 'wolf',
         this.speed = 4,
+        this.direction = 'right';
+        this.src = './sprites/right/wolfStanding.png';
         this.render = function() {
             let wolfSprite = document.createElement('img');
-            wolfSprite.src = "./sprites/wolfhowl.png";
+            wolfSprite.src = this.src;
             ctx.drawImage(wolfSprite, this.x, this.y, this.width, this.height)
         }
         this.UpdateAngle = function() {
@@ -167,14 +168,17 @@ class Wolf {
             this.speedX = this.speed * Math.cos(this.angle);
             this.speedY = this.speed * Math.sin(this.angle);
         }
-
     }
     moveWolf = function () {
         if (player.x > badWolf.x) {
             badWolf.x += badWolf.speed;
+            badWolf.direction = "right";
+            rightSpriteChange(badWolf)
         } 
         if (player.x < badWolf.x) {
             badWolf.x -= badWolf.speed;
+            badWolf.direction = "left";
+            leftSpriteChange(badWolf)
         }  
         if (player.y > badWolf.y) {
             badWolf.y += badWolf.speed;
@@ -182,19 +186,13 @@ class Wolf {
         if (player.y < badWolf.y) {
             badWolf.y -= badWolf.speed;
         }
-        
-        // badWolf.UpdateAngle();
-        // badWolf.UpdateSpeed();
-        // // wolf movement gets weird when angle is 0 or 180!
-        // badWolf.x += badWolf.speedX;
-        // badWolf.y += badWolf.speedY;
     }
 }
 
 let nextSheep;
 let currentSheep;
 function sheepLocator() {
-    for (let i = 0; i<lostSheepArray.length-1; i++) {
+    for (let i = 0; i < lostSheepArray.length-1; i++) {
         nextSheep = lostSheepArray[i+1];
         currentSheep = lostSheepArray[i];
         if (nextSheep.x < currentSheep.x + currentSheep.width
@@ -394,7 +392,7 @@ function resetGame() {
 function resetPlayerPosition() {
     player.x = 490;
     player.y = 240;
-    rightSpriteChange();
+    rightSpriteChange(player);
 }
 
 startButton.addEventListener('click', (e) => {
@@ -478,14 +476,14 @@ function detectHit(thing) {
         }
 }
 
-function leftSpriteChange() {
-    if (player.src.includes('right')) {
-        player.src = player.src.replace('right', 'left')
+function leftSpriteChange(thing) {
+    if (thing.src.includes('right')) {
+        thing.src = thing.src.replace('right', 'left')
     }
 }
-function rightSpriteChange() {
-    if (player.src.includes('left')) {
-        player.src = player.src.replace('left', 'right')
+function rightSpriteChange(thing) {
+    if (thing.src.includes('left')) {
+        thing.src = thing.src.replace('left', 'right')
     }
 }
 
@@ -516,7 +514,7 @@ const gameLoop = () => {
 let leaderboard = [];
 function checkWin() {
     if (!sheep1.lost && !sheep2.lost && !sheep3.lost && !sheep4.lost && !sheep5.lost && !sheep6.lost && !sheep7.lost && !sheep8.lost && !sheep9.lost && !sheep10.lost) {
-        rightSpriteChange()
+        rightSpriteChange(player)
         const paddedScore = currentTime.toString().padStart(2,'0');
         let index = Math.floor(Math.random() * 5000);
         let localPush = {
