@@ -410,13 +410,12 @@ let leaderboard = [];
 function checkWin() {
     if (!sheep1.lost && !sheep2.lost && !sheep3.lost && !sheep4.lost && !sheep5.lost && !sheep6.lost && !sheep7.lost && !sheep8.lost && !sheep9.lost && !sheep10.lost) {
         rightSpriteChange()
-        player.score = currentTime;
-        //leaderboard.push([player.score, player.src]);
+        const paddedScore = currentTime.toString().padStart(2,'0');
         /// to make string to send to localstorage
         let index = Math.floor(Math.random() * 5000);
         let localPush = {
             'playerAvatar' : player.src,
-            'playerScore' : player.score,
+            'playerScore' : paddedScore,
         }
         localStorage.setItem(`playerInfo${index}`, JSON.stringify(localPush));
         updateLeaderboard()
@@ -428,13 +427,13 @@ function checkWin() {
     }
 }
 
+//updates leaderboard from local storage
 function updateLeaderboard() {
         keys = Object.keys(localStorage),
         i = keys.length;
     while ( i-- ) {
-        leaderboard.push( localStorage.getItem(keys[i]) );
+        leaderboard.push(localStorage.getItem(keys[i]));
     }
-    console.log(leaderboard);
     return leaderboard;
 }
 
@@ -507,9 +506,8 @@ function announceWin() {
 function compare(a,b) {
     let thisScore;
     let nextScore;
-
-    thisScore = a[0]
-    nextScore = b[0];
+    thisScore = a.substr(61,2);
+    nextScore = b.substr(61,2);
     if (thisScore < nextScore) {
         return -1;
     } else if (thisScore > nextScore) {
@@ -530,9 +528,7 @@ function populateLeaderboard(){
     leaderboard.forEach((score) => {
         const playerScore = document.createElement('li');
         playerScore.setAttribute('class','score')
-        console.log(score.substr(16,29));
-        console.log(score.playerScore);
-        playerScore.innerHTML = `<img src=${score.substr(16,29)} /> ${score.playerScore}`;
+        playerScore.innerHTML = `<img src=${score.substr(16,29)} /> ${score.substr(61,2)}`;
         leaderboardList.appendChild(playerScore);
     })
 }
