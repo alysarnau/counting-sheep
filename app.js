@@ -127,10 +127,10 @@ const spriteArray = [spriteOne, spriteTwo, spriteThree, spriteFour]
 
 class Sheep {
     constructor() {
-        this.x = Math.floor(Math.random() * (game.width - 25)),
-        this.y = Math.floor(Math.random() * (game.height - 25)),
-        this.width = 30,
-        this.height = 30,
+        this.x = Math.floor(Math.random() * (game.width - 40)),
+        this.y = Math.floor(Math.random() * (game.height - 40)),
+        this.width = 40,
+        this.height = 40,
         this.lost = true,
         this.render = function() {
             let sheepSprite = document.createElement('img');
