@@ -35,11 +35,10 @@
 <li>DONE! Sprites as avatars.</li>
 <li>DONE! Animated win screen.</li>
 <li>DONE! PERSISTENT LEADERBOARD (https://blog.logrocket.com/localstorage-javascript-complete-guide/)</li>
+<li>DONE! Wolf chases you!</li>
+<li>Implement Lives Feature?</li>
 <li>Animate sprites through movement frames in-game</li>
-<li>Potential: have the wolf chase you?</li>
-    <ul>
-        <li>Add'l stretch goal: be able to set difficulty by increasing movement speed for wolf!</li>
-    </ul>
+<li>Option to set difficulty by increasing movement speed for wolf!</li>
 </ul>
 
 <h2>TECHNOLOGIES USED:</h2>
@@ -66,7 +65,6 @@
 <li>Corgi sprites courtesy: https://angryelk.itch.io/animated-corgi-sprite</li>
 <li>Background image tileset courtesy: https://ojas-sabadra.itch.io/pixelworld </li>
 <li>Wolf grunt courtesy: https://opengameart.org/content/dog-grunt</li>
-<li>Wolf Sprite courtest: https://opengameart.org/content/lpc-wolf-animation</li>
 <li>Dog bark courtesy: Mixkit Sound Effects Free License</li>
 </ul>
 
