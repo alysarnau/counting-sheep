@@ -404,11 +404,7 @@ const gameLoop = () => {
     }
 }
 
-
-let winner;
-
 let leaderboard = [];
-
 function checkWin() {
     if (!sheep1.lost && !sheep2.lost && !sheep3.lost && !sheep4.lost && !sheep5.lost && !sheep6.lost && !sheep7.lost && !sheep8.lost && !sheep9.lost && !sheep10.lost) {
         rightSpriteChange()
