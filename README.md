@@ -66,6 +66,7 @@
 <li>Corgi sprites courtesy: https://angryelk.itch.io/animated-corgi-sprite</li>
 <li>Background image tileset courtesy: https://ojas-sabadra.itch.io/pixelworld </li>
 <li>Wolf grunt courtesy: https://opengameart.org/content/dog-grunt</li>
+<li>Wolf Sprite courtest: https://opengameart.org/content/lpc-wolf-animation</li>
 <li>Dog bark courtesy: Mixkit Sound Effects Free License</li>
 </ul>
 

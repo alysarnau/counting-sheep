@@ -147,7 +147,7 @@ class Wolf {
         this.height = 51,
         this.lost = true,
         this.type = 'wolf',
-        this.speed = 5,
+        this.speed = 4,
         this.render = function() {
             let wolfSprite = document.createElement('img');
             wolfSprite.src = "./sprites/wolfhowl.png";
@@ -156,21 +156,38 @@ class Wolf {
         this.UpdateAngle = function() {
             this.dx = this.x - player.x;
             this.dy = this.y - player.y;
-            this.angle = Math.atan2(this.dy, this.dx) * 180 / Math.PI;
+            console.log(this.dx)
+            console.log(this.dy)
+            this.angle = Math.atan2(this.dy, this.dx) * (180 / Math.PI);
             if (this.angle < 0) {
                 this.angle += 360;
-            }
+            } 
         }
         this.UpdateSpeed = function() {
             this.speedX = this.speed * Math.cos(this.angle);
             this.speedY = this.speed * Math.sin(this.angle);
         }
+
     }
     moveWolf = function () {
-        badWolf.UpdateAngle();
-        badWolf.UpdateSpeed();
-        badWolf.x += badWolf.speedX;
-        badWolf.y += badWolf.speedY;
+        if (player.x > badWolf.x) {
+            badWolf.x += badWolf.speed;
+        } 
+        if (player.x < badWolf.x) {
+            badWolf.x -= badWolf.speed;
+        }  
+        if (player.y > badWolf.y) {
+            badWolf.y += badWolf.speed;
+        } 
+        if (player.y < badWolf.y) {
+            badWolf.y -= badWolf.speed;
+        }
+        
+        // badWolf.UpdateAngle();
+        // badWolf.UpdateSpeed();
+        // // wolf movement gets weird when angle is 0 or 180!
+        // badWolf.x += badWolf.speedX;
+        // badWolf.y += badWolf.speedY;
     }
 }
 
@@ -456,6 +473,7 @@ function detectHit(thing) {
             } else if (thing.type === 'wolf') {
                 growl.play();
                 resetPlayerPosition();
+                wolfLocator();
             }
         }
 }
@@ -490,10 +508,8 @@ const gameLoop = () => {
                 detectHit(lostSheep);
             }
         })
-        if (!badWolf.alive) {
-            badWolf.render();
-            detectHit(badWolf);
-        }
+        badWolf.render();
+        detectHit(badWolf);
     }
 }
 
