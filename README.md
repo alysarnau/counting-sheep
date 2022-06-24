@@ -32,13 +32,14 @@
 
 <h2>STRETCH GOALS:</h2>
 <ul>
-<li>Wolf that chases you that you need to avoid!</li>
-<ul>
-    <li>on collision of wolf and corgi, 'snarl' sound effect will trigger and the player's time will have 5 seconds added to it!</li>
-    <li>stretch goal: be able to set difficulty by increasing movement speed for wolf!</li>
-    </ul>
+<li>DONE! Sprites as avatars.</li>
+<li>DONE! Animated win screen.</li>
 <li>DONE! PERSISTENT LEADERBOARD (https://blog.logrocket.com/localstorage-javascript-complete-guide/)</li>
-<li>animate sprites through movement frames in-game</li>
+<li>Animate sprites through movement frames in-game</li>
+<li>Potential: have the wolf chase you?</li>
+    <ul>
+        <li>Add'l stretch goal: be able to set difficulty by increasing movement speed for wolf!</li>
+    </ul>
 </ul>
 
 <h2>TECHNOLOGIES USED:</h2>
@@ -48,7 +49,14 @@
 
 <h2>APPROACH TAKEN:</h2>
 <ul>
+<li>Create basic timer to track time</li>
 <li>Set up gameLoop to handle animation</li>
+<li>Create general gameLoop and collision detection</li>
+<li>On collision, sheep disappear</li>
+<li>Then implemented select screen and player select</li>
+<li>Created animated win screen</li>
+<li>Hooked up leaderboard to local storage</li>
+<li>Implemented wolf which resets the player on collision</li>
 </ul>
 
 <h1>ATTRIBUTION:</h2>
@@ -58,6 +66,6 @@
 <li>Corgi sprites courtesy: https://angryelk.itch.io/animated-corgi-sprite</li>
 <li>Background image tileset courtesy: https://ojas-sabadra.itch.io/pixelworld </li>
 <li>Wolf grunt courtesy: https://opengameart.org/content/dog-grunt</li>
-<li>Dog bark courtesy: PENDING</li>
+<li>Dog bark courtesy: Mixkit Sound Effects Free License</li>
 </ul>
 
