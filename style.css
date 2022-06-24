@@ -95,7 +95,8 @@ p {
 #pause,
 #reset,
 #resume,
-#leaderboard-container {
+#leaderboard-container,
+#clear-scores {
     display: none;
 }
 
@@ -123,5 +124,5 @@ p {
     height: 30px;
     width: 250px;
     background-color: #FF99C8;
-    margin: 20px;
+    margin: 15px auto;
 }

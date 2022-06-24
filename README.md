@@ -54,8 +54,10 @@
 <h1>ATTRIBUTION:</h2>
 <ul>
 <li>Sheep asset courtesy: https://bobkatt.itch.io/</li>
-Background music courtesy: https://soundcloud.com/alexandr-zhelanov (https://opengameart.org/content/casual-game-track)</li>
+<li>Background music courtesy: https://soundcloud.com/alexandr-zhelanov (https://opengameart.org/content/casual-game-track)</li>
 <li>Corgi sprites courtesy: https://angryelk.itch.io/animated-corgi-sprite</li>
 <li>Background image tileset courtesy: https://ojas-sabadra.itch.io/pixelworld </li>
+<li>Wolf grunt courtesy: https://opengameart.org/content/dog-grunt</li>
+<li>Dog bark courtesy: PENDING</li>
 </ul>
 

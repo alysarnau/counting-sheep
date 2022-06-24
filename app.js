@@ -132,6 +132,7 @@ class Sheep {
         this.width = 40,
         this.height = 40,
         this.lost = true,
+        this.type = 'sheep',
         this.render = function() {
             let sheepSprite = document.createElement('img');
             sheepSprite.src = "./sprites/White-sheep.png";
@@ -147,10 +148,11 @@ class Wolf {
         this.width = 60,
         this.height = 60,
         this.lost = true,
+        this.type = 'wolf',
         this.render = function() {
-            let sheepSprite = document.createElement('img');
-            sheepSprite.src = "./sprites/wolfhowl.png";
-            ctx.drawImage(sheepSprite, this.x, this.y, this.width, this.height)
+            let wolfSprite = document.createElement('img');
+            wolfSprite.src = "./sprites/wolfhowl.png";
+            ctx.drawImage(wolfSprite, this.x, this.y, this.width, this.height)
         }
     }
 }
@@ -365,6 +367,7 @@ toggleMusicButton.addEventListener('click', (e) => {
 const backgroundMusic = new Audio('./soundeffects/backgroundmusic.mp3')
 const bark = new Audio('./soundeffects/dog-bark.wav');
 const baa = new Audio('./soundeffects/baa.wav');
+const growl = new Audio('./soundeffects/wolfGrunt.wav');
 backgroundMusic.loop = true;
 bark.loop = false;
 baa.loop = false;
@@ -386,8 +389,13 @@ function detectHit(thing) {
         && player.y + player.height > thing.y) {
             thing.lost = false;
             ////sheep
-            if (thing.width === 40) {
+            if (thing.type === 'sheep') {
                 baa.play();
+            } else if (thing.type === 'wolf') {
+                growl.play();
+                
+                console.log('WOLF');
+                resetPlayerPosition();
             }
         }
 }
@@ -423,6 +431,7 @@ const gameLoop = () => {
         })
         if (!badWolf.alive) {
             badWolf.render();
+            detectHit(badWolf);
         }
     }
 }
