@@ -1,6 +1,3 @@
-// BUG
-// fix sheep overlap same as we fixed wold overlap
-
 // to add:
 // wolf movement
 
@@ -156,17 +153,24 @@ class Wolf {
             wolfSprite.src = "./sprites/wolfhowl.png";
             ctx.drawImage(wolfSprite, this.x, this.y, this.width, this.height)
         }
+        this.UpdateAngle = function() {
+            this.dx = this.x - player.x;
+            this.dy = this.y - player.y;
+            this.angle = Math.atan2(this.dy, this.dx) * 180 / Math.PI;
+            if (this.angle < 0) {
+                this.angle += 360;
+            }
+        }
+        this.UpdateSpeed = function() {
+            this.speedX = this.speed * Math.cos(this.angle);
+            this.speedY = this.speed * Math.sin(this.angle);
+        }
     }
     moveWolf = function () {
-        if (badWolf.x > player.x) {
-            badWolf.x -= 10;
-        } else if (badWolf.x < player.x){
-            badWolf.x += 10;
-        } else if (badWolf.y > player.y)   {
-            badWolf.y -= 10;
-        } else if (badWolf.y < player.y) {
-            badWolf.y += 10;
-        } 
+        badWolf.UpdateAngle();
+        badWolf.UpdateSpeed();
+        badWolf.x += badWolf.speedX;
+        badWolf.y += badWolf.speedY;
     }
 }
 
