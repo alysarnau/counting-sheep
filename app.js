@@ -157,6 +157,17 @@ class Wolf {
             ctx.drawImage(wolfSprite, this.x, this.y, this.width, this.height)
         }
     }
+    moveWolf = function () {
+        if (badWolf.x > player.x) {
+            badWolf.x -= 10;
+        } else if (badWolf.x < player.x){
+            badWolf.x += 10;
+        } else if (badWolf.y > player.y)   {
+            badWolf.y -= 10;
+        } else if (badWolf.y < player.y) {
+            badWolf.y += 10;
+        } 
+    }
 }
 
 let nextSheep;
@@ -459,6 +470,7 @@ function rightSpriteChange() {
 const gameLoop = () => {
     trackMovement();
     player.movePlayer();
+    badWolf.moveWolf();
     checkWin();
     if (player.won) {
         return;
@@ -568,6 +580,7 @@ function winGame () {
     resetPlayerPosition();
     populateLeaderboard(leaderboard);
 }
+
 function announceWin() {
     ctx.fillStyle = 'white'; 
     ctx.textAlign = 'center'; 
@@ -575,7 +588,7 @@ function announceWin() {
     ctx.fillText('YOU WON!', game.width/2, game.height/3);
 }
 
-function compare(a,b) {
+function sortLeaderboardScores(a,b) {
     let thisScore;
     let nextScore;
     thisScore = a.substr(61,2);
@@ -593,7 +606,7 @@ function populateLeaderboard(){
             leaderboardList.removeChild(leaderboardList.firstChild)
         }
     }
-    leaderboard.sort(compare);
+    leaderboard.sort(sortLeaderboardScores);
     while (leaderboard.length > 10) {
         leaderboard.pop();
     }
@@ -614,5 +627,3 @@ clearScoreButton.addEventListener('click', (e) => {
         }
     }
 })
-
-
