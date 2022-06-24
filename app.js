@@ -273,6 +273,7 @@ function resumeGame() {
     player.movePlayer();
 }
 function resetGame() {
+    leaderboard = []
     clearInterval(timer);
     currentTime = 0;
     clearInterval(selectInterval);
@@ -297,7 +298,6 @@ function resetPlayerPosition() {
     player.x = 490;
     player.y = 240;
     rightSpriteChange();
-    //player.src = './sprites/right/sprite0.png';
 }
 
 startButton.addEventListener('click', (e) => {
@@ -306,6 +306,7 @@ startButton.addEventListener('click', (e) => {
     selectScreen()
     startButton.style.pointerEvents = 'none';
     e.target.blur();
+    leaderboard = [];
 })
 pauseButton.addEventListener('click', (e) => {
     clearInterval(timer);
@@ -403,26 +404,38 @@ const gameLoop = () => {
 
 
 let winner;
-const leaderboard = [];
+
+let leaderboard = [];
+
 function checkWin() {
     if (!sheep1.lost && !sheep2.lost && !sheep3.lost && !sheep4.lost && !sheep5.lost && !sheep6.lost && !sheep7.lost && !sheep8.lost && !sheep9.lost && !sheep10.lost) {
         rightSpriteChange()
         player.score = currentTime;
-        leaderboard.push([player.score, player.src]);
+        //leaderboard.push([player.score, player.src]);
         /// to make string to send to localstorage
         let index = Math.floor(Math.random() * 5000);
         let localPush = {
             'playerAvatar' : player.src,
-            'playerScore' : player.score
+            'playerScore' : player.score,
         }
         localStorage.setItem(`playerInfo${index}`, JSON.stringify(localPush));
-        console.log(localStorage);
+        updateLeaderboard()
         /////
         player.won = true;
         ctx.clearRect(0, 0, game.width, game.height)
         ctx.drawImage(background,0,0);
         winGame();
     }
+}
+
+function updateLeaderboard() {
+        keys = Object.keys(localStorage),
+        i = keys.length;
+    while ( i-- ) {
+        leaderboard.push( localStorage.getItem(keys[i]) );
+    }
+    console.log(leaderboard);
+    return leaderboard;
 }
 
 let winAnimation;
@@ -517,7 +530,9 @@ function populateLeaderboard(){
     leaderboard.forEach((score) => {
         const playerScore = document.createElement('li');
         playerScore.setAttribute('class','score')
-        playerScore.innerHTML = `<img src='${score[1]}' /> ${score[0]}`;
+        console.log(score.substr(16,29));
+        console.log(score.playerScore);
+        playerScore.innerHTML = `<img src=${score.substr(16,29)} /> ${score.playerScore}`;
         leaderboardList.appendChild(playerScore);
     })
 }
