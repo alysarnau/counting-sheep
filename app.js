@@ -1,5 +1,8 @@
-// BUG - MAKE SURE WOLF DOESNT GENERATE IN MIDDLE OF SCREEN - THAT'S UNWINNABLE
-// make sure wolf doesn't generate OVER sheep
+// BUG
+// fix sheep overlap same as we fixed wold overlap
+
+// to add:
+// wolf movement
 
 const body = document.querySelector('body');
 const leaderboardContainer = document.querySelector('#leaderboard-container');
@@ -139,25 +142,12 @@ class Sheep {
     }
 }
 
-function wolfLocator() {
-    lostSheepArray.forEach((sheep) => {
-        if (badWolf.x < sheep.x + sheep.width
-            && badWolf.x + badWolf.width > sheep.x
-            && badWolf.y < badWolf.y + sheep.height
-            && badWolf.y + badWolf.height > sheep.y) {
-                badWolf.x = Math.floor(Math.random() * (game.width - 40));
-                badWolf.y = Math.floor(Math.random() * (game.height - 40));
-                console.log('recalculating');
-            }
-    })
-}
-
 class Wolf {
     constructor() {
         this.x = Math.floor(Math.random() * (game.width - 80)),
         this.y = Math.floor(Math.random() * (game.height - 80)),
-        this.width = 80,
-        this.height = 80,
+        this.width = 76,
+        this.height = 51,
         this.lost = true,
         this.type = 'wolf',
         this.speed = 5,
@@ -167,6 +157,37 @@ class Wolf {
             ctx.drawImage(wolfSprite, this.x, this.y, this.width, this.height)
         }
     }
+}
+
+let nextSheep;
+let currentSheep;
+function sheepLocator() {
+    for (let i = 0; i<lostSheepArray.length-1; i++) {
+        nextSheep = lostSheepArray[i+1];
+        currentSheep = lostSheepArray[i];
+        if (nextSheep.x < currentSheep.x + currentSheep.width
+            && nextSheep.x + nextSheep.width > currentSheep.x
+            && nextSheep.y < nextSheep.y + currentSheep.height
+            && nextSheep.y + nextSheep.height > currentSheep.y) {
+                nextSheep.x = Math.floor(Math.random() * (game.width - 40));
+                nextSheep.y = Math.floor(Math.random() * (game.height - 40));
+        }
+    }
+}
+
+function wolfLocator() {
+    lostSheepArray.forEach((sheep) => {
+        if ((badWolf.x < sheep.x + sheep.width
+            && badWolf.x + badWolf.width > sheep.x
+            && badWolf.y < badWolf.y + sheep.height
+            && badWolf.y + badWolf.height > sheep.y) || (badWolf.x < player.x + player.width
+                && badWolf.x + badWolf.width > player.x
+                && badWolf.y < badWolf.y + player.height
+                && badWolf.y + badWolf.height > player.y)) {
+                badWolf.x = Math.floor(Math.random() * (game.width - 40));
+                badWolf.y = Math.floor(Math.random() * (game.height - 40));
+            }
+    })
 }
 
 function trackMovement() {
@@ -255,16 +276,16 @@ function selectHit(sprite) {
         }
 }
 
-let sheep1
-let sheep2
-let sheep3
-let sheep4
-let sheep5
-let sheep6
-let sheep7
-let sheep8
-let sheep9
-let sheep10
+let sheep1;
+let sheep2;
+let sheep3;
+let sheep4;
+let sheep5;
+let sheep6;
+let sheep7;
+let sheep8;
+let sheep9;
+let sheep10;
 let lostSheepArray = [];
 
 let badWolf;
@@ -288,6 +309,7 @@ function beginGame() {
     sheep9 = new Sheep();
     sheep10 = new Sheep();
     lostSheepArray = [sheep1, sheep2, sheep3, sheep4, sheep5, sheep6, sheep7, sheep8, sheep9, sheep10]
+    sheepLocator();
     player.won = false;
     badWolf = new Wolf();
     wolfLocator();
