@@ -1,7 +1,3 @@
-// TO DO:
-// implement wolf that chases?
-    //https://stackoverflow.com/questions/27533331/problems-making-enemy-follow-moving-player
-
 const body = document.querySelector('body');
 const leaderboardContainer = document.querySelector('#leaderboard-container');
 const leaderboardList = document.querySelector('#leaderboard-list');
@@ -148,6 +144,7 @@ class Wolf {
         this.height = 80,
         this.lost = true,
         this.type = 'wolf',
+        this.speed = 5,
         this.render = function() {
             let wolfSprite = document.createElement('img');
             wolfSprite.src = "./sprites/wolfhowl.png";
@@ -399,7 +396,6 @@ function detectHit(thing) {
         && player.y < thing.y + thing.height
         && player.y + player.height > thing.y) {
             thing.lost = false;
-            ////sheep
             if (thing.type === 'sheep') {
                 baa.play();
             } else if (thing.type === 'wolf') {
