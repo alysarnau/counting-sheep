@@ -1,5 +1,5 @@
 // TO DO:
-// clear out unused image files
+// ADD PADDING
 // implement wolf that chases?
     //https://stackoverflow.com/questions/27533331/problems-making-enemy-follow-moving-player
 
@@ -140,6 +140,21 @@ class Sheep {
     }
 }
 
+class Wolf {
+    constructor() {
+        this.x = Math.floor(Math.random() * (game.width - 60)),
+        this.y = Math.floor(Math.random() * (game.height - 60)),
+        this.width = 60,
+        this.height = 60,
+        this.lost = true,
+        this.render = function() {
+            let sheepSprite = document.createElement('img');
+            sheepSprite.src = "./sprites/wolfhowl.png";
+            ctx.drawImage(sheepSprite, this.x, this.y, this.width, this.height)
+        }
+    }
+}
+
 function trackMovement() {
     document.addEventListener('keydown', (e) => {
         player.setDirection(e.key)
@@ -237,6 +252,8 @@ let sheep9 = new Sheep();
 let sheep10 = new Sheep();
 const lostSheepArray = [sheep1, sheep2, sheep3, sheep4, sheep5, sheep6, sheep7, sheep8, sheep9, sheep10]
 
+let badWolf = new Wolf();
+
 let currentTime = 0;
 timerDisplay.innerText = currentTime;
 const countUp = () => {
@@ -333,9 +350,11 @@ toggleScoresButton.addEventListener('click', (e) => {
     if (leaderboardContainer.style.display === 'none') {
         leaderboardContainer.style.display = 'block';
         toggleScoresButton.innerText = "HIDE HI SCORES";
+        clearScoreButton.style.display = 'block';
     } else {
         leaderboardContainer.style.display = 'none'
         toggleScoresButton.innerText = "VIEW HI SCORES";
+        clearScoreButton.style.display = 'none';
     }
 })
 toggleMusicButton.addEventListener('click', (e) => {
@@ -366,7 +385,10 @@ function detectHit(thing) {
         && player.y < thing.y + thing.height
         && player.y + player.height > thing.y) {
             thing.lost = false;
-            baa.play();
+            ////sheep
+            if (thing.width === 40) {
+                baa.play();
+            }
         }
 }
 
@@ -399,6 +421,9 @@ const gameLoop = () => {
                 detectHit(lostSheep);
             }
         })
+        if (!badWolf.alive) {
+            badWolf.render();
+        }
     }
 }
 

@@ -37,7 +37,7 @@
     <li>on collision of wolf and corgi, 'snarl' sound effect will trigger and the player's time will have 5 seconds added to it!</li>
     <li>stretch goal: be able to set difficulty by increasing movement speed for wolf!</li>
     </ul>
-<li>PERSISTENT LEADERBOARD (https://blog.logrocket.com/localstorage-javascript-complete-guide/)</li>
+<li>DONE! PERSISTENT LEADERBOARD (https://blog.logrocket.com/localstorage-javascript-complete-guide/)</li>
 <li>animate sprites through movement frames in-game</li>
 </ul>
 

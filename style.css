@@ -100,7 +100,7 @@ p {
 }
 
 #leaderboard-container {
-    margin: 30px auto;
+    margin: 30px auto 0 auto;
     min-height: 300px;
     width: 500px;
     border: 5px solid #FF99C8;
@@ -119,11 +119,9 @@ p {
 }
 
 #clear-scores {
-    position: absolute;
-    bottom: 10px;
-    left: 120px;
     font-size: 16px;
     height: 30px;
     width: 250px;
     background-color: #FF99C8;
+    margin: 20px;
 }
