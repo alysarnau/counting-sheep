@@ -1,3 +1,6 @@
+// BUG
+
+
 // add wolf sprite animated on lose screen
 
 const body = document.querySelector('body');
@@ -585,15 +588,22 @@ function setWinVariant() {
 
 let happySheep = new Image();
 happySheep.src = './sprites/sheep_idle_col5.png'
-let row = 0;
-let column = 0;
-let numRows = 1
-let numColumns = 5;
-let frameHeight = 64;
-let frameWidth = 64;
-let currentFrame = 0;
+// let row = 0;
+// let column = 0;
+// let numRows = 1
+// let numColumns = 5;
+// let frameHeight = 64;
+// let frameWidth = 64;
+// let currentFrame = 0;
 
 function winGame () {
+    let row = 0;
+    let column = 0;
+    let numRows = 1
+    let numColumns = 5;
+    let frameHeight = 64;
+    let frameWidth = 64;
+    let currentFrame = 0;
     clearInterval(timer);
     clearInterval(gameInterval);
     currentTime = 0;
@@ -604,8 +614,8 @@ function winGame () {
         if (currentFrame > maxFrame){
             currentFrame = 0;
         }
-        let column = currentFrame % numColumns;
-        let row = Math.floor(currentFrame / numColumns);
+        column = currentFrame % numColumns;
+        row = Math.floor(currentFrame / numColumns);
         ctx.clearRect(0, 0, game.width, game.height);
         ctx.drawImage(background,0,0);
         announceWin();
@@ -683,6 +693,9 @@ function checkLives() {
 }
 let gameOverInterval;
 
+let bigBadWolf = new Image();
+bigBadWolf.src = './sprites/wolfHowlSpriteSheet.png'
+
 function gameOverScreen(){
     clearInterval(gameInterval);
     clearInterval(timer);
@@ -690,18 +703,38 @@ function gameOverScreen(){
     background.src = "./background/background_tiles.png"
     currentTime = 0;
     timerDisplay.innerText = currentTime;
-    gameOverInterval = setInterval(gameOverLoop, 60);
     pauseButton.style.display = 'none';
     resetButton.style.display = 'inline-block'
+    ///animation
+
+    row = 0;
+    column = 0;
+    numRows = 1
+    numColumns = 4;
+    frameHeight = 40;
+    frameWidth = 64;
+    currentFrame = 0;
+    ///
+    gameOverInterval = setInterval(gameOverLoop, 100);
 }
 
 function gameOverLoop() {
-    // put wolf animation here!
-    const youLoseText = 'You lose! Try again?'
-    ctx.clearRect(0, 0, game.width, game.height);
-    ctx.drawImage(background,0,0);
-    ctx.fillStyle = "white"; 
-    ctx.textAlign = "center"; 
-    ctx.font = "50px Comic Sans MS";
-    ctx.fillText(youLoseText, game.width/2, (2*game.height)/3);
+    /////
+        currentFrame++;
+        let maxFrame = numColumns * numRows - 1;
+        if (currentFrame > maxFrame){
+            currentFrame = 0;
+        }
+        let column = currentFrame % numColumns;
+        let row = Math.floor(currentFrame / numColumns);
+        ctx.drawImage(background,0,0);
+        ctx.drawImage(bigBadWolf, column * frameWidth, row * frameHeight, frameWidth, frameHeight, 450, 200, frameWidth*1.5, frameHeight*1.5);
+        const youLoseText = 'You lose! Try again?'
+        ctx.fillStyle = "white"; 
+        ctx.textAlign = "center"; 
+        ctx.font = "50px Comic Sans MS";
+        ctx.fillText(youLoseText, game.width/2, (2*game.height)/3);
+        ctx.clearRect(0, 0, game.width, game.height);
+    /////////////
+    // ctx.drawImage(background,0,0);
 }

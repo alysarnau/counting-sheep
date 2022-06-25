@@ -36,7 +36,7 @@
 <li>DONE! Animated win screen.</li>
 <li>DONE! PERSISTENT LEADERBOARD (https://blog.logrocket.com/localstorage-javascript-complete-guide/)</li>
 <li>DONE! Wolf chases you!</li>
-<li>Implement Lives Feature?</li>
+<li>DONE! Implement Lives Feature.</li>
 <li>Animate sprites through movement frames in-game</li>
 <li>Option to set difficulty by increasing movement speed for wolf!</li>
 </ul>
@@ -56,16 +56,18 @@
 <li>Created animated win screen</li>
 <li>Hooked up leaderboard to local storage</li>
 <li>Implemented wolf which resets the player on collision</li>
+<li>Implemented life functionality</li>
 </ul>
 
 <h1>ATTRIBUTION:</h2>
 <ul>
-<li>Sheep asset courtesy: https://bobkatt.itch.io/</li>
-<li>Background music courtesy: https://soundcloud.com/alexandr-zhelanov (https://opengameart.org/content/casual-game-track)</li>
-<li>Corgi sprites courtesy: https://angryelk.itch.io/animated-corgi-sprite</li>
-<li>Background image tileset courtesy: https://ojas-sabadra.itch.io/pixelworld </li>
-<li>Wolf grunt courtesy: https://opengameart.org/content/dog-grunt</li>
+<li>Sheep asset courtesy Bobkatt: https://bobkatt.itch.io/</li>
+<li>Background music courtesy Alexandr Zhelanox: https://soundcloud.com/alexandr-zhelanov/https://opengameart.org/content/casual-game-track</li>
+<li>Corgi sprites courtesy Angry Elk and Miniyeti: https://angryelk.itch.io/animated-corgi-sprite</li>
 <li>Dog bark courtesy: Mixkit Sound Effects Free License</li>
-<li>Pixel hearts courtesy: https://opengameart.org/content/pixel-hearts</li>
+<li>Background image tileset courtesy Ojas Sabadra: https://ojas-sabadra.itch.io/pixelworld </li>
+<li>Wolf grunt courtesy Frieda the dog: https://opengameart.org/content/dog-grunt</li>
+<li>Wolf sprites courtesy Stephen "Redshrike" Challener and William.Thompsonj: https://opengameart.org/content/lpc-wolf-animation</li>
+<li>Pixel hearts courtesy TokyoGeisha: https://opengameart.org/content/pixel-hearts</li>
 </ul>
 

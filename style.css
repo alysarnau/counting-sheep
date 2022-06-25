@@ -119,6 +119,7 @@ p {
     border-radius: 25px;
     position: relative;
     background-color: #FCF6BD;
+    text-align: center;
 }
 
 #leaderboard-title {
