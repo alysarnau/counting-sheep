@@ -1,5 +1,6 @@
 // STRETCH GOAL: ANIMATION THRU MOVEMENT!
 // possible to flip images instead of using different sprite sheet?
+// STETCH GOAL: Wolf Difficulty Setter (speed!)
 
 const body = document.querySelector('body');
 const leaderboardContainer = document.querySelector('#leaderboard-container');
