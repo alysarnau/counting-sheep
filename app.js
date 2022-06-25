@@ -1,10 +1,4 @@
-// implement a life feature? three lives?
-// for LIVES
-// set player.lives = 3
-// on collision with wolf, player.lives -= 1
-// if player.lives === 0; make a gameOver screen?
-// display!
-// create for loop where i = player.lives to create 3 hearts
+// add wolf sprite animated on lose screen
 
 const body = document.querySelector('body');
 const leaderboardContainer = document.querySelector('#leaderboard-container');
@@ -123,7 +117,7 @@ const toggleScoresButton = document.querySelector('#toggle-leaderboard');
 const timerDisplay = document.querySelector("#timer");
 const instructionDiv = document.getElementById('instructions');
 const livesDiv = document.getElementById('heart-container');
-console.log(livesDiv);
+fillLives()
 
 function fillLives() {
     for (let i = 0; i < player.lives; i++) {
@@ -386,11 +380,15 @@ function resumeGame() {
     player.movePlayer();
 }
 function resetGame() {
+    player.lives = 3;
+    displayLives();
     leaderboard = []
-    clearInterval(timer);
     currentTime = 0;
+    clearInterval(timer);
     clearInterval(selectInterval);
     clearInterval(gameInterval);
+    clearInterval(winAnimation);
+    clearInterval(gameOverInterval);
     resetPlayerPosition();
     timerDisplay.innerText = currentTime;
     startButton.innerText = 'START'
@@ -400,11 +398,12 @@ function resetGame() {
     background.src = "./background/startScreen.png";
     ctx.drawImage(background,0,0);
     startButton.style.display = "inline-block";
+    instructionDiv.innerHTML = `<p>Use WASD to avoid the wolf <br /> and find all 10 lost sheep!</p>`
     lostSheepArray.forEach((sheep) => {
         sheep.lost = false;
     });
     player.won = true;
-    clearInterval(winAnimation)
+
 }
 
 function resetPlayerPosition() {
@@ -491,11 +490,12 @@ function detectHit(thing) {
                 growl.play();
                 resetPlayerPosition();
                 wolfLocator();
+                displayLives();
             }
         }
 }
 
-function loseLife() {
+function displayLives() {
     // remove existing hearts
     if (livesDiv.hasChildNodes()) {
         while (livesDiv.firstChild) {
@@ -520,6 +520,7 @@ const gameLoop = () => {
     trackMovement();
     player.movePlayer();
     badWolf.moveWolf();
+    checkLives();
     checkWin();
     if (player.won) {
         return;
@@ -674,3 +675,33 @@ clearScoreButton.addEventListener('click', (e) => {
         }
     }
 })
+
+function checkLives() {
+    if (player.lives === 0) {
+        gameOverScreen()
+    }
+}
+let gameOverInterval;
+
+function gameOverScreen(){
+    clearInterval(gameInterval);
+    clearInterval(timer);
+    clearInterval(gameOverInterval);
+    background.src = "./background/background_tiles.png"
+    currentTime = 0;
+    timerDisplay.innerText = currentTime;
+    gameOverInterval = setInterval(gameOverLoop, 60);
+    pauseButton.style.display = 'none';
+    resetButton.style.display = 'inline-block'
+}
+
+function gameOverLoop() {
+    // put wolf animation here!
+    const youLoseText = 'You lose! Try again?'
+    ctx.clearRect(0, 0, game.width, game.height);
+    ctx.drawImage(background,0,0);
+    ctx.fillStyle = "white"; 
+    ctx.textAlign = "center"; 
+    ctx.font = "50px Comic Sans MS";
+    ctx.fillText(youLoseText, game.width/2, (2*game.height)/3);
+}
