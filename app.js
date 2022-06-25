@@ -1,5 +1,4 @@
-// STRETCH GOAL: ANIMATION THRU MOVEMENT!
-// possible to flip images instead of using different sprite sheet?
+// disable difficulty changing during gameplay
 
 
 const body = document.querySelector('body');
@@ -32,6 +31,7 @@ class Dog {
         this.speed = 10,
         this.lives = 3,
         this.src = null,
+        this.difficulty = 'med',
         this.direction = {
             up: false,
             down: false,
@@ -120,7 +120,6 @@ const timerDisplay = document.querySelector("#timer");
 const instructionDiv = document.getElementById('instructions');
 const livesDiv = document.getElementById('heart-container');
 const difficultyDivs = document.querySelectorAll('.difficulty');
-// console.log(difficultyDivs)
 const easyDifficulty = document.getElementById('easy');
 const mediumDifficulty = document.getElementById('med');
 const hardDifficulty = document.getElementById('hard');
@@ -202,10 +201,13 @@ difficultyDivs.forEach((difficultyDiv) => {
         e.target.style.opacity = 1;
         if (e.target === easyDifficulty) {
             wolfSpeed = 3;
+            player.difficulty = 'easy';
         } else if (e.target === mediumDifficulty) {
             wolfSpeed = 5;
+            player.difficulty = 'medi';
         } else if (e.target === hardDifficulty) {
             wolfSpeed = 7;
+            player.difficulty = 'hard';
         }
     })
 })
@@ -566,8 +568,10 @@ function checkWin() {
         let localPush = {
             'playerAvatar' : player.src,
             'playerScore' : paddedScore,
+            'playerDifficulty' : player.difficulty,
         }
         localStorage.setItem(`playerInfo${index}`, JSON.stringify(localPush));
+        console.log(localStorage)
         updateLeaderboard()
         player.won = true;
         ctx.clearRect(0, 0, game.width, game.height)
@@ -598,8 +602,6 @@ function setWinVariant() {
         waggingCorgi.src = './sprites/corgi_cardigan_tri_wag.png';
     }
 }
-let fawnCardiganRunning = new Image();
-fawnCardiganRunning.src = './sprites/right/fawn_cardigan_running.png';
 
 let happySheep = new Image();
 happySheep.src = './sprites/sheep_idle_col5.png'
@@ -679,7 +681,15 @@ function populateLeaderboard(){
     leaderboard.forEach((score) => {
         const playerScore = document.createElement('li');
         playerScore.setAttribute('class','score')
-        playerScore.innerHTML = `<img src=${score.substr(16,29)} /> ${score.substr(61,2)}`;
+        let difficultyMarker;
+        if (score.substr(85,3) === 'eas') {
+            difficultyMarker = 'easyDiv';
+        } else if (score.substr(85,3) === 'med') {
+            difficultyMarker = 'mediumDiv'
+        } else if (score.substr(85,3) === 'har') {
+            difficultyMarker = 'hardDiv'
+        }
+        playerScore.innerHTML = `<img src=${score.substr(16,29)} /> ${score.substr(61,2)} <div class='difficultyScore' id=${difficultyMarker}>`;
         leaderboardList.appendChild(playerScore);
     })
 }
@@ -736,7 +746,7 @@ function gameOverScreen(){
 }
 
 function announceLose() {
-    const youLoseText = 'You lose! Try again?'
+    const youLoseText = 'YOU LOSE! TRY AGAIN?'
     ctx.fillStyle = "white"; 
     ctx.textAlign = "center"; 
     ctx.font = "50px Comic Sans MS";

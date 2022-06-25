@@ -38,8 +38,8 @@
 <li>DONE! Wolf chases you!</li>
 <li>DONE! Implement Lives Feature.</li>
 <li>DONE! Option to set difficulty by increasing movement speed for wolf!</li>
+<li>DONE! Add difficulty indicator to leaderboard</li>
 <li>Animate sprites through movement frames in-game</li>
-<li>Add difficulty indicator to leaderboard</li>
 
 </ul>
 

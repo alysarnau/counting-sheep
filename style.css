@@ -81,6 +81,14 @@ p {
     height: 20,
 }
 
+.difficultyScore {
+    height: 20px;
+    width: 20px;
+    display: inline-block;
+    border: 1px solid black;
+    border-radius: 10px;;
+}
+
 #container {
     text-align: center;
 }
@@ -176,13 +184,25 @@ p {
 
 #easy {
     background-color: green;
-    opacity: 1;
 }
 
 #med {
     background-color: yellow;
+    opacity: 1;
 }
 
 #hard {
     background-color: red;
+}
+
+#easyDiv {
+    background-color: green;
+}
+
+#mediumDiv {
+    background-color: yellow;
+}
+
+#hardDiv {
+    background-color: green;
 }
