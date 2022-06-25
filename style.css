@@ -46,10 +46,20 @@ h2 {
     margin: 10px;
 }
 
+h3 {
+    margin: 0 0 10px 0;
+    text-decoration: underline;
+}
+
 p {
     font-size: 20px;
     margin: 30px;
     line-height: 1.5;
+    text-align: center;
+}
+
+.life-heart {
+    padding: 0 5px;
 }
 
 .score {
@@ -126,4 +136,13 @@ p {
     width: 250px;
     background-color: #FF99C8;
     margin: 15px auto;
+}
+
+#lives {
+    position: absolute;
+    left: 180px;
+    top: 600px;
+    border: 5px solid #FCF6BD;
+    border-radius: 25px;
+    padding: 10px;
 }

@@ -1,4 +1,10 @@
 // implement a life feature? three lives?
+// for LIVES
+// set player.lives = 3
+// on collision with wolf, player.lives -= 1
+// if player.lives === 0; make a gameOver screen?
+// display!
+// create for loop where i = player.lives to create 3 hearts
 
 const body = document.querySelector('body');
 const leaderboardContainer = document.querySelector('#leaderboard-container');
@@ -28,6 +34,7 @@ class Dog {
         this.won = false,
         this.score = null,
         this.speed = 10,
+        this.lives = 3,
         this.src = null,
         this.direction = {
             up: false,
@@ -115,6 +122,17 @@ const toggleMusicButton = document.querySelector('#toggle-music');
 const toggleScoresButton = document.querySelector('#toggle-leaderboard');
 const timerDisplay = document.querySelector("#timer");
 const instructionDiv = document.getElementById('instructions');
+const livesDiv = document.getElementById('heart-container');
+console.log(livesDiv);
+
+function fillLives() {
+    for (let i = 0; i < player.lives; i++) {
+        let heart = document.createElement('img');
+        heart.setAttribute('class', 'life-heart');
+        heart.src = './sprites/fullHeart.png';
+        livesDiv.appendChild(heart);
+    }
+}
 
 let spriteOne = new Sprite(250, './sprites/right/sprite0.png');
 let spriteTwo = new Sprite(400, './sprites/right/sprite1.png');

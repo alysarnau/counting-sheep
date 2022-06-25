@@ -66,5 +66,6 @@
 <li>Background image tileset courtesy: https://ojas-sabadra.itch.io/pixelworld </li>
 <li>Wolf grunt courtesy: https://opengameart.org/content/dog-grunt</li>
 <li>Dog bark courtesy: Mixkit Sound Effects Free License</li>
+<li>Pixel hearts courtesy: https://opengameart.org/content/pixel-hearts</li>
 </ul>
 
