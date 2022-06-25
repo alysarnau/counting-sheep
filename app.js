@@ -1,6 +1,7 @@
 // STRETCH GOAL: ANIMATION THRU MOVEMENT!
 // possible to flip images instead of using different sprite sheet?
 // STETCH GOAL: Wolf Difficulty Setter (speed!)
+///// on click of .difficulty divs, set opacity to 1! (to indicate chosen difficulty)
 
 const body = document.querySelector('body');
 const leaderboardContainer = document.querySelector('#leaderboard-container');
@@ -119,6 +120,11 @@ const toggleScoresButton = document.querySelector('#toggle-leaderboard');
 const timerDisplay = document.querySelector("#timer");
 const instructionDiv = document.getElementById('instructions');
 const livesDiv = document.getElementById('heart-container');
+const difficultyDivs = document.querySelectorAll('.difficulty');
+// console.log(difficultyDivs)
+const easyDifficulty = document.getElementById('easy');
+const mediumDifficulty = document.getElementById('med');
+const hardDifficulty = document.getElementById('hard');
 fillLives();
 
 function fillLives() {
@@ -152,35 +158,23 @@ class Sheep {
     }
 }
 
+let wolfSpeed = 5;
+
 class Wolf {
     constructor() {
-        this.x = Math.floor(Math.random() * (game.width - 80)),
-        this.y = Math.floor(Math.random() * (game.height - 80)),
+        this.x = Math.floor(Math.random() * (920)),
+        this.y = Math.floor(Math.random() * (520)),
         this.width = 76,
         this.height = 51,
         this.lost = true,
         this.type = 'wolf',
-        this.speed = 4,
+        this.speed = wolfSpeed,
         this.direction = 'right';
         this.src = './sprites/right/wolfStanding.png';
         this.render = function() {
             let wolfSprite = document.createElement('img');
             wolfSprite.src = this.src;
             ctx.drawImage(wolfSprite, this.x, this.y, this.width, this.height)
-        }
-        this.UpdateAngle = function() {
-            this.dx = this.x - player.x;
-            this.dy = this.y - player.y;
-            console.log(this.dx)
-            console.log(this.dy)
-            this.angle = Math.atan2(this.dy, this.dx) * (180 / Math.PI);
-            if (this.angle < 0) {
-                this.angle += 360;
-            } 
-        }
-        this.UpdateSpeed = function() {
-            this.speedX = this.speed * Math.cos(this.angle);
-            this.speedY = this.speed * Math.sin(this.angle);
         }
     }
     moveWolf = function () {
@@ -201,6 +195,26 @@ class Wolf {
             badWolf.y -= badWolf.speed;
         }
     }
+}
+
+difficultyDivs.forEach((difficultyDiv) => {
+    difficultyDiv.addEventListener('click', (e) => {
+        resetDifficulty();
+        e.target.style.opacity = 1;
+        if (e.target === easyDifficulty) {
+            wolfSpeed = 3;
+        } else if (e.target === mediumDifficulty) {
+            wolfSpeed = 5;
+        } else if (e.target === hardDifficulty) {
+            wolfSpeed = 7;
+        }
+    })
+})
+
+function resetDifficulty() {
+    difficultyDivs.forEach((difficultyDiv) => {
+        difficultyDiv.style.opacity = .5;
+    })
 }
 
 let nextSheep;
@@ -228,8 +242,8 @@ function wolfLocator() {
                 && badWolf.x + badWolf.width > player.x
                 && badWolf.y < badWolf.y + player.height
                 && badWolf.y + badWolf.height > player.y)) {
-                badWolf.x = Math.floor(Math.random() * (game.width - 40));
-                badWolf.y = Math.floor(Math.random() * (game.height - 40));
+                badWolf.x = Math.floor(Math.random() * (920));
+                badWolf.y = Math.floor(Math.random() * (420));
             }
     })
 }
