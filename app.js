@@ -1,6 +1,3 @@
-// disable difficulty changing during gameplay
-
-
 const body = document.querySelector('body');
 const leaderboardContainer = document.querySelector('#leaderboard-container');
 const leaderboardList = document.querySelector('#leaderboard-list');
@@ -120,6 +117,7 @@ const timerDisplay = document.querySelector("#timer");
 const instructionDiv = document.getElementById('instructions');
 const livesDiv = document.getElementById('heart-container');
 const difficultyDivs = document.querySelectorAll('.difficulty');
+const wolfDifficulty = document.getElementById('wolf-difficulty');
 const easyDifficulty = document.getElementById('easy');
 const mediumDifficulty = document.getElementById('med');
 const hardDifficulty = document.getElementById('hard');
@@ -386,6 +384,8 @@ function beginGame() {
     pauseButton.style.display = "inline-block";
     resetButton.style.display = "inline-block";
     startButton.style.display = "none";
+        // display changing difficulty midplay
+    wolfDifficulty.style.pointerEvents = 'none';
 }
 function resumeGame() {
     timer = setInterval(countUp,1000);
@@ -411,7 +411,7 @@ function resetGame() {
     timerDisplay.innerText = currentTime;
     startButton.innerText = 'START'
     backgroundMusic.pause();
-    startButton.style.pointerEvents = 'inline-block';
+    startButton.style.pointerEvents = 'auto';
     ctx.clearRect(0, 0, game.width, game.height);
     background.src = "./background/startScreen.png";
     ctx.drawImage(background,0,0);
@@ -434,6 +434,7 @@ startButton.addEventListener('click', (e) => {
     instructionDiv.innerHTML = `<p>Use WASD to move over the pup you'd like to play. Once you've chosen, move your pup over the word 'CONFIRM'.</p>`;
     game.style.display = 'block';
     selectScreen()
+    wolfDifficulty.style.pointerEvents = 'auto'
     startButton.style.pointerEvents = 'none';
     e.target.blur();
     leaderboard = [];
@@ -460,6 +461,7 @@ resetButton.addEventListener('click', (e) => {
     pauseButton.style.display = 'none';
     resumeButton.style.display = 'none';
     resetButton.style.display = 'none';
+    wolfDifficulty.style.pointerEvents = 'auto'
 })
 toggleScoresButton.addEventListener('click', (e) => {
     if (leaderboardContainer.style.display === 'none') {
