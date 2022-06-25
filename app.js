@@ -1,7 +1,6 @@
 // STRETCH GOAL: ANIMATION THRU MOVEMENT!
 // possible to flip images instead of using different sprite sheet?
-// STETCH GOAL: Wolf Difficulty Setter (speed!)
-///// on click of .difficulty divs, set opacity to 1! (to indicate chosen difficulty)
+
 
 const body = document.querySelector('body');
 const leaderboardContainer = document.querySelector('#leaderboard-container');
@@ -599,16 +598,11 @@ function setWinVariant() {
         waggingCorgi.src = './sprites/corgi_cardigan_tri_wag.png';
     }
 }
+let fawnCardiganRunning = new Image();
+fawnCardiganRunning.src = './sprites/right/fawn_cardigan_running.png';
 
 let happySheep = new Image();
 happySheep.src = './sprites/sheep_idle_col5.png'
-// let row = 0;
-// let column = 0;
-// let numRows = 1
-// let numColumns = 5;
-// let frameHeight = 64;
-// let frameWidth = 64;
-// let currentFrame = 0;
 
 function winGame () {
     let row = 0;

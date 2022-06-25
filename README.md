@@ -37,8 +37,10 @@
 <li>DONE! PERSISTENT LEADERBOARD.</li>
 <li>DONE! Wolf chases you!</li>
 <li>DONE! Implement Lives Feature.</li>
+<li>DONE! Option to set difficulty by increasing movement speed for wolf!</li>
 <li>Animate sprites through movement frames in-game</li>
-<li>Option to set difficulty by increasing movement speed for wolf!</li>
+<li>Add difficulty indicator to leaderboard</li>
+
 </ul>
 
 <h2>TECHNOLOGIES USED:</h2>
@@ -57,6 +59,7 @@
 <li>Hooked up leaderboard to local storage</li>
 <li>Implemented wolf which resets the player on collision</li>
 <li>Implemented life functionality - lives lost on contact with wolf, and implement game over screen.</li>
+<li>Change wolf speed on click for difficulty selector.</li>
 </ul>
 
 <h1>ATTRIBUTION:</h2>
