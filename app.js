@@ -1,3 +1,6 @@
+// STRETCH GOAL: ANIMATION THRU MOVEMENT!
+// possible to flip images instead of using different sprite sheet?
+
 const body = document.querySelector('body');
 const leaderboardContainer = document.querySelector('#leaderboard-container');
 const leaderboardList = document.querySelector('#leaderboard-list');

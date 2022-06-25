@@ -34,7 +34,7 @@
 <ul>
 <li>DONE! Sprites as avatars.</li>
 <li>DONE! Animated win screen.</li>
-<li>DONE! PERSISTENT LEADERBOARD (https://blog.logrocket.com/localstorage-javascript-complete-guide/)</li>
+<li>DONE! PERSISTENT LEADERBOARD.</li>
 <li>DONE! Wolf chases you!</li>
 <li>DONE! Implement Lives Feature.</li>
 <li>Animate sprites through movement frames in-game</li>
@@ -56,7 +56,7 @@
 <li>Created animated win screen</li>
 <li>Hooked up leaderboard to local storage</li>
 <li>Implemented wolf which resets the player on collision</li>
-<li>Implemented life functionality</li>
+<li>Implemented life functionality - lives lost on contact with wolf, and implement game over screen.</li>
 </ul>
 
 <h1>ATTRIBUTION:</h2>
