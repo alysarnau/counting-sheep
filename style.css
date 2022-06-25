@@ -145,4 +145,6 @@ p {
     border: 5px solid #FCF6BD;
     border-radius: 25px;
     padding: 10px;
+    width: 160px;
+    height: 65px;
 }

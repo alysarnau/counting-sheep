@@ -487,11 +487,22 @@ function detectHit(thing) {
             if (thing.type === 'sheep') {
                 baa.play();
             } else if (thing.type === 'wolf') {
+                player.lives -= 1;
                 growl.play();
                 resetPlayerPosition();
                 wolfLocator();
             }
         }
+}
+
+function loseLife() {
+    // remove existing hearts
+    if (livesDiv.hasChildNodes()) {
+        while (livesDiv.firstChild) {
+            livesDiv.removeChild(livesDiv.firstChild)
+        }
+    }
+    fillLives();
 }
 
 function leftSpriteChange(thing) {
